@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Academic Portal - Science with Sheshadi LMS</title>
+
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        rajdhani: ['Rajdhani', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="antialiased text-slate-100 min-h-screen flex flex-col justify-between">
+
+    <!-- Header Navigation -->
+    <header class="bg-slate-900/90 border-b border-slate-800 py-4 sticky top-0 z-50 backdrop-blur-md no-print">
+        <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <img src="assets/images/logo.png" alt="Logo" class="h-12 w-12 object-contain rounded-xl border border-amber-500/30 p-1 bg-slate-950">
+                <div>
+                    <h1 class="text-xl font-bold font-cinzel text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-500 branding-academy-name">
+                        SCIENCE with SHESHADI
+                    </h1>
+                    <p class="text-xs text-cyan-400 font-rajdhani tracking-widest uppercase">Student Academic LMS Portal</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-3">
+                <button onclick="window.print()" class="bg-cyan-600 hover:bg-cyan-500 text-white px-3.5 py-2 rounded-xl text-xs font-bold flex items-center space-x-2 shadow-lg shadow-cyan-600/30 transition">
+                    <i class="fa-solid fa-print"></i>
+                    <span>Print Report Card</span>
+                </button>
+
+                <a href="index.html" class="bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center space-x-2 transition">
+                    <i class="fa-solid fa-house"></i>
+                    <span class="hidden sm:inline">Portal Hub</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full space-y-8">
+
+        <!-- Live Zoom Session Alert Banner (Class-Wise Filtered) -->
+        <div id="stLiveZoomBanner" class="hidden glass-panel p-5 border-emerald-500/50 bg-gradient-to-r from-slate-900 via-emerald-950/40 to-slate-900 relative overflow-hidden shadow-2xl">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-400/50 flex items-center justify-center text-emerald-400 text-2xl animate-pulse">
+                        <i class="fa-solid fa-video"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500 text-slate-950 uppercase tracking-wider animate-bounce">
+                                🔴 LIVE CLASS SESSION
+                            </span>
+                            <span id="stZoomGrade" class="text-xs text-emerald-300 font-bold">06 - Science</span>
+                        </div>
+                        <h3 id="stZoomTitle" class="text-base font-bold font-cinzel text-slate-100">Grade 06 Science - Live Class</h3>
+                        <p class="text-xs text-slate-300 font-mono">Class Key / Passcode: <span id="stZoomPass" class="text-amber-300 font-bold">SCIENCE2026</span></p>
+                    </div>
+                </div>
+
+                <a id="stJoinZoomBtn" href="#" target="_blank" class="w-full sm:w-auto bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-extrabold px-6 py-3 rounded-xl text-xs uppercase tracking-wider flex items-center justify-center space-x-2 shadow-xl shadow-emerald-500/20 transition">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    <span>Join Class Zoom Session</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Error Container -->
+        <div id="errorContainer" class="hidden glass-panel p-8 text-center max-w-lg mx-auto space-y-4 border-red-500/50">
+            <div class="w-16 h-16 bg-red-500/10 border border-red-500/30 rounded-full flex items-center justify-center text-red-400 text-2xl mx-auto">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 class="text-2xl font-bold font-cinzel text-red-300">Invalid Student Access Code</h3>
+            <p id="errorMessage" class="text-xs text-slate-300">The Student ID is invalid or not found in our academic records.</p>
+            <a href="index.html" class="inline-block bg-slate-800 hover:bg-slate-700 text-cyan-400 font-bold px-6 py-2.5 rounded-xl text-xs uppercase tracking-wider border border-cyan-500/40">
+                Return to Access Hub
+            </a>
+        </div>
+
+        <!-- Student Profile Display -->
+        <div id="studentProfileContent" class="space-y-8">
+
+            <!-- Educator Banner -->
+            <section class="glass-panel p-6 sm:p-8 relative overflow-hidden">
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
+                    <div class="flex items-center space-x-5">
+                        <img src="assets/images/teacher.png" alt="Mrs. Sheshadi Sathsarani" class="w-20 h-24 object-cover rounded-2xl border-2 border-amber-500/50 shadow-xl">
+                        <div>
+                            <span class="px-3 py-0.5 bg-amber-500/10 border border-amber-500/30 text-amber-300 text-[11px] font-bold rounded-full uppercase tracking-wider">
+                                Class Teacher & Science Lecturer
+                            </span>
+                            <h2 class="text-2xl font-bold font-cinzel text-slate-100 branding-teacher-name">Mrs. Sheshadi Sathsarani</h2>
+                            <p class="text-xs text-slate-400 branding-announcement">Science with Sheshadi - Full-Year Student Evaluation System</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900/80 border border-emerald-500/30 px-4 py-3 rounded-xl text-right no-print">
+                        <span class="text-[10px] uppercase font-bold text-emerald-400 tracking-wider"><i class="fa-solid fa-lock mr-1"></i> Private Student Pass</span>
+                        <p class="text-xs text-slate-300 font-mono">Academic Records Synchronized</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Student Navigation Tabs -->
+            <div class="border-b border-slate-700 no-print">
+                <nav class="flex space-x-6 text-sm font-semibold overflow-x-auto pb-1">
+                    <button id="st-tab-btn-dash" onclick="switchStTab('dash')" class="pb-3 text-cyan-400 border-b-2 border-cyan-400 flex items-center gap-2 whitespace-nowrap">
+                        <i class="fa-solid fa-chart-line"></i> Performance Analytics
+                    </button>
+                    <button id="st-tab-btn-files" onclick="switchStTab('files')" class="pb-3 text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
+                        <i class="fa-solid fa-folder-open text-amber-400"></i> Shared Study Files & Guides
+                    </button>
+                    <button id="st-tab-btn-cal" onclick="switchStTab('cal')" class="pb-3 text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
+                        <i class="fa-solid fa-calendar-days text-emerald-400"></i> Academic Calendar
+                    </button>
+                </nav>
+            </div>
+
+            <!-- TAB 1: PERFORMANCE ANALYTICS -->
+            <div id="st-tab-dash" class="space-y-8">
+                <!-- Student Profile Grid -->
+                <section class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Left Column: Student Details + Practical Results Pie Chart -->
+                    <div class="lg:col-span-1 glass-panel p-6 space-y-6">
+                        <div class="flex items-center space-x-4 pb-6 border-b border-slate-700/70">
+                            <img id="stAvatar" src="" alt="Student Avatar" class="w-20 h-20 rounded-2xl border-2 border-cyan-400/50 bg-slate-900 p-1 shadow-md">
+                            <div>
+                                <h3 id="stName" class="text-2xl font-bold font-cinzel text-amber-300">Loading...</h3>
+                                <p class="text-xs font-mono text-cyan-400">ID: <span id="stId">...</span></p>
+                                <div class="mt-2 inline-block px-3 py-0.5 bg-slate-800 border border-slate-600 rounded-full text-xs text-slate-300 font-semibold">
+                                    <i class="fa-solid fa-chalkboard-user mr-1 text-amber-400"></i><span id="stGrade">06 - Science</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Practical Results Pie Chart -->
+                        <div class="bg-slate-900/90 border border-emerald-500/30 p-5 rounded-2xl space-y-3">
+                            <h4 class="text-xs font-bold font-cinzel text-emerald-300 uppercase tracking-wider flex items-center justify-between">
+                                <span><i class="fa-solid fa-chart-pie mr-1.5 text-emerald-400"></i>Practical Results Breakdown</span>
+                                <span class="text-[10px] text-slate-400 font-mono">Pie Chart</span>
+                            </h4>
+                            <div class="h-48 relative flex items-center justify-center">
+                                <canvas id="stPracticalPieChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Academic Metrics -->
+                        <div class="space-y-4 text-sm">
+                            <div class="flex justify-between items-center text-slate-300">
+                                <span class="text-slate-400"><i class="fa-solid fa-user-check mr-2 text-cyan-400"></i>Homeroom Teacher</span>
+                                <span id="stTeacher" class="font-semibold text-slate-100">Mrs. Sheshadi Sathsarani</span>
+                            </div>
+                            <div class="flex justify-between items-center text-slate-300">
+                                <span class="text-slate-400"><i class="fa-solid fa-chart-simple mr-2 text-amber-400"></i>Annual Unit Test Avg</span>
+                                <span id="stAvg" class="font-bold text-amber-300 text-base">0.0 / 100</span>
+                            </div>
+                            <div class="flex justify-between items-center text-slate-300">
+                                <span class="text-slate-400"><i class="fa-solid fa-calendar-check mr-2 text-emerald-400"></i>Class Attendance</span>
+                                <span id="stAttendance" class="font-semibold text-emerald-400">95%</span>
+                            </div>
+                            <div class="flex justify-between items-center text-slate-300">
+                                <span class="text-slate-400"><i class="fa-solid fa-award mr-2 text-purple-400"></i>Overall Status</span>
+                                <span id="stStatus" class="font-semibold text-purple-300">Active Progress</span>
+                            </div>
+                        </div>
+
+                        <!-- Teacher Remarks Note -->
+                        <div class="p-4 bg-slate-900/90 border border-amber-500/30 rounded-2xl space-y-2">
+                            <span class="text-xs font-bold text-amber-300 uppercase tracking-wider"><i class="fa-solid fa-comment-dots mr-1"></i> Teacher Remarks:</span>
+                            <p id="stTeacherRemarks" class="text-xs text-slate-300 italic leading-relaxed">
+                                Demonstrates excellent understanding in weekly practicals and unit revision tests.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Month Selector, Weekly Progress Table & Charts -->
+                    <div class="lg:col-span-2 space-y-8">
+                        
+                        <!-- Month Selector Tabs -->
+                        <div class="glass-panel p-4 space-y-3 no-print">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-bold uppercase text-amber-400 tracking-wider"><i class="fa-solid fa-calendar-days mr-1"></i> Select Academic Month (Jan - Dec):</span>
+                                <span id="selectedMonthLabel" class="text-xs font-bold text-cyan-300 uppercase">January</span>
+                            </div>
+                            <div id="monthTabsContainer" class="flex flex-wrap gap-2 pt-1">
+                                <!-- Month Buttons -->
+                            </div>
+                        </div>
+
+                        <!-- Selected Month Weekly Progress Table -->
+                        <div class="glass-panel p-6 space-y-4">
+                            <div class="flex items-center justify-between pb-2 border-b border-slate-700/70">
+                                <div>
+                                    <h4 class="text-lg font-bold font-cinzel text-slate-100"><span id="tableMonthTitle">January</span> Weekly Progress Tracker</h4>
+                                    <p class="text-xs text-slate-400">Guidebook completion, practical ratings & unit test scores</p>
+                                </div>
+                                <span class="text-xs text-emerald-400 font-mono"><i class="fa-solid fa-shield-check"></i> Verified Record</span>
+                            </div>
+
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-sm text-slate-300">
+                                    <thead class="bg-slate-900/90 text-slate-300 font-semibold uppercase text-xs border-b border-slate-700">
+                                        <tr>
+                                            <th class="px-5 py-3">Week</th>
+                                            <th class="px-5 py-3">Guidebook 1</th>
+                                            <th class="px-5 py-3">Guidebook 2</th>
+                                            <th class="px-5 py-3">Past Paper</th>
+                                            <th class="px-5 py-3">Practical Rating</th>
+                                            <th class="px-5 py-3">Unit Test Score</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="stWeeklyTableBody" class="divide-y divide-slate-800">
+                                        <!-- Dynamic Rows -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Charts Row -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="glass-panel p-5 space-y-3">
+                                <h5 class="text-sm font-bold text-slate-200 font-cinzel"><i class="fa-solid fa-chart-line text-cyan-400 mr-2"></i>12-Month Unit Test Trend</h5>
+                                <div class="h-56 relative">
+                                    <canvas id="stAnnualTrendChart"></canvas>
+                                </div>
+                            </div>
+
+                            <div class="glass-panel p-5 space-y-3">
+                                <h5 class="text-sm font-bold text-slate-200 font-cinzel"><i class="fa-solid fa-chart-column text-amber-400 mr-2"></i>Term Assessment Marks</h5>
+                                <div class="h-56 relative">
+                                    <canvas id="stTermChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+            </div>
+
+            <!-- TAB 2: SHARED STUDY FILES -->
+            <div id="st-tab-files" class="hidden space-y-6">
+                <div class="glass-panel p-6 space-y-6">
+                    <div class="pb-4 border-b border-slate-700">
+                        <h3 class="text-xl font-bold font-cinzel text-slate-100">Study Materials & Shared Files</h3>
+                        <p class="text-xs text-slate-400">Download theory guidebooks, past paper sets, and practical manuals uploaded by your teacher.</p>
+                    </div>
+
+                    <div id="stFilesContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Dynamic File Cards -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: ACADEMIC CALENDAR -->
+            <div id="st-tab-cal" class="hidden space-y-6">
+                <div class="glass-panel p-6 space-y-6">
+                    <div class="pb-4 border-b border-slate-700">
+                        <h3 class="text-xl font-bold font-cinzel text-slate-100">Academic Schedule & Important Dates</h3>
+                        <p class="text-xs text-slate-400">View upcoming term exams, live class schedules, and assignment submission deadlines.</p>
+                    </div>
+
+                    <div id="stCalendarContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Dynamic Calendar Cards -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-800 py-6 text-center text-xs text-slate-500 no-print">
+        <p>&copy; 2026 Sathsarani Science Academy. Private Student Academic System.</p>
+    </footer>
+
+    <!-- Script -->
+    <script src="assets/js/lms-core.js"></script>
+    <script>
+        const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+        let currentStudent = null;
+        let selectedMonth = "January";
+        let annualChart = null;
+        let termChart = null;
+        let stPracticalPieChart = null;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (window.LMSCore) {
+                window.LMSCore.applyThemeAndBranding();
+            }
+
+            const params = new URLSearchParams(window.location.search);
+            const queryId = (params.get('id') || params.get('qr') || '').trim().toLowerCase();
+
+            const errorContainer = document.getElementById('errorContainer');
+            const studentProfileContent = document.getElementById('studentProfileContent');
+
+            if (!queryId) {
+                errorContainer.classList.remove('hidden');
+                studentProfileContent.classList.add('hidden');
+                return;
+            }
+
+            const students = await window.LMSCore.getStudents();
+
+            currentStudent = students.find(s => 
+                s.student_info.student_id.toLowerCase() === queryId ||
+                (s.student_info.qr_code_key && s.student_info.qr_code_key.toLowerCase() === queryId) ||
+                s.student_info.name.toLowerCase() === queryId ||
+                s.tab_name.toLowerCase() === queryId
+            );
+
+            if (!currentStudent) {
+                errorContainer.classList.remove('hidden');
+                studentProfileContent.classList.add('hidden');
+                document.getElementById('errorMessage').textContent = `No student record found matching code: '${queryId}'.`;
+                return;
+            }
+
+            checkLiveZoomSession(currentStudent);
+            renderStudentPage();
+            renderStudentFiles();
+            renderStudentCalendar();
+        });
+
+        function checkLiveZoomSession(student) {
+            const z = window.LMSCore.getZoomSession();
+            const banner = document.getElementById('stLiveZoomBanner');
+            const stGrade = (student.student_info.grade_class || '').toLowerCase();
+            const targetGrade = (z.grade || '').toLowerCase();
+
+            // Class-wise targeting filter
+            const isMatch = z.isLive && (targetGrade === 'all classes' || targetGrade.includes(stGrade) || stGrade.includes(targetGrade));
+
+            if (isMatch) {
+                banner.classList.remove('hidden');
+                document.getElementById('stZoomTitle').textContent = z.title;
+                document.getElementById('stZoomGrade').textContent = z.grade || "Class Session";
+                document.getElementById('stZoomPass').textContent = z.passcode || "SCIENCE2026";
+                document.getElementById('stJoinZoomBtn').href = z.meetingUrl;
+            } else {
+                banner.classList.add('hidden');
+            }
+        }
+
+        function switchStTab(tabKey) {
+            ['dash', 'files', 'cal'].forEach(t => {
+                const view = document.getElementById(`st-tab-${t}`);
+                const btn = document.getElementById(`st-tab-btn-${t}`);
+                if (t === tabKey) {
+                    view.classList.remove('hidden');
+                    btn.className = "pb-3 text-cyan-400 border-b-2 border-cyan-400 flex items-center gap-2 whitespace-nowrap";
+                } else {
+                    view.classList.add('hidden');
+                    btn.className = "pb-3 text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap";
+                }
+            });
+        }
+
+        function renderStudentPage() {
+            const info = currentStudent.student_info;
+            document.getElementById('stName').textContent = info.name;
+            document.getElementById('stId').textContent = info.student_id;
+            document.getElementById('stGrade').textContent = info.grade_class;
+            document.getElementById('stTeacher').textContent = info.homeroom_teacher;
+            document.getElementById('stAvatar').src = info.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${info.name}`;
+            document.getElementById('stAvg').textContent = currentStudent.summary.average_unit_test + ' / 100';
+            document.getElementById('stAttendance').textContent = currentStudent.summary.attendance || '95%';
+            document.getElementById('stStatus').textContent = currentStudent.summary.overall_status || 'Active Progress';
+            document.getElementById('stTeacherRemarks').textContent = currentStudent.teacher_notes || "Demonstrates strong understanding in weekly practicals and unit revision tests.";
+
+            renderMonthTabs();
+            selectMonth("January");
+            renderCharts();
+        }
+
+        function renderMonthTabs() {
+            const container = document.getElementById('monthTabsContainer');
+            container.innerHTML = '';
+
+            MONTHS.forEach(m => {
+                const btn = document.createElement('button');
+                btn.className = `px-3 py-1.5 text-xs font-bold rounded-lg border transition ${m === selectedMonth ? 'bg-amber-500 text-slate-950 border-amber-400' : 'bg-slate-900/80 text-slate-300 border-slate-700 hover:border-amber-400/50'}`;
+                btn.textContent = m.substring(0, 3).toUpperCase();
+                btn.addEventListener('click', () => selectMonth(m));
+                container.appendChild(btn);
+            });
+        }
+
+        function selectMonth(monthName) {
+            selectedMonth = monthName;
+            document.getElementById('selectedMonthLabel').textContent = monthName;
+            document.getElementById('tableMonthTitle').textContent = monthName;
+            renderMonthTabs();
+
+            const tbody = document.getElementById('stWeeklyTableBody');
+            tbody.innerHTML = '';
+
+            const monthData = (currentStudent.monthly_progress && currentStudent.monthly_progress[monthName]) ? currentStudent.monthly_progress[monthName] : [
+                { week: "1 week", master_guide_1: "Incomplete", master_guide_2: "Incomplete", past_paper: "Incomplete", practical: "Good", unit_test: 50 },
+                { week: "2 week", master_guide_1: "Incomplete", master_guide_2: "Incomplete", past_paper: "Incomplete", practical: "Good", unit_test: 50 },
+                { week: "3 week", master_guide_1: "Incomplete", master_guide_2: "Incomplete", past_paper: "Incomplete", practical: "Good", unit_test: 50 },
+                { week: "4 week", master_guide_1: "Incomplete", master_guide_2: "Incomplete", past_paper: "Incomplete", practical: "Good", unit_test: 50 }
+            ];
+
+            const getBadgeClass = (val) => {
+                const s = String(val).toLowerCase();
+                if (s.includes('complete') || s.includes('good') || s.includes('excellent')) return 'badge-completed';
+                if (s.includes('incomplete') || s.includes('bad') || s.includes('needs')) return 'badge-incomplete';
+                return 'badge-progress';
+            };
+
+            monthData.forEach((row, idx) => {
+                const tr = document.createElement('tr');
+                tr.className = idx % 2 === 0 ? 'bg-slate-900/40' : 'bg-slate-800/20';
+                tr.innerHTML = `
+                    <td class="px-5 py-3.5 font-bold text-cyan-400">${row.week}</td>
+                    <td class="px-5 py-3.5"><span class="px-3 py-1 rounded-full text-xs font-semibold ${getBadgeClass(row.master_guide_1)}">${row.master_guide_1}</span></td>
+                    <td class="px-5 py-3.5"><span class="px-3 py-1 rounded-full text-xs font-semibold ${getBadgeClass(row.master_guide_2)}">${row.master_guide_2}</span></td>
+                    <td class="px-5 py-3.5"><span class="px-3 py-1 rounded-full text-xs font-semibold ${getBadgeClass(row.past_paper)}">${row.past_paper}</span></td>
+                    <td class="px-5 py-3.5"><span class="px-3 py-1 rounded-full text-xs font-semibold ${getBadgeClass(row.practical)}">${row.practical}</span></td>
+                    <td class="px-5 py-3.5 font-bold text-emerald-400">${row.unit_test} / 100</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderStudentFiles() {
+            const files = window.LMSCore.getFiles();
+            const container = document.getElementById('stFilesContainer');
+            container.innerHTML = '';
+
+            files.forEach(f => {
+                const card = document.createElement('div');
+                card.className = "glass-panel p-6 space-y-4 hover:border-amber-400/50 transition";
+                card.innerHTML = `
+                    <div class="flex items-start justify-between">
+                        <div class="p-3 bg-amber-500/10 border border-amber-500/30 text-amber-300 rounded-2xl">
+                            <i class="fa-solid fa-file-pdf text-2xl"></i>
+                        </div>
+                        <span class="bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 text-[11px] font-bold px-2.5 py-1 rounded-full">${f.category}</span>
+                    </div>
+                    <div>
+                        <h4 class="font-extrabold text-slate-100 text-base font-cinzel">${f.title}</h4>
+                        <p class="text-xs text-slate-400 mt-1">${f.description}</p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-700/60 flex justify-between items-center text-xs">
+                        <span class="text-slate-400 font-mono">${f.fileSize} • ${f.uploadDate}</span>
+                        <a href="${f.fileUrl}" target="_blank" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold px-4 py-2 rounded-xl flex items-center gap-1.5 transition shadow-md">
+                            <i class="fa-solid fa-download text-xs"></i> Download
+                        </a>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderStudentCalendar() {
+            const events = window.LMSCore.getCalendarEvents();
+            const container = document.getElementById('stCalendarContainer');
+            container.innerHTML = '';
+
+            events.forEach(e => {
+                const card = document.createElement('div');
+                card.className = "glass-panel p-4 space-y-2 border-emerald-500/30";
+                card.innerHTML = `
+                    <div class="flex items-center space-x-2">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">${e.category}</span>
+                        <span class="text-xs font-mono text-cyan-300">${e.date} • ${e.time}</span>
+                    </div>
+                    <h4 class="font-bold text-slate-100 text-sm font-cinzel">${e.title}</h4>
+                    <p class="text-xs text-slate-400">${e.description}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderCharts() {
+            if (annualChart) annualChart.destroy();
+            if (termChart) termChart.destroy();
+            if (stPracticalPieChart) stPracticalPieChart.destroy();
+
+            // 1. Monthly Unit Test Line Chart
+            const monthlyAverages = MONTHS.map(m => {
+                const weeks = (currentStudent.monthly_progress && currentStudent.monthly_progress[m]) ? currentStudent.monthly_progress[m] : [];
+                if (weeks.length === 0) return 50;
+                const sum = weeks.reduce((a, b) => a + (typeof b.unit_test === 'number' ? b.unit_test : 0), 0);
+                return Math.round(sum / weeks.length);
+            });
+
+            annualChart = new Chart(document.getElementById('stAnnualTrendChart').getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: MONTHS.map(m => m.substring(0, 3)),
+                    datasets: [{
+                        label: 'Monthly Unit Test Average',
+                        data: monthlyAverages,
+                        borderColor: '#00d2ff',
+                        backgroundColor: 'rgba(0, 210, 255, 0.15)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.3,
+                        pointBackgroundColor: '#d4af37',
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { ticks: { color: '#94a3b8' } },
+                        y: { min: 0, max: 100, ticks: { color: '#94a3b8' } }
+                    }
+                }
+            });
+
+            // 2. Term Assessment Marks Bar Chart
+            termChart = new Chart(document.getElementById('stTermChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: (currentStudent.assessments || []).map(a => a.term),
+                    datasets: [{
+                        label: 'Score',
+                        data: (currentStudent.assessments || []).map(a => a.score),
+                        backgroundColor: ['rgba(79, 70, 229, 0.8)', 'rgba(14, 165, 233, 0.8)', 'rgba(212, 175, 55, 0.8)', 'rgba(16, 185, 129, 0.8)'],
+                        borderColor: ['#4f46e5', '#0ea5e9', '#d4af37', '#10b981'],
+                        borderWidth: 2,
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { ticks: { color: '#94a3b8' } },
+                        y: { min: 0, max: 100, ticks: { color: '#94a3b8' } }
+                    }
+                }
+            });
+
+            // 3. Practical Results Pie Chart
+            const pieCounts = window.LMSCore.getPracticalPieData(currentStudent);
+            stPracticalPieChart = new Chart(document.getElementById('stPracticalPieChart').getContext('2d'), {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(pieCounts),
+                    datasets: [{
+                        data: Object.values(pieCounts),
+                        backgroundColor: ['#10b981', '#0ea5e9', '#f59e0b', '#ef4444'],
+                        borderWidth: 2,
+                        borderColor: '#0f172a'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { color: '#cbd5e1', font: { size: 10 } } }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

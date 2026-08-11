@@ -1,0 +1,118 @@
+/* -------------------------------------------------------------
+ * Science with Sheshadi - Student Academic Portal Styles
+ * ------------------------------------------------------------- */
+
+:root {
+    --bg-dark: #0b131d;
+    --panel-bg: rgba(30, 46, 66, 0.75);
+    --border-color: rgba(74, 117, 156, 0.35);
+    --cyan-glow: #00d2ff;
+    --gold-accent: #d4af37;
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+}
+
+body {
+    font-family: 'Rajdhani', 'Plus Jakarta Sans', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    background-image: 
+        radial-gradient(circle at 50% 0%, rgba(0, 210, 255, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+        linear-gradient(to bottom, #0d1622 0%, #080d15 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+/* Glassmorphism Cards */
+.glass-panel {
+    background: var(--panel-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    border-radius: 1rem;
+}
+
+.glass-panel-glow {
+    border: 1px solid rgba(0, 210, 255, 0.4);
+    box-shadow: 0 0 25px rgba(0, 210, 255, 0.15);
+}
+
+/* Student Tab Button Styling */
+.student-tab-btn {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-bottom: 3px solid transparent;
+}
+
+.student-tab-btn:hover {
+    color: var(--cyan-glow);
+    background: rgba(0, 210, 255, 0.08);
+}
+
+.student-tab-btn.active {
+    color: var(--cyan-glow);
+    border-bottom-color: var(--cyan-glow);
+    background: rgba(0, 210, 255, 0.15);
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(0, 210, 255, 0.2);
+}
+
+/* Status Badges */
+.badge-completed {
+    background: rgba(16, 185, 129, 0.2);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.badge-incomplete {
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.badge-progress {
+    background: rgba(245, 158, 11, 0.2);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #080d15;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #1e2e42;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--cyan-glow);
+}
+
+/* Print Stylesheet for Report Cards */
+@media print {
+    body {
+        background: white !important;
+        color: black !important;
+    }
+    .no-print {
+        display: none !important;
+    }
+    .glass-panel {
+        background: white !important;
+        color: black !important;
+        border: 1px solid #ccc !important;
+        box-shadow: none !important;
+    }
+    .text-slate-100, .text-slate-300, .text-slate-400 {
+        color: #111 !important;
+    }
+}

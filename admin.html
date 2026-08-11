@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educator Management Portal - Science with Sheshadi LMS</title>
+
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+
+    <script>
+        if (sessionStorage.getItem('admin_authenticated') !== 'true') {
+            window.location.href = 'admin_login.html';
+        }
+
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        rajdhani: ['Rajdhani', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="antialiased text-slate-100 min-h-screen flex flex-col justify-between">
+
+    <!-- Header Navigation -->
+    <header class="bg-slate-900/90 border-b border-slate-700 sticky top-0 z-50 backdrop-blur-md no-print">
+        <div class="max-w-7xl mx-auto px-4 flex justify-between items-center h-20">
+            <div class="flex items-center space-x-3">
+                <img src="assets/images/logo.png" alt="Logo" class="h-12 w-12 object-contain rounded-xl border border-amber-500/30 p-1 bg-slate-950">
+                <div>
+                    <h1 class="text-xl font-bold font-cinzel text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-500 branding-academy-name">
+                        SCIENCE with SHESHADI
+                    </h1>
+                    <p class="text-xs text-amber-400 font-rajdhani tracking-widest uppercase">Educator LMS Management Hub</p>
+                </div>
+            </div>
+
+            <!-- Action Controls -->
+            <div class="flex items-center space-x-3">
+                <button onclick="toggleRegisterModal()" class="bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 px-3.5 py-2 rounded-xl text-xs font-extrabold flex items-center space-x-1.5 shadow-md">
+                    <i class="fa-solid fa-user-plus"></i>
+                    <span>Register New Student</span>
+                </button>
+
+                <button id="syncSheetsBtn" class="bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-cyan-500/40 px-3 py-2 rounded-xl text-xs font-semibold flex items-center space-x-1.5 transition">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    <span class="hidden sm:inline">Sync Sheets</span>
+                </button>
+
+                <label class="bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 px-3 py-2 rounded-xl text-xs font-semibold cursor-pointer flex items-center space-x-1.5 transition">
+                    <i class="fa-solid fa-file-excel"></i>
+                    <span class="hidden sm:inline">Upload Excel</span>
+                    <input type="file" id="excelFileInput" accept=".xlsx, .xls" class="hidden">
+                </label>
+
+                <button id="logoutBtn" class="bg-red-500/20 hover:bg-red-500/30 text-red-300 border border-red-500/40 px-3 py-2 rounded-xl text-xs font-bold flex items-center space-x-1.5 transition">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full space-y-8">
+
+        <!-- Top Teacher & Class-Wise Zoom Launcher Banner -->
+        <section class="glass-panel p-6 sm:p-8 relative overflow-hidden">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+                
+                <!-- Teacher Profile Info -->
+                <div class="flex items-center space-x-5 md:col-span-2">
+                    <img src="assets/images/teacher.png" alt="Mrs. Sheshadi Sathsarani" class="w-24 h-28 object-cover rounded-2xl border-2 border-amber-500/50 shadow-xl">
+                    <div class="space-y-1">
+                        <span class="px-3 py-1 bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold rounded-full uppercase tracking-wider">
+                            Administrator & Head Educator
+                        </span>
+                        <h2 class="text-2xl sm:text-3xl font-bold font-cinzel text-slate-100 branding-teacher-name">Mrs. Sheshadi Sathsarani</h2>
+                        <p class="text-xs text-slate-300 branding-announcement">
+                            Manage student registration, account creation, photo uploads, weekly progress tables, term test marks, and Zoom live keys.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Zoom Meeting Launcher Box -->
+                <div class="bg-slate-900/90 border border-cyan-500/40 p-5 rounded-2xl space-y-3 shadow-lg no-print">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold uppercase text-cyan-300 tracking-wider">
+                            <i class="fa-solid fa-video mr-1 text-cyan-400"></i> Zoom Classroom
+                        </span>
+                        <span id="zoomLiveBadge" class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 animate-pulse">
+                            LIVE NOW
+                        </span>
+                    </div>
+
+                    <div class="text-xs text-slate-300 space-y-1">
+                        <p id="zoomSessionTitleDisplay" class="font-bold text-slate-100 truncate">Grade 06 Science - Live Class</p>
+                        <p class="text-[11px] text-slate-400 font-mono">Target Class: <span id="zoomTargetGradeDisplay" class="text-amber-300 font-bold">06 - Science</span></p>
+                        <p class="text-[11px] text-slate-400 font-mono">Meeting Key/Passcode: <span id="zoomPasscodeDisplay" class="text-cyan-300">SCIENCE2026</span></p>
+                    </div>
+
+                    <div class="flex items-center space-x-2 pt-1">
+                        <button id="launchZoomBtn" class="flex-grow bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-slate-950 font-extrabold py-2.5 rounded-xl text-xs flex items-center justify-center space-x-2 shadow-md transition">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span id="zoomBtnText">Broadcast Class Zoom Key</span>
+                        </button>
+                        
+                        <button id="editZoomModalBtn" class="p-2.5 bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-slate-700 rounded-xl text-xs" title="Edit Zoom Meeting Settings">
+                            <i class="fa-solid fa-gear"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Main Navigation Tabs Bar -->
+        <div class="border-b border-slate-700 no-print">
+            <nav class="flex space-x-6 text-sm font-semibold overflow-x-auto pb-1" aria-label="LMS Admin Navigation">
+                <button id="nav-tab-students" onclick="switchAdminTab('students')" class="pb-3 text-amber-400 border-b-2 border-amber-400 flex items-center gap-2 whitespace-nowrap">
+                    <i class="fa-solid fa-users-gear"></i> Student Evaluation & Weekly Tables
+                </button>
+                <button id="nav-tab-files" onclick="switchAdminTab('files')" class="pb-3 text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
+                    <i class="fa-solid fa-folder-open text-cyan-400"></i> File Sharing & Study Materials
+                </button>
+                <button id="nav-tab-calendar" onclick="switchAdminTab('calendar')" class="pb-3 text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
+                    <i class="fa-solid fa-calendar-days text-emerald-400"></i> Academic Calendar & Schedule
+                </button>
+                <button id="nav-tab-custom" onclick="switchAdminTab('custom')" class="pb-3 text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
+                    <i class="fa-solid fa-sliders text-purple-400"></i> LMS Customization Studio
+                </button>
+            </nav>
+        </div>
+
+        <!-- VIEW 1: STUDENT EVALUATION & WEEKLY TABLES -->
+        <div id="view-students" class="space-y-8">
+
+            <!-- Search & Student Tabs Navigation + Register Button -->
+            <section class="space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 no-print">
+                    <div class="relative flex-grow max-w-md">
+                        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                        <input type="text" id="adminSearchInput" placeholder="Search student name, ID or tab..." class="w-full bg-slate-900 border border-slate-700 rounded-xl pl-11 pr-4 py-2.5 text-sm focus:outline-none focus:border-amber-400 text-slate-100">
+                    </div>
+                    
+                    <button onclick="toggleRegisterModal()" class="bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-extrabold px-4 py-2.5 rounded-xl text-xs flex items-center space-x-2 shadow-lg">
+                        <i class="fa-solid fa-user-plus"></i>
+                        <span>Register / Create Student Account</span>
+                    </button>
+                </div>
+
+                <div class="border-b border-slate-700/80 overflow-x-auto no-print">
+                    <div id="adminStudentTabsContainer" class="flex space-x-2 min-w-max pb-1">
+                        <!-- Student Tabs rendered by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Selected Student Profile View -->
+            <section class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- Left Column: Student Details + Practical Pie Chart + Photo & Remarks -->
+                <div class="lg:col-span-1 glass-panel p-6 space-y-6">
+                    <div class="flex items-center space-x-4 pb-6 border-b border-slate-700">
+                        <img id="adminStAvatar" src="" alt="Student Avatar" class="w-20 h-20 rounded-2xl border-2 border-amber-400/50 bg-slate-900 p-1 shadow-md object-cover">
+                        <div>
+                            <h3 id="adminStName" class="text-2xl font-bold font-cinzel text-amber-300">Loading...</h3>
+                            <p class="text-xs font-mono text-cyan-400">ID: <span id="adminStId">...</span></p>
+                            <p class="text-[11px] font-mono text-slate-400">User: <span id="adminStUsername">...</span></p>
+                            <div class="mt-2 inline-block px-3 py-0.5 bg-slate-800 border border-slate-600 rounded-full text-xs text-slate-300 font-semibold">
+                                <i class="fa-solid fa-chalkboard-user mr-1 text-amber-400"></i><span id="adminStGrade">06 - Science</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Practical Results Breakdown Pie Chart -->
+                    <div class="bg-slate-900/90 border border-emerald-500/30 p-5 rounded-2xl space-y-3">
+                        <h4 class="text-xs font-bold font-cinzel text-emerald-300 uppercase tracking-wider flex items-center justify-between">
+                            <span><i class="fa-solid fa-chart-pie mr-1.5 text-emerald-400"></i>Practical Results Breakdown</span>
+                            <span class="text-[10px] text-slate-400 font-mono">Pie Chart</span>
+                        </h4>
+                        <div class="h-48 relative flex items-center justify-center">
+                            <canvas id="adminPracticalPieChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Academic Stats & Remarks -->
+                    <div class="space-y-4 text-sm">
+                        <div class="flex justify-between items-center text-slate-300">
+                            <span class="text-slate-400">Annual Unit Test Avg</span>
+                            <span id="adminStAvg" class="font-bold text-amber-300">0.0 / 100</span>
+                        </div>
+                        <div class="flex justify-between items-center text-slate-300">
+                            <span class="text-slate-400">Class Attendance</span>
+                            <span id="adminStAttendance" class="font-semibold text-emerald-400">95%</span>
+                        </div>
+
+                        <!-- QR Code Link Preview -->
+                        <div class="pt-2 border-t border-slate-700/70 text-center">
+                            <div id="qrcodeBox" class="bg-white p-2 rounded-xl inline-block shadow-md mx-auto mb-2"></div>
+                            <p id="qrUrlText" class="text-[10px] font-mono text-cyan-300 break-all px-2 py-1 bg-slate-950 rounded-lg">student.html?id=...</p>
+                        </div>
+
+                        <div class="pt-2 border-t border-slate-700/70 space-y-2">
+                            <label class="block text-xs font-bold text-slate-300">Teacher Remarks:</label>
+                            <textarea id="adminStRemarks" rows="2" placeholder="Enter feedback for student..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-slate-100 focus:outline-none focus:border-amber-400"></textarea>
+                            <button id="saveRemarksBtn" class="w-full bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 py-2 rounded-xl text-xs font-bold transition">
+                                <i class="fa-solid fa-floppy-disk mr-1"></i> Save Teacher Remarks
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Month Selector, Weekly Table & Term Test Marks -->
+                <div class="lg:col-span-2 space-y-8">
+                    
+                    <!-- Month Selector Bar -->
+                    <div class="glass-panel p-4 space-y-3 no-print">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold uppercase text-amber-400 tracking-wider"><i class="fa-solid fa-calendar-days mr-1"></i> Select Academic Month (Jan - Dec):</span>
+                            <span id="adminMonthLabel" class="text-xs font-bold text-cyan-300 uppercase">January</span>
+                        </div>
+                        <div id="adminMonthTabsContainer" class="flex flex-wrap gap-2 pt-1">
+                            <!-- 12 Month Buttons -->
+                        </div>
+                    </div>
+
+                    <!-- Weekly Progress Table with Dropdowns -->
+                    <div class="glass-panel p-6 space-y-4">
+                        <div class="flex items-center justify-between pb-2 border-b border-slate-700">
+                            <div>
+                                <h4 class="text-lg font-bold font-cinzel text-slate-100"><span id="adminTableMonthTitle">January</span> Weekly Table Controls</h4>
+                                <p class="text-xs text-slate-400">Select guidebook completion, past paper status, practical rating & unit test score</p>
+                            </div>
+                            <button id="saveWeeklyTableBtn" class="bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-slate-950 font-extrabold px-4 py-2 rounded-xl text-xs flex items-center space-x-1.5 shadow-md">
+                                <i class="fa-solid fa-floppy-disk"></i>
+                                <span>Save Weekly Table</span>
+                            </button>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-sm text-slate-300">
+                                <thead class="bg-slate-900/90 text-slate-300 font-semibold uppercase text-xs border-b border-slate-700">
+                                    <tr>
+                                        <th class="px-4 py-3">Week</th>
+                                        <th class="px-4 py-3">Guidebook 1</th>
+                                        <th class="px-4 py-3">Guidebook 2</th>
+                                        <th class="px-4 py-3">Past Paper</th>
+                                        <th class="px-4 py-3">Practical Rating</th>
+                                        <th class="px-4 py-3">Unit Test Score</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="adminWeeklyTableBody" class="divide-y divide-slate-800">
+                                    <!-- Dynamic Rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Term Test Marks Management -->
+                    <div class="glass-panel p-6 space-y-4 border-amber-500/30">
+                        <div class="flex items-center justify-between pb-2 border-b border-slate-700">
+                            <div>
+                                <h4 class="text-lg font-bold font-cinzel text-amber-300"><i class="fa-solid fa-award mr-2"></i>Term Test Marks Management</h4>
+                                <p class="text-xs text-slate-400">Add or edit Term 1, Term 2, and Final Examination marks.</p>
+                            </div>
+                            <button id="saveTermMarksBtn" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold px-4 py-2 rounded-xl text-xs flex items-center space-x-1.5 shadow-md">
+                                <i class="fa-solid fa-floppy-disk"></i>
+                                <span>Save Term Test Marks</span>
+                            </button>
+                        </div>
+
+                        <div id="termMarksContainer" class="space-y-3">
+                            <!-- Dynamic Term Rows -->
+                        </div>
+
+                        <div class="pt-3 border-t border-slate-800 flex items-center space-x-3">
+                            <input type="text" id="newTermNameInput" placeholder="e.g. Term 3 Examination" class="bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 flex-grow focus:border-amber-400">
+                            <input type="number" id="newTermScoreInput" min="0" max="100" placeholder="Score (0-100)" class="bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 w-32 focus:border-amber-400 font-bold">
+                            <button id="addTermExamBtn" class="bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/40 px-3.5 py-2 rounded-xl text-xs font-bold flex items-center space-x-1">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>Add Term Test</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Charts Row -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="glass-panel p-5 space-y-3">
+                            <h5 class="text-sm font-bold text-slate-200 font-cinzel"><i class="fa-solid fa-chart-line text-cyan-400 mr-2"></i>12-Month Unit Test Trend</h5>
+                            <div class="h-56 relative">
+                                <canvas id="adminAnnualTrendChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="glass-panel p-5 space-y-3">
+                            <h5 class="text-sm font-bold text-slate-200 font-cinzel"><i class="fa-solid fa-chart-column text-amber-400 mr-2"></i>Term Assessment Marks</h5>
+                            <div class="h-56 relative">
+                                <canvas id="adminTermChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+
+        <!-- VIEW 2: FILE SHARING & STUDY MATERIALS -->
+        <div id="view-files" class="hidden space-y-8">
+            <div class="glass-panel p-6 space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-slate-700">
+                    <div>
+                        <h3 class="text-xl font-bold font-cinzel text-slate-100">Study Materials & Shared Files</h3>
+                        <p class="text-xs text-slate-400">Share PDF guidebooks, past paper sets, and lab worksheets directly with students.</p>
+                    </div>
+                    <button onclick="toggleUploadFileForm()" class="bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-slate-950 font-bold px-4 py-2.5 rounded-xl text-xs flex items-center space-x-2 shadow-md">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <span>Upload / Share New File</span>
+                    </button>
+                </div>
+
+                <!-- Upload File Form -->
+                <form id="uploadFileForm" class="hidden bg-slate-900/90 border border-amber-500/30 p-6 rounded-2xl space-y-4">
+                    <h4 class="text-sm font-bold text-amber-300 font-cinzel uppercase"><i class="fa-solid fa-file-circle-plus mr-2"></i>Share New Study Material</h4>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Document Title</label>
+                            <input type="text" id="fileTitleInput" required placeholder="e.g. Grade 06 Science Master Guide 03" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-amber-400">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Material Category</label>
+                            <select id="fileCategoryInput" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-amber-400">
+                                <option value="Master Guide">Master Guidebook</option>
+                                <option value="Past Papers">Past Paper / Model Paper</option>
+                                <option value="Lab Manual">Practical Lab Manual</option>
+                                <option value="Revision Notes">Short Notes & Diagrams</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Target Grade / Subject</label>
+                            <select id="fileGradeInput" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-amber-400">
+                                <option value="06 - Science">06 - Science</option>
+                                <option value="07 - Science">07 - Science</option>
+                                <option value="08 - Science">08 - Science</option>
+                                <option value="O/L Revision">O/L Revision</option>
+                                <option value="All Classes">All Classes</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">File URL / Download Link</label>
+                            <input type="url" id="fileUrlInput" required placeholder="https://drive.google.com/... or PDF link" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-amber-400">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">Description & Instructions</label>
+                        <textarea id="fileDescInput" rows="2" placeholder="Brief summary of what this document contains..." class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs text-slate-100 focus:outline-none focus:border-amber-400"></textarea>
+                    </div>
+
+                    <div class="flex justify-end space-x-3 pt-2">
+                        <button type="button" onclick="toggleUploadFileForm()" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-xs font-semibold">Cancel</button>
+                        <button type="submit" class="px-5 py-2 bg-amber-500 text-slate-950 font-bold rounded-xl text-xs shadow-md">Publish File to LMS</button>
+                    </div>
+                </form>
+
+                <!-- Files Table -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs sm:text-sm text-slate-300">
+                        <thead class="bg-slate-900/90 text-slate-300 font-semibold uppercase text-xs border-b border-slate-700">
+                            <tr>
+                                <th class="px-5 py-3">Document Title</th>
+                                <th class="px-5 py-3">Category</th>
+                                <th class="px-5 py-3">Target Grade</th>
+                                <th class="px-5 py-3">Upload Date</th>
+                                <th class="px-5 py-3">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminFilesTableBody" class="divide-y divide-slate-800">
+                            <!-- Dynamic Rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 3: ACADEMIC CALENDAR & SCHEDULE -->
+        <div id="view-calendar" class="hidden space-y-8">
+            <div class="glass-panel p-6 space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-slate-700">
+                    <div>
+                        <h3 class="text-xl font-bold font-cinzel text-slate-100">Academic Calendar & Events</h3>
+                        <p class="text-xs text-slate-400">Schedule evaluation dates, assignment deadlines, practical labs, and live classes.</p>
+                    </div>
+                    <button onclick="toggleAddEventForm()" class="bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-slate-950 font-bold px-4 py-2.5 rounded-xl text-xs flex items-center space-x-2 shadow-md">
+                        <i class="fa-solid fa-calendar-plus"></i>
+                        <span>Add New Academic Event</span>
+                    </button>
+                </div>
+
+                <!-- Add Event Form -->
+                <form id="addEventForm" class="hidden bg-slate-900/90 border border-emerald-500/30 p-6 rounded-2xl space-y-4">
+                    <h4 class="text-sm font-bold text-emerald-300 font-cinzel uppercase"><i class="fa-solid fa-calendar-check mr-2"></i>New Calendar Entry</h4>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Event Title</label>
+                            <input type="text" id="evtTitleInput" required placeholder="e.g. Term 2 Examination" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-400">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Date</label>
+                            <input type="date" id="evtDateInput" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-400">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Time</label>
+                            <input type="text" id="evtTimeInput" required placeholder="e.g. 08:30 AM - 10:30 AM" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-400">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Category</label>
+                            <select id="evtCategoryInput" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-400">
+                                <option value="Exam">Term Exam</option>
+                                <option value="Class">Live Class</option>
+                                <option value="Deadline">Submission Deadline</option>
+                                <option value="Practical">Practical Demonstration</option>
+                                <option value="Holiday">Academy Holiday</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Target Grade</label>
+                            <select id="evtGradeInput" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-400">
+                                <option value="06 - Science">06 - Science</option>
+                                <option value="07 - Science">07 - Science</option>
+                                <option value="All Classes">All Classes</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Short Description</label>
+                            <input type="text" id="evtDescInput" placeholder="Brief detail about this event..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-400">
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end space-x-3 pt-2">
+                        <button type="button" onclick="toggleAddEventForm()" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-xs font-semibold">Cancel</button>
+                        <button type="submit" class="px-5 py-2 bg-emerald-500 text-slate-950 font-bold rounded-xl text-xs shadow-md">Add to Calendar</button>
+                    </div>
+                </form>
+
+                <!-- Calendar Events List -->
+                <div id="adminCalendarList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Dynamic Event Cards -->
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 4: LMS CUSTOMIZATION STUDIO -->
+        <div id="view-custom" class="hidden space-y-8">
+            <div class="glass-panel p-6 space-y-6">
+                <div class="pb-4 border-b border-slate-700">
+                    <h3 class="text-xl font-bold font-cinzel text-slate-100">LMS Customization Studio</h3>
+                    <p class="text-xs text-slate-400">Personalize academy branding, educator profile, custom announcement banners, and color themes.</p>
+                </div>
+
+                <form id="customizationForm" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1">Academy / Institute Name</label>
+                            <input type="text" id="custAcademyName" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-slate-100 focus:outline-none focus:border-purple-400">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1">Portal Subtitle / Tagline</label>
+                            <input type="text" id="custTagline" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-slate-100 focus:outline-none focus:border-purple-400">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1">Head Educator Name</label>
+                            <input type="text" id="custTeacherName" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-slate-100 focus:outline-none focus:border-purple-400">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1">Educator Designation</label>
+                            <input type="text" id="custTeacherTitle" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-slate-100 focus:outline-none focus:border-purple-400">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 mb-1">Student Portal Banner Announcement</label>
+                        <textarea id="custAnnouncement" rows="3" required class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-slate-100 focus:outline-none focus:border-purple-400"></textarea>
+                    </div>
+
+                    <div class="flex justify-end pt-4 border-t border-slate-800">
+                        <button type="submit" class="bg-gradient-to-r from-purple-600 to-indigo-500 hover:from-purple-500 hover:to-indigo-400 text-white font-bold px-6 py-3 rounded-xl text-xs uppercase tracking-wider shadow-lg shadow-purple-600/30 transition">
+                            <i class="fa-solid fa-wand-magic-sparkles mr-1.5"></i> Save & Apply Customization
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Student Registration Modal (with Photo Upload & Credentials) -->
+    <div id="registerModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="glass-panel p-6 sm:p-8 max-w-lg w-full space-y-5 border-amber-500/50 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center pb-3 border-b border-slate-700">
+                <h3 class="font-bold font-cinzel text-amber-300 text-lg flex items-center gap-2">
+                    <i class="fa-solid fa-user-plus text-amber-400"></i> Register New Student Account
+                </h3>
+                <button onclick="toggleRegisterModal()" class="text-slate-400 hover:text-slate-200"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+
+            <form id="studentRegistrationForm" class="space-y-4 text-xs">
+                
+                <!-- Student Photo Upload & Preview -->
+                <div class="flex items-center space-x-4 p-3 bg-slate-950 rounded-xl border border-slate-800">
+                    <img id="regPhotoPreview" src="https://api.dicebear.com/7.x/avataaars/svg?seed=NewStudent" alt="Preview" class="w-16 h-16 rounded-xl object-cover border-2 border-amber-400/60 bg-slate-900 p-0.5">
+                    <div class="flex-grow space-y-1">
+                        <label class="block font-bold text-slate-200">Upload Student Photo:</label>
+                        <input type="file" id="regPhotoInput" accept="image/*" class="text-slate-400 text-[11px] file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-[11px] file:font-semibold file:bg-amber-500/20 file:text-amber-300 hover:file:bg-amber-500/30">
+                        <p class="text-[10px] text-slate-500">Supports JPG, PNG, WEBP (stored in Student_Improvement_Tracker)</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-semibold text-slate-300 mb-1">Full Student Name *</label>
+                        <input type="text" id="regName" required placeholder="e.g. Samantha Perera" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-100 focus:border-amber-400">
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold text-slate-300 mb-1">Student Registration ID *</label>
+                        <input type="text" id="regStudentId" required placeholder="e.g. ST-90001" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-cyan-300 font-mono focus:border-amber-400">
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold text-slate-300 mb-1">Login Username / Email *</label>
+                        <input type="text" id="regUsername" required placeholder="e.g. samantha or st-90001" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-100 focus:border-amber-400">
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold text-slate-300 mb-1">Account Password *</label>
+                        <input type="password" id="regPassword" required placeholder="student123" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-100 focus:border-amber-400 font-mono">
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold text-slate-300 mb-1">Grade / Class *</label>
+                        <select id="regGrade" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-100 focus:border-amber-400">
+                            <option value="06 - Science">06 - Science</option>
+                            <option value="07 - Science">07 - Science</option>
+                            <option value="08 - Science">08 - Science</option>
+                            <option value="09 - Science">09 - Science</option>
+                            <option value="O/L Revision">O/L Revision</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold text-slate-300 mb-1">Homeroom Teacher</label>
+                        <input type="text" id="regTeacher" value="Mrs. Sheshadi Sathsarani" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-100 focus:border-amber-400">
+                    </div>
+                </div>
+
+                <div class="pt-2 flex justify-end space-x-2 border-t border-slate-800">
+                    <button type="button" onclick="toggleRegisterModal()" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl font-semibold">Cancel</button>
+                    <button type="submit" class="px-5 py-2 bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-extrabold rounded-xl shadow-lg flex items-center space-x-1.5">
+                        <i class="fa-solid fa-user-check"></i>
+                        <span>Register Student Account</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Zoom Settings Modal -->
+    <div id="zoomModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="glass-panel p-6 max-w-md w-full space-y-4 border-cyan-500/40">
+            <div class="flex justify-between items-center pb-3 border-b border-slate-700">
+                <h3 class="font-bold font-cinzel text-cyan-300 text-base"><i class="fa-solid fa-video mr-2"></i>Configure Class-Wise Zoom Key</h3>
+                <button onclick="closeZoomModal()" class="text-slate-400 hover:text-slate-200"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <form id="zoomConfigForm" class="space-y-3 text-xs">
+                <div>
+                    <label class="block text-slate-400 font-semibold mb-1">Target Class / Grade</label>
+                    <select id="modalZoomGrade" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-amber-300 font-bold focus:border-cyan-400">
+                        <option value="06 - Science">06 - Science</option>
+                        <option value="07 - Science">07 - Science</option>
+                        <option value="08 - Science">08 - Science</option>
+                        <option value="09 - Science">09 - Science</option>
+                        <option value="O/L Revision">O/L Revision</option>
+                        <option value="All Classes">All Classes</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-slate-400 font-semibold mb-1">Class Topic / Session Title</label>
+                    <input type="text" id="modalZoomTitle" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-100 focus:border-cyan-400">
+                </div>
+                <div>
+                    <label class="block text-slate-400 font-semibold mb-1">Zoom Meeting Join Link (URL)</label>
+                    <input type="url" id="modalZoomUrl" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-100 focus:border-cyan-400">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-slate-400 font-semibold mb-1">Meeting ID</label>
+                        <input type="text" id="modalZoomId" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-100 focus:border-cyan-400 font-mono">
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 font-semibold mb-1">Class Passcode / Key</label>
+                        <input type="text" id="modalZoomPass" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-100 focus:border-cyan-400 font-mono">
+                    </div>
+                </div>
+
+                <div class="pt-3 flex justify-end space-x-2">
+                    <button type="button" onclick="closeZoomModal()" class="px-3.5 py-2 bg-slate-800 text-slate-300 rounded-xl font-bold">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-cyan-500 text-slate-950 font-bold rounded-xl shadow-md">Broadcast Zoom Key</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-800 py-6 text-center text-xs text-slate-500 no-print">
+        <p>&copy; 2026 Sathsarani Science Academy. LMS Educator Management Portal.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/lms-core.js"></script>
+    <script src="assets/js/sheet-sync.js"></script>
+    <script src="assets/js/excel-parser.js"></script>
+    <script>
+        const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+        let allStudents = [];
+        let curIndex = 0;
+        let selectedMonth = "January";
+        let annualChart = null;
+        let termChart = null;
+        let practicalPieChart = null;
+        let uploadedPhotoBase64 = null;
+
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            sessionStorage.removeItem('admin_authenticated');
+            window.location.href = 'admin_login.html';
+        });
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (window.LMSCore) {
+                window.LMSCore.applyThemeAndBranding();
+                refreshZoomDisplay();
+                renderFilesList();
+                renderCalendarList();
+                loadCustomizationForm();
+            }
+
+            allStudents = await window.LMSCore.getStudents();
+            renderTabs();
+            selectAdminStudent(0);
+        });
+
+        // Registration Modal Toggle
+        function toggleRegisterModal() {
+            document.getElementById('registerModal').classList.toggle('hidden');
+        }
+
+        // Student Photo File Upload Reader
+        document.getElementById('regPhotoInput').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (evt) => {
+                uploadedPhotoBase64 = evt.target.result;
+                document.getElementById('regPhotoPreview').src = uploadedPhotoBase64;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        // Submit New Student Registration
+        document.getElementById('studentRegistrationForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('regName').value.trim();
+            const stId = document.getElementById('regStudentId').value.trim().toUpperCase();
+            const username = document.getElementById('regUsername').value.trim().toLowerCase();
+            const password = document.getElementById('regPassword').value.trim();
+            const grade = document.getElementById('regGrade').value;
+            const teacher = document.getElementById('regTeacher').value.trim();
+
+            const res = await window.LMSCore.registerStudent({
+                name: name,
+                student_id: stId,
+                username: username,
+                password: password,
+                grade_class: grade,
+                homeroom_teacher: teacher,
+                avatar: uploadedPhotoBase64 || `https://api.dicebear.com/7.x/avataaars/svg?seed=${name}`
+            });
+
+            allStudents = res.students;
+            toggleRegisterModal();
+            renderTabs();
+            selectAdminStudent(allStudents.length - 1);
+            alert(`Student account successfully created for ${name} (${stId})! Username: ${username} | Password: ${password}`);
+        });
+
+        // Tab Switching
+        function switchAdminTab(tabName) {
+            ['students', 'files', 'calendar', 'custom'].forEach(t => {
+                const view = document.getElementById(`view-${t}`);
+                const nav = document.getElementById(`nav-tab-${t}`);
+                if (t === tabName) {
+                    view.classList.remove('hidden');
+                    nav.className = "pb-3 text-amber-400 border-b-2 border-amber-400 flex items-center gap-2 whitespace-nowrap";
+                } else {
+                    view.classList.add('hidden');
+                    nav.className = "pb-3 text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap";
+                }
+            });
+        }
+
+        // --- ZOOM CLASS-WISE KEY MANAGEMENT ---
+        function refreshZoomDisplay() {
+            const z = window.LMSCore.getZoomSession();
+            document.getElementById('zoomSessionTitleDisplay').textContent = z.title;
+            document.getElementById('zoomTargetGradeDisplay').textContent = z.grade || "06 - Science";
+            document.getElementById('zoomPasscodeDisplay').textContent = z.passcode || "SCIENCE2026";
+            
+            const badge = document.getElementById('zoomLiveBadge');
+            const btnText = document.getElementById('zoomBtnText');
+
+            if (z.isLive) {
+                badge.className = "px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 animate-pulse";
+                badge.textContent = "LIVE NOW";
+                btnText.textContent = "Broadcast Class Zoom Key";
+            } else {
+                badge.className = "px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-slate-800 text-slate-400 border border-slate-700";
+                badge.textContent = "OFFLINE";
+                btnText.textContent = "Start Live Zoom Session";
+            }
+        }
+
+        document.getElementById('launchZoomBtn').addEventListener('click', () => {
+            const z = window.LMSCore.getZoomSession();
+            window.LMSCore.toggleZoomLive(true);
+            refreshZoomDisplay();
+            window.open(z.meetingUrl, '_blank');
+        });
+
+        document.getElementById('editZoomModalBtn').addEventListener('click', () => {
+            const z = window.LMSCore.getZoomSession();
+            document.getElementById('modalZoomTitle').value = z.title;
+            document.getElementById('modalZoomGrade').value = z.grade || "06 - Science";
+            document.getElementById('modalZoomUrl').value = z.meetingUrl;
+            document.getElementById('modalZoomId').value = z.meetingId;
+            document.getElementById('modalZoomPass').value = z.passcode;
+            document.getElementById('zoomModal').classList.remove('hidden');
+        });
+
+        function closeZoomModal() {
+            document.getElementById('zoomModal').classList.add('hidden');
+        }
+
+        document.getElementById('zoomConfigForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            window.LMSCore.saveZoomSession({
+                title: document.getElementById('modalZoomTitle').value.trim(),
+                grade: document.getElementById('modalZoomGrade').value,
+                meetingUrl: document.getElementById('modalZoomUrl').value.trim(),
+                meetingId: document.getElementById('modalZoomId').value.trim(),
+                passcode: document.getElementById('modalZoomPass').value.trim(),
+                isLive: true
+            });
+            closeZoomModal();
+            refreshZoomDisplay();
+            alert("Zoom Class-Wise Key updated and broadcasted to " + document.getElementById('modalZoomGrade').value + " students!");
+        });
+
+        // --- FILE SHARING ---
+        function toggleUploadFileForm() {
+            document.getElementById('uploadFileForm').classList.toggle('hidden');
+        }
+
+        function renderFilesList() {
+            const files = window.LMSCore.getFiles();
+            const tbody = document.getElementById('adminFilesTableBody');
+            tbody.innerHTML = '';
+
+            files.forEach(f => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-800/40 border-b border-slate-800";
+                tr.innerHTML = `
+                    <td class="px-5 py-3.5 font-bold text-slate-100">
+                        ${f.title}
+                        <p class="text-[11px] text-slate-400 font-normal">${f.description}</p>
+                    </td>
+                    <td class="px-5 py-3.5"><span class="px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">${f.category}</span></td>
+                    <td class="px-5 py-3.5 font-semibold text-cyan-300">${f.grade}</td>
+                    <td class="px-5 py-3.5 text-slate-400 font-mono">${f.uploadDate}</td>
+                    <td class="px-5 py-3.5 flex items-center space-x-3">
+                        <a href="${f.fileUrl}" target="_blank" class="text-cyan-400 hover:underline font-bold"><i class="fa-solid fa-download mr-1"></i>View</a>
+                        <button onclick="deleteSharedFile('${f.id}')" class="text-red-400 hover:text-red-300"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        document.getElementById('uploadFileForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            window.LMSCore.addFile({
+                title: document.getElementById('fileTitleInput').value.trim(),
+                category: document.getElementById('fileCategoryInput').value,
+                grade: document.getElementById('fileGradeInput').value,
+                fileUrl: document.getElementById('fileUrlInput').value.trim(),
+                description: document.getElementById('fileDescInput').value.trim() || "No additional notes.",
+                fileSize: "15.0 MB"
+            });
+            toggleUploadFileForm();
+            renderFilesList();
+            alert("New study file published to student portals!");
+        });
+
+        function deleteSharedFile(id) {
+            if (confirm("Are you sure you want to delete this file?")) {
+                window.LMSCore.deleteFile(id);
+                renderFilesList();
+            }
+        }
+
+        // --- ACADEMIC CALENDAR ---
+        function toggleAddEventForm() {
+            document.getElementById('addEventForm').classList.toggle('hidden');
+        }
+
+        function renderCalendarList() {
+            const events = window.LMSCore.getCalendarEvents();
+            const container = document.getElementById('adminCalendarList');
+            container.innerHTML = '';
+
+            events.forEach(e => {
+                const card = document.createElement('div');
+                card.className = "glass-panel p-4 space-y-2 border-emerald-500/30 flex justify-between items-start";
+                card.innerHTML = `
+                    <div class="space-y-1">
+                        <div class="flex items-center space-x-2">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">${e.category}</span>
+                            <span class="text-xs font-mono text-cyan-300">${e.date} • ${e.time}</span>
+                        </div>
+                        <h4 class="font-bold text-slate-100 text-sm font-cinzel">${e.title}</h4>
+                        <p class="text-xs text-slate-400">${e.description}</p>
+                    </div>
+                    <button onclick="deleteCalendarEvt('${e.id}')" class="text-red-400 hover:text-red-300 text-xs p-1"><i class="fa-solid fa-trash"></i></button>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        document.getElementById('addEventForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            window.LMSCore.addCalendarEvent({
+                title: document.getElementById('evtTitleInput').value.trim(),
+                date: document.getElementById('evtDateInput').value,
+                time: document.getElementById('evtTimeInput').value.trim(),
+                category: document.getElementById('evtCategoryInput').value,
+                grade: document.getElementById('evtGradeInput').value,
+                description: document.getElementById('evtDescInput').value.trim() || "Academic scheduled activity."
+            });
+            toggleAddEventForm();
+            renderCalendarList();
+            alert("New event added to LMS Academic Calendar!");
+        });
+
+        function deleteCalendarEvt(id) {
+            if (confirm("Delete this event from the academic calendar?")) {
+                window.LMSCore.deleteCalendarEvent(id);
+                renderCalendarList();
+            }
+        }
+
+        // --- LMS CUSTOMIZATION STUDIO ---
+        function loadCustomizationForm() {
+            const s = window.LMSCore.getSettings();
+            document.getElementById('custAcademyName').value = s.academyName;
+            document.getElementById('custTagline').value = s.tagline;
+            document.getElementById('custTeacherName').value = s.teacherName;
+            document.getElementById('custTeacherTitle').value = s.teacherTitle;
+            document.getElementById('custAnnouncement').value = s.announcement;
+        }
+
+        document.getElementById('customizationForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            window.LMSCore.saveSettings({
+                academyName: document.getElementById('custAcademyName').value.trim(),
+                tagline: document.getElementById('custTagline').value.trim(),
+                teacherName: document.getElementById('custTeacherName').value.trim(),
+                teacherTitle: document.getElementById('custTeacherTitle').value.trim(),
+                announcement: document.getElementById('custAnnouncement').value.trim()
+            });
+            window.LMSCore.applyThemeAndBranding();
+            alert("Customization settings updated successfully!");
+        });
+
+        // --- STUDENT EVALUATION & WEEKLY TABLES ---
+        function renderTabs(filtered = null) {
+            const container = document.getElementById('adminStudentTabsContainer');
+            container.innerHTML = '';
+            const list = filtered || allStudents;
+
+            list.forEach((st, idx) => {
+                const origIdx = allStudents.indexOf(st);
+                const btn = document.createElement('button');
+                btn.className = `student-tab-btn flex items-center space-x-2 px-5 py-3 text-sm font-semibold rounded-t-lg focus:outline-none ${origIdx === curIndex ? 'active text-amber-400' : 'text-slate-400'}`;
+                btn.innerHTML = `<i class="fa-solid fa-user-graduate text-xs"></i><span>${st.tab_name} (${st.student_info.name})</span>`;
+                btn.addEventListener('click', () => selectAdminStudent(origIdx));
+                container.appendChild(btn);
+            });
+        }
+
+        function renderMonthTabs() {
+            const container = document.getElementById('adminMonthTabsContainer');
+            container.innerHTML = '';
+
+            MONTHS.forEach(m => {
+                const btn = document.createElement('button');
+                btn.className = `px-3 py-1.5 text-xs font-bold rounded-lg border transition ${m === selectedMonth ? 'bg-amber-500 text-slate-950 border-amber-400' : 'bg-slate-900/80 text-slate-300 border-slate-700 hover:border-amber-400/50'}`;
+                btn.textContent = m.substring(0, 3).toUpperCase();
+                btn.addEventListener('click', () => selectAdminMonth(m));
+                container.appendChild(btn);
+            });
+        }
+
+        function selectAdminMonth(mName) {
+            selectedMonth = mName;
+            document.getElementById('adminMonthLabel').textContent = mName;
+            document.getElementById('adminTableMonthTitle').textContent = mName;
+            renderMonthTabs();
+
+            const st = allStudents[curIndex];
+            const tbody = document.getElementById('adminWeeklyTableBody');
+            tbody.innerHTML = '';
+
+            const mData = (st.monthly_progress && st.monthly_progress[mName]) ? st.monthly_progress[mName] : [
+                { week: "1 week", master_guide_1: "Incomplete", master_guide_2: "Incomplete", past_paper: "Incomplete", practical: "Good", unit_test: 50 },
+                { week: "2 week", master_guide_1: "Incomplete", master_guide_2: "Incomplete", past_paper: "Incomplete", practical: "Good", unit_test: 50 },
+                { week: "3 week", master_guide_1: "Incomplete", master_guide_2: "Incomplete", past_paper: "Incomplete", practical: "Good", unit_test: 50 },
+                { week: "4 week", master_guide_1: "Incomplete", master_guide_2: "Incomplete", past_paper: "Incomplete", practical: "Good", unit_test: 50 }
+            ];
+
+            const guideOpts = ["Completed", "Incomplete", "0.5 Done", "Pending"];
+            const prOpts = ["Excellent", "Good", "Needs Improvement", "Incomplete"];
+
+            mData.forEach((row, idx) => {
+                const tr = document.createElement('tr');
+                tr.className = idx % 2 === 0 ? 'bg-slate-900/40' : 'bg-slate-800/20';
+
+                const makeSelect = (opts, currentVal, attrName) => {
+                    let html = `<select data-week="${idx}" data-field="${attrName}" class="bg-slate-950 border border-slate-700 rounded px-2.5 py-1 text-xs text-slate-100 font-semibold focus:border-amber-400">`;
+                    opts.forEach(o => {
+                        const sel = (String(currentVal).toLowerCase() === o.toLowerCase() || (o === 'Completed' && String(currentVal).toLowerCase().includes('complete'))) ? 'selected' : '';
+                        html += `<option value="${o}" ${sel}>${o}</option>`;
+                    });
+                    html += `</select>`;
+                    return html;
+                };
+
+                tr.innerHTML = `
+                    <td class="px-4 py-3 font-bold text-cyan-400">${row.week}</td>
+                    <td class="px-4 py-3">${makeSelect(guideOpts, row.master_guide_1, 'master_guide_1')}</td>
+                    <td class="px-4 py-3">${makeSelect(guideOpts, row.master_guide_2, 'master_guide_2')}</td>
+                    <td class="px-4 py-3">${makeSelect(guideOpts, row.past_paper, 'past_paper')}</td>
+                    <td class="px-4 py-3">${makeSelect(prOpts, row.practical, 'practical')}</td>
+                    <td class="px-4 py-3"><input type="number" data-week="${idx}" data-field="unit_test" value="${row.unit_test}" min="0" max="100" class="bg-slate-950 border border-amber-500/50 rounded px-2.5 py-1 text-xs w-20 text-emerald-400 font-bold"> / 100</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Save Weekly Table Changes
+        document.getElementById('saveWeeklyTableBtn').addEventListener('click', async () => {
+            const st = allStudents[curIndex];
+            const tbody = document.getElementById('adminWeeklyTableBody');
+            const rows = tbody.querySelectorAll('tr');
+
+            const newWeeklyData = [];
+            rows.forEach((tr, wIdx) => {
+                const mg1 = tr.querySelector('[data-field="master_guide_1"]').value;
+                const mg2 = tr.querySelector('[data-field="master_guide_2"]').value;
+                const pp = tr.querySelector('[data-field="past_paper"]').value;
+                const pr = tr.querySelector('[data-field="practical"]').value;
+                const ut = parseInt(tr.querySelector('[data-field="unit_test"]').value) || 0;
+
+                newWeeklyData.push({
+                    week: `${wIdx + 1} week`,
+                    master_guide_1: mg1,
+                    master_guide_2: mg2,
+                    past_paper: pp,
+                    practical: pr,
+                    unit_test: ut
+                });
+            });
+
+            allStudents = await window.LMSCore.saveStudentWeeklyTable(st.student_info.student_id, selectedMonth, newWeeklyData);
+            selectAdminStudent(curIndex);
+            alert(`Weekly table saved for ${st.student_info.name} (${selectedMonth})!`);
+        });
+
+        // --- TERM TEST MARKS MANAGEMENT ---
+        function renderTermMarksList(st) {
+            const container = document.getElementById('termMarksContainer');
+            container.innerHTML = '';
+
+            const list = st.assessments || [
+                { term: "Term 1 Exam", score: 80 },
+                { term: "Term 2 Exam", score: 68 },
+                { term: "Final Exam", score: 100 }
+            ];
+
+            list.forEach((item, idx) => {
+                const row = document.createElement('div');
+                row.className = "flex items-center space-x-3 bg-slate-950 p-2.5 rounded-xl border border-slate-800";
+                row.innerHTML = `
+                    <input type="text" value="${item.term}" data-term-idx="${idx}" class="term-name-input bg-slate-900 border border-slate-700 rounded-lg px-3 py-1 text-xs text-slate-100 flex-grow font-bold focus:border-amber-400">
+                    <input type="number" min="0" max="100" value="${item.score}" data-term-idx="${idx}" class="term-score-input bg-slate-900 border border-amber-500/50 rounded-lg px-3 py-1 text-xs text-emerald-400 font-extrabold w-28 focus:border-amber-400">
+                    <button onclick="removeTermExam(${idx})" class="text-red-400 hover:text-red-300 p-1"><i class="fa-solid fa-trash text-xs"></i></button>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        document.getElementById('addTermExamBtn').addEventListener('click', () => {
+            const nameInput = document.getElementById('newTermNameInput');
+            const scoreInput = document.getElementById('newTermScoreInput');
+            const tName = nameInput.value.trim();
+            const tScore = parseInt(scoreInput.value) || 0;
+
+            if (!tName) {
+                alert("Please enter a Term Exam name (e.g. Term 3 Exam).");
+                return;
+            }
+
+            const st = allStudents[curIndex];
+            if (!st.assessments) st.assessments = [];
+            st.assessments.push({ term: tName, score: tScore });
+            
+            nameInput.value = '';
+            scoreInput.value = '';
+            renderTermMarksList(st);
+            renderCharts(st);
+        });
+
+        async function removeTermExam(idx) {
+            const st = allStudents[curIndex];
+            if (st.assessments && st.assessments[idx]) {
+                st.assessments.splice(idx, 1);
+                allStudents = await window.LMSCore.saveStudentTermMarks(st.student_info.student_id, st.assessments);
+                selectAdminStudent(curIndex);
+            }
+        }
+
+        document.getElementById('saveTermMarksBtn').addEventListener('click', async () => {
+            const st = allStudents[curIndex];
+            const nameInputs = document.querySelectorAll('.term-name-input');
+            const scoreInputs = document.querySelectorAll('.term-score-input');
+
+            const updatedTerms = [];
+            nameInputs.forEach((inp, idx) => {
+                const tName = inp.value.trim();
+                const tScore = parseInt(scoreInputs[idx].value) || 0;
+                if (tName) updatedTerms.push({ term: tName, score: tScore });
+            });
+
+            allStudents = await window.LMSCore.saveStudentTermMarks(st.student_info.student_id, updatedTerms);
+            selectAdminStudent(curIndex);
+            alert(`Term Test Marks updated for ${st.student_info.name}!`);
+        });
+
+        function selectAdminStudent(idx) {
+            if (!allStudents[idx]) return;
+            curIndex = idx;
+            const st = allStudents[idx];
+
+            renderTabs();
+
+            document.getElementById('adminStName').textContent = st.student_info.name;
+            document.getElementById('adminStId').textContent = st.student_info.student_id;
+            document.getElementById('adminStUsername').textContent = st.student_info.username || st.student_info.student_id.toLowerCase();
+            document.getElementById('adminStGrade').textContent = st.student_info.grade_class;
+            document.getElementById('adminStAvatar').src = st.student_info.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${st.student_info.name}`;
+            document.getElementById('adminStAvg').textContent = st.summary.average_unit_test + ' / 100';
+            document.getElementById('adminStAttendance').textContent = st.summary.attendance || '95%';
+            document.getElementById('adminStRemarks').value = st.teacher_notes || "Demonstrates strong understanding in weekly practicals.";
+
+            // QR Code
+            const currentOrigin = window.location.origin + window.location.pathname.replace('admin.html', '');
+            const targetUrl = `${currentOrigin}student.html?id=${st.student_info.student_id}`;
+
+            document.getElementById('qrUrlText').textContent = `student.html?id=${st.student_info.student_id}`;
+
+            const qrBox = document.getElementById('qrcodeBox');
+            qrBox.innerHTML = '';
+            new QRCode(qrBox, { text: targetUrl, width: 90, height: 90, colorDark: "#0f172a", colorLight: "#ffffff" });
+
+            renderMonthTabs();
+            selectAdminMonth("January");
+            renderTermMarksList(st);
+            renderCharts(st);
+        }
+
+        document.getElementById('saveRemarksBtn').addEventListener('click', () => {
+            const st = allStudents[curIndex];
+            st.teacher_notes = document.getElementById('adminStRemarks').value.trim();
+            window.LMSCore.saveStudents(allStudents);
+            alert(`Teacher remarks saved for ${st.student_info.name}!`);
+        });
+
+        function renderCharts(st) {
+            if (annualChart) annualChart.destroy();
+            if (termChart) termChart.destroy();
+            if (practicalPieChart) practicalPieChart.destroy();
+
+            // 1. Monthly Unit Test Line Chart
+            const monthlyAverages = MONTHS.map(m => {
+                const weeks = (st.monthly_progress && st.monthly_progress[m]) ? st.monthly_progress[m] : [];
+                if (weeks.length === 0) return 50;
+                const sum = weeks.reduce((a, b) => a + (typeof b.unit_test === 'number' ? b.unit_test : 0), 0);
+                return Math.round(sum / weeks.length);
+            });
+
+            annualChart = new Chart(document.getElementById('adminAnnualTrendChart').getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: MONTHS.map(m => m.substring(0, 3)),
+                    datasets: [{
+                        label: 'Monthly Unit Test Average',
+                        data: monthlyAverages,
+                        borderColor: '#00d2ff',
+                        backgroundColor: 'rgba(0, 210, 255, 0.15)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.3,
+                        pointBackgroundColor: '#d4af37',
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { ticks: { color: '#94a3b8' } },
+                        y: { min: 0, max: 100, ticks: { color: '#94a3b8' } }
+                    }
+                }
+            });
+
+            // 2. Term Assessment Marks Bar Chart
+            termChart = new Chart(document.getElementById('adminTermChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: (st.assessments || []).map(a => a.term),
+                    datasets: [{
+                        label: 'Score',
+                        data: (st.assessments || []).map(a => a.score),
+                        backgroundColor: ['rgba(79, 70, 229, 0.8)', 'rgba(14, 165, 233, 0.8)', 'rgba(212, 175, 55, 0.8)', 'rgba(16, 185, 129, 0.8)'],
+                        borderColor: ['#4f46e5', '#0ea5e9', '#d4af37', '#10b981'],
+                        borderWidth: 2,
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { ticks: { color: '#94a3b8' } },
+                        y: { min: 0, max: 100, ticks: { color: '#94a3b8' } }
+                    }
+                }
+            });
+
+            // 3. Practical Results Pie Chart
+            const pieCounts = window.LMSCore.getPracticalPieData(st);
+            practicalPieChart = new Chart(document.getElementById('adminPracticalPieChart').getContext('2d'), {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(pieCounts),
+                    datasets: [{
+                        data: Object.values(pieCounts),
+                        backgroundColor: ['#10b981', '#0ea5e9', '#f59e0b', '#ef4444'],
+                        borderWidth: 2,
+                        borderColor: '#0f172a'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { color: '#cbd5e1', font: { size: 10 } } }
+                    }
+                }
+            });
+        }
+
+        // Search Filter
+        document.getElementById('adminSearchInput').addEventListener('input', (e) => {
+            const q = e.target.value.toLowerCase().trim();
+            if (!q) {
+                renderTabs();
+                return;
+            }
+            const filtered = allStudents.filter(st => 
+                st.student_info.name.toLowerCase().includes(q) ||
+                st.student_info.student_id.toLowerCase().includes(q) ||
+                (st.student_info.username && st.student_info.username.toLowerCase().includes(q)) ||
+                st.tab_name.toLowerCase().includes(q)
+            );
+            renderTabs(filtered);
+        });
+    </script>
+</body>
+</html>
