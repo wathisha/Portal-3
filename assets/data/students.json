@@ -24,33 +24,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "Incomplete",
+          "master_guide_1": "InIncomplete",
           "master_guide_2": "0.5 Done",
-          "past_paper": "Incomplete",
+          "past_paper": "InIncomplete",
           "practical": "Average",
           "unit_test": 35.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "Incomplete",
-          "master_guide_2": "Incomplete",
-          "past_paper": "Incomplete",
+          "master_guide_1": "InIncomplete",
+          "master_guide_2": "InIncomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 30.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
+          "master_guide_1": "Incompleted",
           "master_guide_2": "0.5 Done",
-          "past_paper": "Incomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 50.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 55.0
         }
@@ -66,33 +66,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "Incomplete",
+          "master_guide_1": "InIncomplete",
           "master_guide_2": "0.5 Done",
-          "past_paper": "Incomplete",
+          "past_paper": "InIncomplete",
           "practical": "Average",
           "unit_test": 37.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "Incomplete",
-          "master_guide_2": "Incomplete",
-          "past_paper": "Incomplete",
+          "master_guide_1": "InIncomplete",
+          "master_guide_2": "InIncomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 32.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
+          "master_guide_1": "Incompleted",
           "master_guide_2": "0.5 Done",
-          "past_paper": "Incomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 52.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 57.0
         }
@@ -108,33 +108,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "Incomplete",
+          "master_guide_1": "InIncomplete",
           "master_guide_2": "0.5 Done",
-          "past_paper": "Incomplete",
+          "past_paper": "InIncomplete",
           "practical": "Average",
           "unit_test": 40.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "Incomplete",
-          "master_guide_2": "Incomplete",
-          "past_paper": "Incomplete",
+          "master_guide_1": "InIncomplete",
+          "master_guide_2": "InIncomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 35.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
+          "master_guide_1": "Incompleted",
           "master_guide_2": "0.5 Done",
-          "past_paper": "Incomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 55.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 60.0
         }
@@ -150,33 +150,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "Incomplete",
+          "master_guide_1": "InIncomplete",
           "master_guide_2": "0.5 Done",
-          "past_paper": "Incomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 42.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "Incomplete",
-          "master_guide_2": "Incomplete",
-          "past_paper": "Incomplete",
+          "master_guide_1": "InIncomplete",
+          "master_guide_2": "InIncomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 37.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
+          "master_guide_1": "Incompleted",
           "master_guide_2": "0.5 Done",
-          "past_paper": "Incomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 57.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 62.0
         }
@@ -192,33 +192,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "Incomplete",
+          "master_guide_1": "InIncomplete",
           "master_guide_2": "0.5 Done",
-          "past_paper": "Incomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 45.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "Incomplete",
-          "master_guide_2": "Incomplete",
-          "past_paper": "Incomplete",
+          "master_guide_1": "InIncomplete",
+          "master_guide_2": "InIncomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 40.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
+          "master_guide_1": "Incompleted",
           "master_guide_2": "0.5 Done",
-          "past_paper": "Incomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 60.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 65.0
         }
@@ -234,33 +234,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "Incomplete",
+          "master_guide_1": "InIncomplete",
           "master_guide_2": "0.5 Done",
-          "past_paper": "Incomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 47.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "Incomplete",
-          "master_guide_2": "Incomplete",
-          "past_paper": "Incomplete",
+          "master_guide_1": "InIncomplete",
+          "master_guide_2": "InIncomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 42.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
+          "master_guide_1": "Incompleted",
           "master_guide_2": "0.5 Done",
-          "past_paper": "completed",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 62.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 67.0
         }
@@ -276,33 +276,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "Incomplete",
+          "master_guide_1": "InIncomplete",
           "master_guide_2": "0.5 Done",
-          "past_paper": "Incomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 50.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "Incomplete",
-          "master_guide_2": "Incomplete",
-          "past_paper": "Incomplete",
+          "master_guide_1": "InIncomplete",
+          "master_guide_2": "InIncomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 45.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
+          "master_guide_1": "Incompleted",
           "master_guide_2": "0.5 Done",
-          "past_paper": "completed",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 65.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 70.0
         }
@@ -318,33 +318,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
+          "master_guide_1": "Incompleted",
           "master_guide_2": "0.5 Done",
-          "past_paper": "Incomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 52.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "Incomplete",
-          "master_guide_2": "Incomplete",
-          "past_paper": "Incomplete",
+          "master_guide_1": "InIncomplete",
+          "master_guide_2": "InIncomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 47.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
+          "master_guide_1": "Incompleted",
           "master_guide_2": "0.5 Done",
-          "past_paper": "completed",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 67.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 72.0
         }
@@ -360,33 +360,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
+          "master_guide_1": "Incompleted",
           "master_guide_2": "0.5 Done",
-          "past_paper": "Incomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 55.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "Incomplete",
-          "master_guide_2": "Incomplete",
-          "past_paper": "Incomplete",
+          "master_guide_1": "InIncomplete",
+          "master_guide_2": "InIncomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 50.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 70.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 75.0
         }
@@ -402,33 +402,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
+          "master_guide_1": "Incompleted",
           "master_guide_2": "0.5 Done",
-          "past_paper": "Incomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 57.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "Incomplete",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "InIncomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 52.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 72.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 77.0
         }
@@ -444,33 +444,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
+          "master_guide_1": "Incompleted",
           "master_guide_2": "0.5 Done",
-          "past_paper": "Incomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 60.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "Incomplete",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "InIncomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 55.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 75.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 80.0
         }
@@ -486,33 +486,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 62.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "Incomplete",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "InIncomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 57.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 77.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 82.0
         }
@@ -567,33 +567,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 70.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 65.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 85.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 90.0
         }
@@ -609,33 +609,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 72.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 67.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 87.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 92.0
         }
@@ -651,33 +651,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 75.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 70.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 90.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 95.0
         }
@@ -693,33 +693,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 77.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 72.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 92.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 97.0
         }
@@ -735,33 +735,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 80.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 75.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 95.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 100.0
         }
@@ -777,33 +777,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 82.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 77.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 97.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 100.0
         }
@@ -819,33 +819,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 85.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 80.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 100.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 100.0
         }
@@ -861,33 +861,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 87.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 82.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 100.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 100.0
         }
@@ -903,33 +903,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 90.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 85.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 100.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 100.0
         }
@@ -945,33 +945,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 92.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 87.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 100.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 100.0
         }
@@ -987,33 +987,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 95.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 90.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 100.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 100.0
         }
@@ -1029,33 +1029,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 97.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 92.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 100.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 100.0
         }
@@ -1110,33 +1110,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "Incomplete",
+          "master_guide_1": "InIncomplete",
           "master_guide_2": "0.5 Done",
-          "past_paper": "Incomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 50.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "Incomplete",
-          "master_guide_2": "Incomplete",
-          "past_paper": "Incomplete",
+          "master_guide_1": "InIncomplete",
+          "master_guide_2": "InIncomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 45.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
+          "master_guide_1": "Incompleted",
           "master_guide_2": "0.5 Done",
-          "past_paper": "completed",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 65.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 70.0
         }
@@ -1152,33 +1152,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
+          "master_guide_1": "Incompleted",
           "master_guide_2": "0.5 Done",
-          "past_paper": "Incomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 52.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "Incomplete",
-          "master_guide_2": "Incomplete",
-          "past_paper": "Incomplete",
+          "master_guide_1": "InIncomplete",
+          "master_guide_2": "InIncomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 47.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
+          "master_guide_1": "Incompleted",
           "master_guide_2": "0.5 Done",
-          "past_paper": "completed",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 67.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 72.0
         }
@@ -1194,33 +1194,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
+          "master_guide_1": "Incompleted",
           "master_guide_2": "0.5 Done",
-          "past_paper": "Incomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 55.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "Incomplete",
-          "master_guide_2": "Incomplete",
-          "past_paper": "Incomplete",
+          "master_guide_1": "InIncomplete",
+          "master_guide_2": "InIncomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 50.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 70.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 75.0
         }
@@ -1236,33 +1236,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
+          "master_guide_1": "Incompleted",
           "master_guide_2": "0.5 Done",
-          "past_paper": "Incomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 57.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "Incomplete",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "InIncomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 52.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 72.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 77.0
         }
@@ -1278,33 +1278,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
+          "master_guide_1": "Incompleted",
           "master_guide_2": "0.5 Done",
-          "past_paper": "Incomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 60.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "Incomplete",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "InIncomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 55.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 75.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 80.0
         }
@@ -1320,33 +1320,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 62.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "Incomplete",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "InIncomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 57.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 77.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 82.0
         }
@@ -1362,33 +1362,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 65.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "Incomplete",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "InIncomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 60.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 80.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 85.0
         }
@@ -1404,33 +1404,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 67.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 62.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 82.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 87.0
         }
@@ -1446,33 +1446,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 70.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 65.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 85.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 90.0
         }
@@ -1488,33 +1488,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 72.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 67.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 87.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 92.0
         }
@@ -1530,33 +1530,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 75.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 70.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 90.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 95.0
         }
@@ -1572,33 +1572,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 77.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 72.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 92.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 97.0
         }
@@ -1653,33 +1653,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 75.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 70.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 90.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 95.0
         }
@@ -1695,33 +1695,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 77.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 72.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 92.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 97.0
         }
@@ -1737,33 +1737,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 80.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 75.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 95.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 100.0
         }
@@ -1779,33 +1779,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 82.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 77.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 97.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 100.0
         }
@@ -1821,33 +1821,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 85.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 80.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 100.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 100.0
         }
@@ -1863,33 +1863,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 87.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 82.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 100.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 100.0
         }
@@ -1905,33 +1905,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 90.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 85.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 100.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 100.0
         }
@@ -1947,33 +1947,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 92.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 87.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 100.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 100.0
         }
@@ -1989,33 +1989,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 95.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 90.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 100.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 100.0
         }
@@ -2031,33 +2031,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 97.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 92.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 100.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 100.0
         }
@@ -2073,33 +2073,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 100.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 95.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 100.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 100.0
         }
@@ -2115,33 +2115,33 @@
         },
         {
           "week": "1 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 100.0
         },
         {
           "week": "2 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 97.0
         },
         {
           "week": "3 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 100.0
         },
         {
           "week": "4 week",
-          "master_guide_1": "completed",
-          "master_guide_2": "completed",
-          "past_paper": "completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 100.0
         }
@@ -2187,33 +2187,33 @@
     "weekly_progress": [
       {
         "week": "1 week",
-        "master_guide_1": "Completed",
-        "master_guide_2": "Completed",
-        "past_paper": "Completed",
+        "master_guide_1": "Incompleted",
+        "master_guide_2": "Incompleted",
+        "past_paper": "Incompleted",
         "practical": "Good",
         "unit_test": 75
       },
       {
         "week": "2 week",
-        "master_guide_1": "Completed",
-        "master_guide_2": "Incomplete",
-        "past_paper": "Incomplete",
+        "master_guide_1": "Incompleted",
+        "master_guide_2": "InIncomplete",
+        "past_paper": "InIncomplete",
         "practical": "Good",
         "unit_test": 70
       },
       {
         "week": "3 week",
-        "master_guide_1": "Completed",
-        "master_guide_2": "Completed",
-        "past_paper": "Completed",
+        "master_guide_1": "Incompleted",
+        "master_guide_2": "Incompleted",
+        "past_paper": "Incompleted",
         "practical": "Excellent",
         "unit_test": 85
       },
       {
         "week": "4 week",
-        "master_guide_1": "Completed",
-        "master_guide_2": "Completed",
-        "past_paper": "Completed",
+        "master_guide_1": "Incompleted",
+        "master_guide_2": "Incompleted",
+        "past_paper": "Incompleted",
         "practical": "Excellent",
         "unit_test": 90
       }
@@ -2222,33 +2222,33 @@
       "January": [
         {
           "week": "1 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 75
         },
         {
           "week": "2 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Incomplete",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "InIncomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 70
         },
         {
           "week": "3 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 85
         },
         {
           "week": "4 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 90
         }
@@ -2256,33 +2256,33 @@
       "February": [
         {
           "week": "1 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 75
         },
         {
           "week": "2 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Incomplete",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "InIncomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 70
         },
         {
           "week": "3 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 85
         },
         {
           "week": "4 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 90
         }
@@ -2290,33 +2290,33 @@
       "March": [
         {
           "week": "1 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 75
         },
         {
           "week": "2 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Incomplete",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "InIncomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 70
         },
         {
           "week": "3 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 85
         },
         {
           "week": "4 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 90
         }
@@ -2324,33 +2324,33 @@
       "April": [
         {
           "week": "1 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 75
         },
         {
           "week": "2 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Incomplete",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "InIncomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 70
         },
         {
           "week": "3 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 85
         },
         {
           "week": "4 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 90
         }
@@ -2358,33 +2358,33 @@
       "May": [
         {
           "week": "1 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 75
         },
         {
           "week": "2 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Incomplete",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "InIncomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 70
         },
         {
           "week": "3 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 85
         },
         {
           "week": "4 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 90
         }
@@ -2392,33 +2392,33 @@
       "June": [
         {
           "week": "1 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 75
         },
         {
           "week": "2 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Incomplete",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "InIncomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 70
         },
         {
           "week": "3 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 85
         },
         {
           "week": "4 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 90
         }
@@ -2426,33 +2426,33 @@
       "July": [
         {
           "week": "1 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 75
         },
         {
           "week": "2 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Incomplete",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "InIncomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 70
         },
         {
           "week": "3 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 85
         },
         {
           "week": "4 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 90
         }
@@ -2460,33 +2460,33 @@
       "August": [
         {
           "week": "1 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 75
         },
         {
           "week": "2 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Incomplete",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "InIncomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 70
         },
         {
           "week": "3 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 85
         },
         {
           "week": "4 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 90
         }
@@ -2494,33 +2494,33 @@
       "September": [
         {
           "week": "1 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 75
         },
         {
           "week": "2 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Incomplete",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "InIncomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 70
         },
         {
           "week": "3 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 85
         },
         {
           "week": "4 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 90
         }
@@ -2528,33 +2528,33 @@
       "October": [
         {
           "week": "1 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 75
         },
         {
           "week": "2 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Incomplete",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "InIncomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 70
         },
         {
           "week": "3 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 85
         },
         {
           "week": "4 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 90
         }
@@ -2562,33 +2562,33 @@
       "November": [
         {
           "week": "1 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 75
         },
         {
           "week": "2 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Incomplete",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "InIncomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 70
         },
         {
           "week": "3 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 85
         },
         {
           "week": "4 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 90
         }
@@ -2596,33 +2596,33 @@
       "December": [
         {
           "week": "1 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Good",
           "unit_test": 75
         },
         {
           "week": "2 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Incomplete",
-          "past_paper": "Incomplete",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "InIncomplete",
+          "past_paper": "InIncomplete",
           "practical": "Good",
           "unit_test": 70
         },
         {
           "week": "3 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 85
         },
         {
           "week": "4 week",
-          "master_guide_1": "Completed",
-          "master_guide_2": "Completed",
-          "past_paper": "Completed",
+          "master_guide_1": "Incompleted",
+          "master_guide_2": "Incompleted",
+          "past_paper": "Incompleted",
           "practical": "Excellent",
           "unit_test": 90
         }
@@ -2631,15 +2631,15 @@
     "assessments": [
       {
         "term": "Term 1 Exam",
-        "score": 78
+        "score": 00
       },
       {
         "term": "Term 2 Exam",
-        "score": 82
+        "score": 00
       },
       {
         "term": "Final Exam",
-        "score": 88
+        "score": 00
       }
     ],
     "summary": {
