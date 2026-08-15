@@ -1,12 +1,13 @@
 /**
  * LMS Core Management Engine - Science with Sheshadi LMS
  * Handles LocalStorage persistence for:
- * 1. LMS Customization, Branding & Educator Profile (Mrs. Sheshadi Amarasinghe)
+ * 1. LMS Customization, Branding & Educator Profile (Mrs. Sheshadi Amarasinghe, Slogan, Hotlines, Teacher Photo, Custom Background)
  * 2. File Sharing & Study Materials
- * 3. Academic Calendar & Events
- * 4. Zoom & SKYPE Live Meeting Launcher (Class-Wise Targeting with Local Skype Account Integration)
- * 5. Student Registration (with photo upload), Accounts, Username/Password Authentication, Weekly Tables & Term Test Marks
- * 6. NULL-state Dropdown Handling ('Still not attended'), Dynamic Unit Test Averages & QR Code Resolution
+ * 3. Academic Calendar & Events (Google Calendar / Microsoft Teams Grid View)
+ * 4. WhatsApp & Zoom Live Classroom (Class-Wise Broadcast & Direct WhatsApp Links)
+ * 5. Grade-Wise Notifications Center (Grade 6, 7, 8, 9, 10, 11)
+ * 6. Student Registration, Accounts, Username/Password Authentication, Weekly Tables with '(Still not attended)' & Term Test Marks
+ * 7. 12-Month Unit Test Trend (Default 0 for uncompleted months) & Accurate Practical Pie Chart
  */
 
 (function () {
@@ -15,13 +16,14 @@
     const DEFAULT_SETTINGS = {
         academyName: "Sathsarani Science Academy",
         tagline: "GRADE 6-11 SCIENCE | UNDERSTAND TODAY, SUCCEED TOMORROW",
+        motto: "SCIENCE වල අපි ශේෂ..!!",
         teacherName: "Mrs. Sheshadi Amarasinghe",
         teacherTitle: "B.Sc. (Chemistry Special), Grad.Chem (IChem) | Head Science Specialist",
         hotlines: "071 781 2092 | 077 161 4260",
-        motto: "SCIENCE වල අපි ශේෂ..!!",
-        subjectList: ["06 - Science", "07 - Science", "08 - Science", "09 - Science", "O/L Revision Science"],
-        themeColor: "crimson-amber",
-        announcement: "Welcome to Sathsarani Science Academy LMS! Grade 06-11 Science Master Guidebooks, past paper revisions, Zoom & Skype live classes are active.",
+        teacherPhoto: "assets/images/teacher_banner.png",
+        bgImage: "assets/images/lms_background.png",
+        subjectList: ["06 - Science", "07 - Science", "08 - Science", "09 - Science", "10 - Science", "11 - Science"],
+        announcement: "Welcome to Sathsarani Science Academy LMS! Grade 06-11 Science Master Guidebooks, past paper revisions, WhatsApp & Zoom live classes are active.",
         offerings: [
             "Clear Explanations",
             "Exam Focused Learning",
@@ -31,6 +33,61 @@
         ],
         gradingScale: { A: 75, B: 65, C: 50, S: 35 }
     };
+
+    const DEFAULT_WHATSAPP = {
+        isLive: true,
+        teacherWhatsappNumber: "94717812092",
+        whatsappGroupUrl: "https://chat.whatsapp.com/ScienceWithSheshadi2026",
+        title: "Grade 06 Science - Live Class WhatsApp Q&A & Support",
+        grade: "06 - Science",
+        broadcastText: "Hello students, today's Science Master Guidebook and practical review questions are now published.",
+        statusText: "LIVE ON WHATSAPP"
+    };
+
+    const DEFAULT_ZOOM = {
+        isLive: true,
+        title: "Grade 06 Science - Live Theory & Practical Zoom Session",
+        grade: "06 - Science",
+        meetingUrl: "https://zoom.us/j/9876543210?pwd=SCIENCE2026CLASS",
+        meetingId: "987 654 3210",
+        passcode: "SCIENCE2026",
+        hostName: "Mrs. Sheshadi Amarasinghe",
+        startTime: "Saturday 8:00 AM - 10:30 AM",
+        statusText: "LIVE ON ZOOM"
+    };
+
+    const DEFAULT_NOTIFICATIONS = [
+        {
+            id: "NOTIF-101",
+            title: "Term 2 Practical Evaluation Date",
+            message: "All Grade 06 students must complete Unit 3 & 4 laboratory workbooks before August 25.",
+            grade: "06 - Science",
+            priority: "Exam Alert",
+            date: "2026-08-15",
+            time: "07:30 PM",
+            sender: "Mrs. Sheshadi Amarasinghe"
+        },
+        {
+            id: "NOTIF-102",
+            title: "Live Science Master Class Schedule",
+            message: "Weekly live problem solving session will be hosted this Saturday on Zoom & WhatsApp.",
+            grade: "All Grades",
+            priority: "Live Class",
+            date: "2026-08-14",
+            time: "09:00 AM",
+            sender: "Mrs. Sheshadi Amarasinghe"
+        },
+        {
+            id: "NOTIF-103",
+            title: "Grade 10 & 11 Past Paper Assignment Uploaded",
+            message: "New model paper for Term 2 has been published in the shared files section.",
+            grade: "10 - Science",
+            priority: "Homework",
+            date: "2026-08-12",
+            time: "05:00 PM",
+            sender: "Mrs. Sheshadi Amarasinghe"
+        }
+    ];
 
     const DEFAULT_FILES = [
         {
@@ -80,40 +137,37 @@
         },
         {
             id: "EVT-202",
-            title: "Live Skype / Zoom Revision Session",
+            title: "Live Science Master Class & Practical",
             date: "2026-08-15",
             time: "08:00 AM - 10:30 AM",
             category: "Class",
             grade: "All Classes",
             description: "Interactive discussion on past paper question techniques."
+        },
+        {
+            id: "EVT-203",
+            title: "Lab Practical Logbook Submission",
+            date: "2026-08-25",
+            time: "05:00 PM Deadline",
+            category: "Assignment",
+            grade: "07 - Science",
+            description: "Submit recorded chemistry and biology experiment sheets."
+        },
+        {
+            id: "EVT-204",
+            title: "National Holiday - Poya Day Break",
+            date: "2026-08-28",
+            time: "All Day",
+            category: "Holiday",
+            grade: "All Classes",
+            description: "Academy offices and online classes closed for Poya."
         }
     ];
-
-    const DEFAULT_ZOOM = {
-        isLive: true,
-        title: "Grade 06 Science - Live Master Theory & Practical Session",
-        grade: "06 - Science",
-        meetingUrl: "https://zoom.us/j/9876543210?pwd=SCIENCE2026CLASS",
-        meetingId: "987 654 3210",
-        passcode: "SCIENCE2026",
-        hostName: "Mrs. Sheshadi Amarasinghe",
-        startTime: "Saturday 8:00 AM - 10:30 AM",
-        statusText: "LIVE NOW - Class Session Active"
-    };
-
-    const DEFAULT_SKYPE = {
-        isLive: true,
-        teacherSkypeId: "sheshadi.science",
-        skypeMeetingUrl: "https://join.skype.com/meet/SCIENCE2026CLASS",
-        title: "Grade 06 Science - Live Skype Interactive Classroom",
-        grade: "06 - Science",
-        callMode: "call", // 'call' (skype:id?call), 'video' (skype:id?call&video=true), 'chat' (skype:id?chat), or 'meet'
-        statusText: "LIVE ON SKYPE - Class Active"
-    };
 
     window.LMSCore = {
         STATUS_OPTIONS: ["Completed", "Incomplete", "0.5 Done", "Pending", "Still not attended"],
 
+        // --- Customization & Branding Settings ---
         getSettings() {
             const stored = localStorage.getItem('lms_settings');
             return stored ? { ...DEFAULT_SETTINGS, ...JSON.parse(stored) } : DEFAULT_SETTINGS;
@@ -122,9 +176,91 @@
             const current = this.getSettings();
             const updated = { ...current, ...newSettings };
             localStorage.setItem('lms_settings', JSON.stringify(updated));
+            this.applyThemeAndBranding();
             return updated;
         },
 
+        // --- WhatsApp Live Session Engine ---
+        getWhatsappSession() {
+            const stored = localStorage.getItem('lms_whatsapp_session');
+            return stored ? JSON.parse(stored) : DEFAULT_WHATSAPP;
+        },
+        saveWhatsappSession(waObj) {
+            const updated = { ...this.getWhatsappSession(), ...waObj };
+            localStorage.setItem('lms_whatsapp_session', JSON.stringify(updated));
+            return updated;
+        },
+        toggleWhatsappLive(isLive, targetGrade) {
+            return this.saveWhatsappSession({
+                isLive: isLive,
+                grade: targetGrade || this.getWhatsappSession().grade,
+                statusText: isLive ? "LIVE ON WHATSAPP - Q&A Active" : "Offline"
+            });
+        },
+        getWhatsappDirectUri(customText) {
+            const wa = this.getWhatsappSession();
+            const phone = (wa.teacherWhatsappNumber || '94717812092').replace(/[^0-9]/g, '');
+            const msg = customText || wa.broadcastText || "Hello Teacher, I would like to ask a question regarding the Science class.";
+            return `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+        },
+        getWhatsappGroupUri() {
+            const wa = this.getWhatsappSession();
+            return wa.whatsappGroupUrl || "https://chat.whatsapp.com/ScienceWithSheshadi2026";
+        },
+
+        // --- Zoom Session Engine ---
+        getZoomSession() {
+            const stored = localStorage.getItem('lms_zoom_session');
+            return stored ? JSON.parse(stored) : DEFAULT_ZOOM;
+        },
+        saveZoomSession(zoomObj) {
+            const updated = { ...this.getZoomSession(), ...zoomObj };
+            localStorage.setItem('lms_zoom_session', JSON.stringify(updated));
+            return updated;
+        },
+        toggleZoomLive(isLive, targetGrade) {
+            return this.saveZoomSession({
+                isLive: isLive,
+                grade: targetGrade || this.getZoomSession().grade,
+                statusText: isLive ? "LIVE ON ZOOM - Class Active" : "Scheduled / Offline"
+            });
+        },
+
+        // --- Grade-Wise Notifications Engine ---
+        getNotifications() {
+            const stored = localStorage.getItem('lms_notifications');
+            return stored ? JSON.parse(stored) : DEFAULT_NOTIFICATIONS;
+        },
+        addNotification(notifObj) {
+            const notifs = this.getNotifications();
+            const newNotif = {
+                id: "NOTIF-" + Date.now(),
+                date: new Date().toISOString().split('T')[0],
+                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                sender: this.getSettings().teacherName,
+                priority: notifObj.priority || "General",
+                ...notifObj
+            };
+            notifs.unshift(newNotif);
+            localStorage.setItem('lms_notifications', JSON.stringify(notifs));
+            return newNotif;
+        },
+        deleteNotification(notifId) {
+            let notifs = this.getNotifications();
+            notifs = notifs.filter(n => n.id !== notifId);
+            localStorage.setItem('lms_notifications', JSON.stringify(notifs));
+            return notifs;
+        },
+        getNotificationsForGrade(grade) {
+            const notifs = this.getNotifications();
+            const cleanGrade = (grade || '').toLowerCase();
+            return notifs.filter(n => {
+                const target = (n.grade || '').toLowerCase();
+                return target === 'all grades' || target === 'all classes' || target.includes(cleanGrade) || cleanGrade.includes(target);
+            });
+        },
+
+        // --- File Sharing & Study Materials ---
         getFiles() {
             const stored = localStorage.getItem('lms_files');
             return stored ? JSON.parse(stored) : DEFAULT_FILES;
@@ -148,6 +284,7 @@
             return files;
         },
 
+        // --- Academic Calendar Events ---
         getCalendarEvents() {
             const stored = localStorage.getItem('lms_calendar_events');
             return stored ? JSON.parse(stored) : DEFAULT_CALENDAR;
@@ -167,53 +304,7 @@
             return events;
         },
 
-        // --- ZOOM SESSION ENGINE ---
-        getZoomSession() {
-            const stored = localStorage.getItem('lms_zoom_session');
-            return stored ? JSON.parse(stored) : DEFAULT_ZOOM;
-        },
-        saveZoomSession(zoomObj) {
-            const updated = { ...this.getZoomSession(), ...zoomObj };
-            localStorage.setItem('lms_zoom_session', JSON.stringify(updated));
-            return updated;
-        },
-        toggleZoomLive(isLive, targetGrade) {
-            return this.saveZoomSession({
-                isLive: isLive,
-                grade: targetGrade || this.getZoomSession().grade,
-                statusText: isLive ? "LIVE NOW - Class Session Active" : "Scheduled / Offline"
-            });
-        },
-
-        // --- SKYPE SESSION ENGINE (Local Account Protocol & App Launch) ---
-        getSkypeSession() {
-            const stored = localStorage.getItem('lms_skype_session');
-            return stored ? JSON.parse(stored) : DEFAULT_SKYPE;
-        },
-        saveSkypeSession(skypeObj) {
-            const updated = { ...this.getSkypeSession(), ...skypeObj };
-            localStorage.setItem('lms_skype_session', JSON.stringify(updated));
-            return updated;
-        },
-        toggleSkypeLive(isLive, targetGrade) {
-            return this.saveSkypeSession({
-                isLive: isLive,
-                grade: targetGrade || this.getSkypeSession().grade,
-                statusText: isLive ? "LIVE ON SKYPE - Class Active" : "Offline"
-            });
-        },
-        getSkypeDirectUri(skypeObj) {
-            const s = skypeObj || this.getSkypeSession();
-            const cleanId = (s.teacherSkypeId || 'sheshadi.science').trim();
-            if (s.skypeMeetingUrl && s.skypeMeetingUrl.startsWith('http')) {
-                return s.skypeMeetingUrl;
-            }
-            if (s.callMode === 'video') return `skype:${cleanId}?call&video=true`;
-            if (s.callMode === 'chat') return `skype:${cleanId}?chat`;
-            return `skype:${cleanId}?call`;
-        },
-
-        // --- Student Accounts, Registration & Authentications ---
+        // --- Student Accounts & Persistence ---
         async getStudents() {
             const stored = localStorage.getItem('lms_students');
             if (stored) {
@@ -233,9 +324,9 @@
             localStorage.setItem('lms_students', JSON.stringify(studentsArray));
         },
 
-        // Calculate Monthly Average for Unit Tests (If student completed 2 tests, sum / 2)
+        // Calculate Monthly Average for Unit Tests: Default to 0 if no tests completed
         calculateMonthlyUnitTestAverage(weeks) {
-            if (!weeks || !Array.isArray(weeks) || weeks.length === 0) return null;
+            if (!weeks || !Array.isArray(weeks) || weeks.length === 0) return 0;
             let sum = 0;
             let count = 0;
             weeks.forEach(w => {
@@ -244,16 +335,16 @@
                     count++;
                 }
             });
-            if (count === 0) return null;
+            // Default value is 0 in the beginning / unrecorded months
+            if (count === 0) return 0;
             return Math.round((sum / count) * 10) / 10;
         },
 
-        // Student Account Registration (with photo & credentials)
+        // Student Account Registration
         async registerStudent(newSt) {
             const students = await this.getStudents();
             const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             
-            // Build 12-month progress default structure with "(Still not attended)" state
             const monthlyProgress = {};
             MONTHS.forEach(m => {
                 monthlyProgress[m] = [
@@ -272,10 +363,11 @@
                     username: newSt.username || newSt.student_id.toLowerCase(),
                     password: newSt.password || 'student123',
                     grade_class: newSt.grade_class || "06 - Science",
-                    homeroom_teacher: newSt.homeroom_teacher || "Mrs. Sheshadi Amarasinghe (B.Sc. Chem, Grad.Chem)",
+                    homeroom_teacher: newSt.homeroom_teacher || this.getSettings().teacherName,
                     avatar: newSt.avatar || ("https://api.dicebear.com/7.x/avataaars/svg?seed=" + encodeURIComponent(newSt.name)),
                     qr_code_key: "QR-" + newSt.student_id,
-                    access_url: "student.html?id=" + newSt.student_id
+                    access_url: "student.html?id=" + newSt.student_id,
+                    parent_whatsapp: newSt.parent_whatsapp || "+94771614260"
                 },
                 weekly_progress: monthlyProgress["January"],
                 monthly_progress: monthlyProgress,
@@ -323,7 +415,6 @@
                 if (!st.monthly_progress) st.monthly_progress = {};
                 st.monthly_progress[monthName] = weeklyRows;
 
-                // Re-calculate annual unit test average strictly based on completed tests
                 let totalScore = 0, count = 0;
                 Object.values(st.monthly_progress).forEach(mWeeks => {
                     if (Array.isArray(mWeeks)) {
@@ -376,8 +467,6 @@
                         });
                     }
                 });
-            } else {
-                counts["Completed"] = 15; counts["0.5 Done"] = 8; counts["Pending"] = 6; counts["Incomplete"] = 3; counts["Still not attended"] = 4;
             }
             return counts;
         },
@@ -401,9 +490,27 @@
             document.querySelectorAll('.branding-academy-name').forEach(el => { el.textContent = settings.academyName; });
             document.querySelectorAll('.branding-tagline').forEach(el => { el.textContent = settings.tagline; });
             document.querySelectorAll('.branding-teacher-name').forEach(el => { el.textContent = settings.teacherName; });
+            document.querySelectorAll('.branding-teacher-title').forEach(el => { el.textContent = settings.teacherTitle; });
             document.querySelectorAll('.branding-announcement').forEach(el => { el.textContent = settings.announcement; });
             document.querySelectorAll('.branding-hotlines').forEach(el => { el.textContent = settings.hotlines; });
             document.querySelectorAll('.branding-motto').forEach(el => { el.textContent = settings.motto; });
+
+            // Apply custom teacher photo if present
+            if (settings.teacherPhoto) {
+                document.querySelectorAll('.branding-teacher-photo').forEach(el => {
+                    el.src = settings.teacherPhoto;
+                });
+            }
+
+            // Apply custom background image across all pages if set
+            if (settings.bgImage) {
+                document.body.style.backgroundImage = `
+                    linear-gradient(to bottom, rgba(12, 7, 16, 0.88), rgba(15, 8, 20, 0.94)),
+                    radial-gradient(circle at 50% 0%, rgba(225, 29, 72, 0.20) 0%, transparent 60%),
+                    radial-gradient(circle at 90% 80%, rgba(245, 158, 11, 0.15) 0%, transparent 50%),
+                    url('${settings.bgImage}')
+                `;
+            }
         }
     };
 })();
