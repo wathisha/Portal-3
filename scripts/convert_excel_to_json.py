@@ -18,7 +18,9 @@ def parse_student_tab(sheet):
     student_info = {
         "name": "Unknown",
         "student_id": "N/A",
-        "grade_class": "N/A",
+        "username": "student",
+        "password": "student123",
+        "grade_class": "06 - Science",
         "homeroom_teacher": "Mrs. Sheshadi Sathsarani",
         "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=" + sheet.title,
         "qr_code_key": f"QR-{sheet.title}",
@@ -33,8 +35,10 @@ def parse_student_tab(sheet):
             
             if "student name" in val.lower():
                 student_info["name"] = val_next or "Student"
+                student_info["avatar"] = "https://api.dicebear.com/7.x/avataaars/svg?seed=" + (val_next or sheet.title)
             elif "student id" in val.lower():
                 student_info["student_id"] = val_next or "N/A"
+                student_info["username"] = (val_next or "student").lower()
                 student_info["qr_code_key"] = f"QR-{val_next}"
                 student_info["access_url"] = f"student.html?id={val_next}"
             elif "grade" in val.lower() or "class" in val.lower():
@@ -49,34 +53,37 @@ def parse_student_tab(sheet):
     for r in range(1, sheet.max_row + 1):
         row_str = " ".join([str(sheet.cell(r, c).value or "").strip() for c in range(1, 7)]).lower()
         
-        # Check if row is a month banner or week header
+        # Check if row is a month banner
         for m in MONTHS:
             if m.lower() in row_str:
                 current_month_idx = MONTHS.index(m)
                 
         c1 = str(sheet.cell(r, 1).value or "").strip().lower()
-        if "week" in c1:
+        # Only process week rows (e.g. 1 week, 2 week, etc.), skip header row 'weeks'
+        if "week" in c1 and c1 not in ["weeks", "week"]:
             month_key = MONTHS[current_month_idx] if current_month_idx < len(MONTHS) else "January"
             if month_key not in monthly_progress:
                 monthly_progress[month_key] = []
                 
-            mg1 = str(sheet.cell(r, 2).value or "").strip()
-            mg2 = str(sheet.cell(r, 3).value or "").strip()
-            pp = str(sheet.cell(r, 4).value or "").strip()
-            pr = str(sheet.cell(r, 5).value or "").strip()
+            mg1 = str(sheet.cell(r, 2).value or "").strip() or "NULL"
+            mg2 = str(sheet.cell(r, 3).value or "").strip() or "NULL"
+            pp = str(sheet.cell(r, 4).value or "").strip() or "NULL"
+            pr = str(sheet.cell(r, 5).value or "").strip() or "NULL"
             ut = sheet.cell(r, 6).value
             
             try:
-                ut = float(ut) if ut is not None else 0
+                ut = float(ut) if ut is not None and ut != "" else None
+                if ut is not None and (ut < 0 or ut > 100):
+                    ut = None
             except:
-                ut = 0
+                ut = None
                 
             monthly_progress[month_key].append({
                 "week": str(sheet.cell(r, 1).value or "").strip(),
-                "master_guide_1": mg1 or "N/A",
-                "master_guide_2": mg2 or "N/A",
-                "past_paper": pp or "N/A",
-                "practical": pr or "N/A",
+                "master_guide_1": mg1,
+                "master_guide_2": mg2,
+                "past_paper": pp,
+                "practical": pr,
                 "unit_test": ut
             })
 
@@ -92,38 +99,52 @@ def parse_student_tab(sheet):
                 score = 0
             assessments.append({"term": c1, "score": score})
 
-    # Fill missing months with default template
+    # Ensure all 12 months exist and have 4 weeks
     for m in MONTHS:
         if m not in monthly_progress or len(monthly_progress[m]) == 0:
             monthly_progress[m] = [
-                {"week": "1 week", "master_guide_1": "Incomplete", "master_guide_2": "Incomplete", "past_paper": "Incomplete", "practical": "Average", "unit_test": 50},
-                {"week": "2 week", "master_guide_1": "Incomplete", "master_guide_2": "Incomplete", "past_paper": "Incomplete", "practical": "Good", "unit_test": 50},
-                {"week": "3 week", "master_guide_1": "Incomplete", "master_guide_2": "Incomplete", "past_paper": "Incomplete", "practical": "Good", "unit_test": 50},
-                {"week": "4 week", "master_guide_1": "Incomplete", "master_guide_2": "Incomplete", "past_paper": "Incomplete", "practical": "Good", "unit_test": 50}
+                {"week": "1 week", "master_guide_1": "NULL", "master_guide_2": "NULL", "past_paper": "NULL", "practical": "NULL", "unit_test": None},
+                {"week": "2 week", "master_guide_1": "NULL", "master_guide_2": "NULL", "past_paper": "NULL", "practical": "NULL", "unit_test": None},
+                {"week": "3 week", "master_guide_1": "NULL", "master_guide_2": "NULL", "past_paper": "NULL", "practical": "NULL", "unit_test": None},
+                {"week": "4 week", "master_guide_1": "NULL", "master_guide_2": "NULL", "past_paper": "NULL", "practical": "NULL", "unit_test": None}
             ]
+        while len(monthly_progress[m]) < 4:
+            idx = len(monthly_progress[m]) + 1
+            monthly_progress[m].append({
+                "week": f"{idx} week",
+                "master_guide_1": "NULL",
+                "master_guide_2": "NULL",
+                "past_paper": "NULL",
+                "practical": "NULL",
+                "unit_test": None
+            })
 
-    # Calculate overall average unit test score across all 12 months
-    all_ut = []
+    # Calculate overall average unit test score across completed tests only
+    total_score = 0
+    test_count = 0
     for m in MONTHS:
         for w in monthly_progress[m]:
-            if isinstance(w["unit_test"], (int, float)):
-                all_ut.append(w["unit_test"])
-    avg_score = round(sum(all_ut) / len(all_ut), 1) if all_ut else 0.0
+            if isinstance(w.get("unit_test"), (int, float)):
+                total_score += w["unit_test"]
+                test_count += 1
+    avg_score = round(total_score / test_count, 1) if test_count > 0 else 0.0
 
     return {
         "tab_name": sheet.title,
         "student_info": student_info,
+        "weekly_progress": monthly_progress["January"],
         "monthly_progress": monthly_progress,
         "assessments": assessments or [
-            {"term": "Term 1", "score": 80},
-            {"term": "Term 2", "score": 68},
-            {"term": "Final Exam", "score": 100}
+            {"term": "Term 1 Exam", "score": 80},
+            {"term": "Term 2 Exam", "score": 85},
+            {"term": "Final Exam", "score": 90}
         ],
         "summary": {
             "attendance": "96%",
             "average_unit_test": avg_score,
-            "overall_status": "Active Student"
-        }
+            "overall_status": "Active Progress"
+        },
+        "teacher_notes": "Demonstrates strong understanding in weekly practicals and unit revision tests."
     }
 
 def convert_excel(excel_path, json_output_path):

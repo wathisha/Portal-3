@@ -4,13 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Educator Login - Science with Sheshadi LMS</title>
-
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css">
-
     <script>
         tailwind.config = {
             theme: {
@@ -27,17 +25,17 @@
 <body class="antialiased text-slate-100 min-h-screen flex flex-col justify-between">
 
     <!-- Header -->
-    <header class="bg-slate-900/90 border-b border-slate-800 py-4">
+    <header class="bg-slate-950/90 border-b border-rose-900/40 py-4">
         <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
             <div class="flex items-center space-x-3">
-                <img src="assets/images/logo.png" alt="Science with Sheshadi Logo" class="h-10 w-10 object-contain rounded-xl border border-amber-500/30 p-1 bg-slate-950">
+                <img src="assets/images/logo.png" alt="Logo" class="h-10 w-10 object-contain rounded-xl border border-amber-500/30 p-1 bg-slate-950">
                 <div>
                     <h1 class="text-lg font-bold font-cinzel text-amber-300 branding-academy-name">SCIENCE with SHESHADI</h1>
-                    <p class="text-[11px] text-cyan-400 font-rajdhani uppercase tracking-wider branding-tagline">Teacher Management System</p>
+                    <p class="text-[11px] text-rose-400 font-rajdhani uppercase tracking-wider branding-tagline">Teacher Management Hub</p>
                 </div>
             </div>
 
-            <a href="index.html" class="text-xs text-slate-400 hover:text-cyan-400 flex items-center space-x-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700 transition">
+            <a href="index.html" class="text-xs text-slate-300 hover:text-amber-400 flex items-center space-x-1.5 bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-700 transition">
                 <i class="fa-solid fa-house"></i>
                 <span>Back to Access Hub</span>
             </a>
@@ -47,13 +45,13 @@
     <!-- Main Container: Admin Login -->
     <main class="max-w-md mx-auto px-4 py-12 flex-grow flex flex-col justify-center w-full">
 
-        <div class="glass-panel p-8 space-y-6 border-amber-500/40 shadow-2xl relative overflow-hidden">
-            <div class="absolute -top-12 -right-12 w-40 h-40 bg-amber-500/10 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="glass-panel p-8 space-y-6 border-rose-500/40 shadow-2xl relative overflow-hidden">
+            <div class="absolute -top-12 -right-12 w-40 h-40 bg-rose-500/10 rounded-full blur-2xl pointer-events-none"></div>
 
             <div class="text-center space-y-2 relative z-10">
-                <img src="assets/images/teacher.png" alt="Mrs. Sheshadi Sathsarani" class="w-20 h-24 object-cover rounded-2xl border-2 border-amber-500/60 mx-auto shadow-lg">
+                <img src="assets/images/teacher_banner.png" alt="Mrs. Sheshadi Amarasinghe" class="w-20 h-24 object-cover rounded-2xl border-2 border-amber-400 mx-auto shadow-lg bg-slate-950">
                 <h2 class="text-2xl font-bold font-cinzel text-amber-300">Teacher & Admin Login</h2>
-                <p class="text-xs text-slate-400 branding-teacher-name">Mrs. Sheshadi Sathsarani - Educator Hub</p>
+                <p class="text-xs text-slate-400 branding-teacher-name">Mrs. Sheshadi Amarasinghe - Educator Hub</p>
             </div>
 
             <!-- Login Error Message -->
@@ -67,7 +65,7 @@
                     <label class="block text-xs font-semibold text-slate-400 mb-1">Username / Email</label>
                     <div class="relative">
                         <i class="fa-solid fa-user absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
-                        <input type="text" id="adminUser" required placeholder="admin or sheshadi" class="w-full bg-slate-900 border border-slate-700 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-amber-400">
+                        <input type="text" id="adminUser" required placeholder="admin or sheshadi" class="w-full bg-slate-950 border border-slate-700 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-amber-400">
                     </div>
                 </div>
 
@@ -75,15 +73,15 @@
                     <label class="block text-xs font-semibold text-slate-400 mb-1">Passkey / Password</label>
                     <div class="relative">
                         <i class="fa-solid fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
-                        <input type="password" id="adminPass" required placeholder="••••••••" class="w-full bg-slate-900 border border-slate-700 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-amber-400">
+                        <input type="password" id="adminPass" required placeholder="••••••••" class="w-full bg-slate-950 border border-slate-700 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-amber-400">
                     </div>
                     <p class="text-[10px] text-slate-500 mt-1.5 flex items-center justify-between">
                         <span>Default Credentials:</span>
-                        <span class="text-amber-400 font-mono bg-slate-900 px-2 py-0.5 rounded border border-slate-800">sheshadi / password123</span>
+                        <span class="text-amber-400 font-mono bg-slate-950 px-2 py-0.5 rounded border border-slate-800">sheshadi / password123</span>
                     </p>
                 </div>
 
-                <button type="submit" class="w-full bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-slate-950 font-bold py-3 rounded-xl text-xs uppercase tracking-wider flex items-center justify-center space-x-2 shadow-lg shadow-amber-600/20 transition">
+                <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 text-slate-950 font-extrabold py-3 rounded-xl text-xs uppercase tracking-wider flex items-center justify-center space-x-2 shadow-lg shadow-amber-500/20 transition">
                     <i class="fa-solid fa-right-to-bracket"></i>
                     <span>Log In to Teacher Dashboard</span>
                 </button>
@@ -112,7 +110,6 @@
 
             const loginError = document.getElementById('loginError');
 
-            // Valid credentials: admin/password123 or sheshadi/sheshadi2026 or password123
             if ((user === 'admin' && pass === 'password123') || 
                 (user === 'sheshadi' && (pass === 'sheshadi2026' || pass === 'password123')) || 
                 pass === 'password123') {

@@ -1,14 +1,18 @@
 /* -------------------------------------------------------------
- * Science with Sheshadi - Student Academic Portal Styles
+ * Science with Sheshadi - Modern Student LMS Portal Styles
+ * Aesthetic: Deep Crimson-Amber Glassmorphism with Molecular Artwork
  * ------------------------------------------------------------- */
 
 :root {
-    --bg-dark: #0b131d;
-    --panel-bg: rgba(30, 46, 66, 0.75);
-    --border-color: rgba(74, 117, 156, 0.35);
-    --cyan-glow: #00d2ff;
-    --gold-accent: #d4af37;
-    --text-main: #f1f5f9;
+    --bg-dark: #0c0710;
+    --panel-bg: rgba(24, 14, 30, 0.78);
+    --panel-hover: rgba(35, 20, 44, 0.85);
+    --border-color: rgba(225, 29, 72, 0.25);
+    --gold-accent: #f59e0b;
+    --crimson-glow: #e11d48;
+    --amber-glow: #fbbf24;
+    --cyan-accent: #06b6d4;
+    --text-main: #f8fafc;
     --text-muted: #94a3b8;
 }
 
@@ -17,45 +21,53 @@ body {
     background-color: var(--bg-dark);
     color: var(--text-main);
     background-image: 
-        radial-gradient(circle at 50% 0%, rgba(0, 210, 255, 0.12) 0%, transparent 50%),
-        radial-gradient(circle at 90% 80%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
-        linear-gradient(to bottom, #0d1622 0%, #080d15 100%);
+        linear-gradient(to bottom, rgba(12, 7, 16, 0.88), rgba(15, 8, 20, 0.94)),
+        radial-gradient(circle at 50% 0%, rgba(225, 29, 72, 0.20) 0%, transparent 60%),
+        radial-gradient(circle at 90% 80%, rgba(245, 158, 11, 0.15) 0%, transparent 50%),
+        url('../images/lms_background.png');
+    background-size: cover;
+    background-position: center top;
     background-attachment: fixed;
     min-height: 100vh;
 }
 
-/* Glassmorphism Cards */
+/* Glassmorphism Panels */
 .glass-panel {
     background: var(--panel-bg);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
     border: 1px solid var(--border-color);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-    border-radius: 1rem;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+    border-radius: 1.25rem;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.glass-panel:hover {
+    border-color: rgba(245, 158, 11, 0.4);
 }
 
 .glass-panel-glow {
-    border: 1px solid rgba(0, 210, 255, 0.4);
-    box-shadow: 0 0 25px rgba(0, 210, 255, 0.15);
+    border: 1px solid rgba(245, 158, 11, 0.5);
+    box-shadow: 0 0 30px rgba(225, 29, 72, 0.25);
 }
 
-/* Student Tab Button Styling */
+/* Student Tab Navigation Button */
 .student-tab-btn {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     border-bottom: 3px solid transparent;
 }
 
 .student-tab-btn:hover {
-    color: var(--cyan-glow);
-    background: rgba(0, 210, 255, 0.08);
+    color: var(--amber-glow);
+    background: rgba(245, 158, 11, 0.08);
 }
 
 .student-tab-btn.active {
-    color: var(--cyan-glow);
-    border-bottom-color: var(--cyan-glow);
-    background: rgba(0, 210, 255, 0.15);
+    color: var(--amber-glow);
+    border-bottom-color: var(--amber-glow);
+    background: rgba(245, 158, 11, 0.15);
     font-weight: 700;
-    box-shadow: 0 4px 15px rgba(0, 210, 255, 0.2);
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.2);
 }
 
 /* Status Badges */
@@ -65,16 +77,28 @@ body {
     border: 1px solid rgba(16, 185, 129, 0.4);
 }
 
+.badge-half {
+    background: rgba(245, 158, 11, 0.2);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.badge-pending {
+    background: rgba(6, 182, 212, 0.2);
+    color: #38bdf8;
+    border: 1px solid rgba(6, 182, 212, 0.4);
+}
+
 .badge-incomplete {
     background: rgba(239, 68, 68, 0.2);
     color: #f87171;
     border: 1px solid rgba(239, 68, 68, 0.4);
 }
 
-.badge-progress {
-    background: rgba(245, 158, 11, 0.2);
-    color: #fbbf24;
-    border: 1px solid rgba(245, 158, 11, 0.4);
+.badge-not-attended {
+    background: rgba(71, 85, 105, 0.35);
+    color: #94a3b8;
+    border: 1px solid rgba(100, 116, 139, 0.5);
 }
 
 /* Custom Scrollbar */
@@ -84,20 +108,20 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-    background: #080d15;
+    background: #0d0714;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #1e2e42;
+    background: #2b1328;
     border-radius: 4px;
     border: 1px solid var(--border-color);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--cyan-glow);
+    background: var(--amber-glow);
 }
 
-/* Print Stylesheet for Report Cards */
+/* Print Stylesheet for Official Academic Scorecard */
 @media print {
     body {
         background: white !important;
@@ -112,7 +136,7 @@ body {
         border: 1px solid #ccc !important;
         box-shadow: none !important;
     }
-    .text-slate-100, .text-slate-300, .text-slate-400 {
+    .text-slate-100, .text-slate-200, .text-slate-300, .text-slate-400 {
         color: #111 !important;
     }
 }
