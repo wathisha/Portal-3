@@ -45,21 +45,20 @@
 
             <!-- Action Controls -->
             <div class="flex items-center space-x-3">
+                <a href="students_directory.html" class="bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 px-3 py-2 rounded-xl text-xs font-bold flex items-center space-x-1.5 transition">
+                    <i class="fa-solid fa-address-book"></i>
+                    <span class="hidden sm:inline">Students Directory</span>
+                </a>
+
                 <button onclick="toggleRegisterModal()" class="bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 text-slate-950 px-3.5 py-2 rounded-xl text-xs font-extrabold flex items-center space-x-1.5 shadow-md transition">
                     <i class="fa-solid fa-user-plus"></i>
-                    <span>Register New Student</span>
+                    <span>Register Student</span>
                 </button>
 
                 <button id="syncSheetsBtn" class="bg-slate-900 hover:bg-slate-800 text-cyan-400 border border-cyan-500/40 px-3 py-2 rounded-xl text-xs font-semibold flex items-center space-x-1.5 transition">
                     <i class="fa-solid fa-rotate-right"></i>
                     <span class="hidden sm:inline">Sync Sheets</span>
                 </button>
-
-                <label class="bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/40 px-3 py-2 rounded-xl text-xs font-semibold cursor-pointer flex items-center space-x-1.5 transition">
-                    <i class="fa-solid fa-file-excel"></i>
-                    <span class="hidden sm:inline">Upload Excel</span>
-                    <input type="file" id="excelFileInput" accept=".xlsx, .xls" class="hidden">
-                </label>
 
                 <button id="logoutBtn" class="bg-red-500/20 hover:bg-red-500/30 text-red-300 border border-red-500/40 px-3 py-2 rounded-xl text-xs font-bold flex items-center space-x-1.5 transition">
                     <i class="fa-solid fa-right-from-bracket"></i>
@@ -72,14 +71,14 @@
     <!-- Main Container -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full space-y-8">
 
-        <!-- Top Teacher Showcase & Live Classroom (Skype / Zoom) Launcher Banner -->
+        <!-- Top Teacher Showcase & Live Classroom (WhatsApp / Zoom) Launcher Banner -->
         <section class="glass-panel p-6 sm:p-8 relative overflow-hidden border-rose-500/30">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
                 
                 <!-- Teacher Profile Info & Credentials Artwork -->
                 <div class="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6 lg:col-span-7">
                     <div class="relative">
-                        <img src="assets/images/teacher_banner.png" alt="Mrs. Sheshadi Amarasinghe" class="w-28 h-32 object-cover rounded-2xl border-2 border-amber-400 shadow-2xl bg-slate-950">
+                        <img src="assets/images/teacher_banner.png" alt="Mrs. Sheshadi Amarasinghe" class="branding-teacher-photo w-28 h-32 object-cover rounded-2xl border-2 border-amber-400 shadow-2xl bg-slate-950">
                         <span class="absolute -bottom-2 -right-2 bg-amber-500 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded-full uppercase shadow">Grade 6-11</span>
                     </div>
                     <div class="space-y-1.5">
@@ -104,32 +103,32 @@
                     </div>
                 </div>
 
-                <!-- Live Classroom Launcher Box (Skype & Zoom Local Account Integration) -->
-                <div class="lg:col-span-5 bg-slate-950/90 border border-amber-500/40 p-5 rounded-2xl space-y-3 shadow-2xl no-print">
+                <!-- Live Classroom Launcher Box (WhatsApp Broadcast & Zoom Integration) -->
+                <div class="lg:col-span-5 bg-slate-950/90 border border-emerald-500/40 p-5 rounded-2xl space-y-3 shadow-2xl no-print">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center space-x-2">
-                            <span class="text-xs font-bold uppercase text-amber-300 tracking-wider">
-                                <i class="fa-brands fa-skype text-sky-400 mr-1 text-sm"></i> Live Classroom
+                            <span class="text-xs font-bold uppercase text-emerald-400 tracking-wider">
+                                <i class="fa-brands fa-whatsapp text-emerald-400 mr-1 text-base"></i> Live Classroom Hub
                             </span>
                         </div>
                         <span id="liveClassBadge" class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 animate-pulse">
-                            LIVE ON SKYPE
+                            LIVE ON WHATSAPP
                         </span>
                     </div>
 
                     <div class="text-xs space-y-1">
-                        <p id="liveSessionTitleDisplay" class="font-bold text-slate-100 truncate font-cinzel">Grade 06 Science - Live Skype Classroom</p>
+                        <p id="liveSessionTitleDisplay" class="font-bold text-slate-100 truncate font-cinzel">Grade 06 Science - Live Class Q&A</p>
                         <div class="flex justify-between items-center text-slate-400 text-[11px]">
                             <span>Target: <strong id="liveTargetGradeDisplay" class="text-cyan-300">06 - Science</strong></span>
-                            <span>Skype: <strong id="liveSkypeUserDisplay" class="text-amber-300 font-mono">sheshadi.science</strong></span>
+                            <span>WhatsApp: <strong id="liveWaPhoneDisplay" class="text-emerald-300 font-mono">+94 71 781 2092</strong></span>
                         </div>
                     </div>
 
                     <div class="grid grid-cols-2 gap-2 pt-1">
-                        <button id="launchSkypeBtn" class="bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white font-bold py-2 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow-md" title="Opens local Skype app on PC or Phone">
-                            <i class="fa-brands fa-skype text-sm"></i>
-                            <span>Launch Skype App</span>
-                        </button>
+                        <a id="launchWhatsappBtn" href="#" target="_blank" class="bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-slate-950 font-bold py-2 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow-md">
+                            <i class="fa-brands fa-whatsapp text-sm"></i>
+                            <span>Open WhatsApp</span>
+                        </a>
                         <button id="launchZoomBtn" class="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-2 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow-md">
                             <i class="fa-solid fa-video text-xs"></i>
                             <span>Launch Zoom</span>
@@ -137,9 +136,9 @@
                     </div>
                     
                     <div class="flex justify-between items-center pt-1 border-t border-slate-800">
-                        <span class="text-[10px] text-slate-400 italic">Syncs with local Skype account on PC/Phone</span>
+                        <span class="text-[10px] text-slate-400">Class group discussion & video broadcast</span>
                         <button id="editClassroomModalBtn" class="text-[11px] text-amber-400 hover:underline font-bold flex items-center gap-1">
-                            <i class="fa-solid fa-gear"></i> Configure Live Keys
+                            <i class="fa-solid fa-gear"></i> Configure Links
                         </button>
                     </div>
                 </div>
@@ -150,20 +149,23 @@
         <!-- Navigation Tabs for LMS Management -->
         <nav class="flex border-b border-slate-700 space-x-6 text-sm font-bold no-print overflow-x-auto">
             <button onclick="switchAdminTab('students')" id="nav-tab-students" class="pb-3 text-amber-400 border-b-2 border-amber-400 flex items-center gap-2 whitespace-nowrap">
-                <i class="fa-solid fa-users-gear"></i> Student Evaluation & Weekly Tables
+                <i class="fa-solid fa-users-gear"></i> Student Evaluation & Marks
             </button>
-            <button onclick="switchAdminTab('files')" id="nav-tab-files" class="pb-3 text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
-                <i class="fa-solid fa-folder-open"></i> File Sharing & Study Materials
+            <button onclick="switchAdminTab('notifications')" id="nav-tab-notifications" class="pb-3 text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-bullhorn"></i> Grade-Wise Notifications
             </button>
             <button onclick="switchAdminTab('calendar')" id="nav-tab-calendar" class="pb-3 text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
-                <i class="fa-solid fa-calendar-days"></i> Academic Calendar
+                <i class="fa-solid fa-calendar-days"></i> Academic Calendar (Grid View)
+            </button>
+            <button onclick="switchAdminTab('files')" id="nav-tab-files" class="pb-3 text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-folder-open"></i> File Sharing
             </button>
             <button onclick="switchAdminTab('custom')" id="nav-tab-custom" class="pb-3 text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
-                <i class="fa-solid fa-sliders"></i> LMS Customizer Studio
+                <i class="fa-solid fa-sliders"></i> ERP Customizer Studio
             </button>
         </nav>
 
-        <!-- VIEW 1: STUDENT EVALUATION & WEEKLY TABLES -->
+        <!-- VIEW 1: STUDENT EVALUATION & WEEKLY TABLES & TERM TEST MARKS -->
         <div id="view-students" class="space-y-8">
 
             <!-- Search & Student Tabs Navigation + Register Button -->
@@ -174,10 +176,17 @@
                         <input type="text" id="adminSearchInput" placeholder="Search student name, ID or tab..." class="w-full bg-slate-950 border border-slate-700 rounded-xl pl-11 pr-4 py-2.5 text-sm focus:outline-none focus:border-amber-400 text-slate-100">
                     </div>
                     
-                    <button onclick="toggleRegisterModal()" class="bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-extrabold px-4 py-2.5 rounded-xl text-xs flex items-center space-x-2 shadow-lg hover:brightness-110 transition">
-                        <i class="fa-solid fa-user-plus"></i>
-                        <span>Register / Create Student Account</span>
-                    </button>
+                    <div class="flex items-center gap-3">
+                        <a href="students_directory.html" class="bg-slate-900 hover:bg-slate-800 text-amber-300 border border-amber-500/40 px-4 py-2.5 rounded-xl text-xs font-bold flex items-center space-x-1.5 transition">
+                            <i class="fa-solid fa-table-cells text-xs"></i>
+                            <span>All Students Page</span>
+                        </a>
+
+                        <button onclick="toggleRegisterModal()" class="bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-extrabold px-4 py-2.5 rounded-xl text-xs flex items-center space-x-2 shadow-lg hover:brightness-110 transition">
+                            <i class="fa-solid fa-user-plus"></i>
+                            <span>Register Student</span>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="border-b border-slate-700/80 overflow-x-auto no-print">
@@ -257,7 +266,7 @@
                     </div>
                 </div>
 
-                <!-- Right Column: Month Selector, Weekly Table & Term Test Marks -->
+                <!-- Right Column: Month Selector, Weekly Table & Term Test Marks Slots -->
                 <div class="lg:col-span-2 space-y-8">
                     
                     <!-- Month Selector Bar -->
@@ -303,21 +312,21 @@
                         </div>
                     </div>
 
-                    <!-- Term Test Marks Management -->
-                    <div class="glass-panel p-6 space-y-4 border-amber-500/30">
+                    <!-- Dedicated Term Test Marks Management & Save Slots -->
+                    <div class="glass-panel p-6 space-y-4 border-amber-500/40">
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-700">
                             <div>
-                                <h4 class="text-lg font-bold font-cinzel text-amber-300"><i class="fa-solid fa-award mr-2"></i>Term Test Marks Management</h4>
-                                <p class="text-xs text-slate-400">Add or edit Term 1, Term 2, and Final Examination marks.</p>
+                                <h4 class="text-lg font-bold font-cinzel text-amber-300"><i class="fa-solid fa-award mr-2"></i>Term Assessment Marks Slots & Chart Controls</h4>
+                                <p class="text-xs text-slate-400">Enter and save scores for Term 1, Term 2, and Term 3 / Final Examinations (0–100).</p>
                             </div>
                             <button id="saveTermMarksBtn" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold px-4 py-2 rounded-xl text-xs flex items-center space-x-1.5 shadow-md transition">
                                 <i class="fa-solid fa-floppy-disk"></i>
-                                <span>Save Term Test Marks</span>
+                                <span>Save Term Assessment Marks</span>
                             </button>
                         </div>
 
                         <div id="termMarksContainer" class="space-y-3">
-                            <!-- Dynamic Term Rows -->
+                            <!-- Dynamic Term Slots -->
                         </div>
 
                         <div class="pt-3 border-t border-slate-800 flex items-center space-x-3">
@@ -325,17 +334,17 @@
                             <input type="number" id="newTermScoreInput" min="0" max="100" placeholder="Score (0-100)" class="bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 w-32 focus:border-amber-400 font-bold">
                             <button id="addTermExamBtn" class="bg-slate-900 hover:bg-slate-800 text-amber-300 border border-amber-500/40 px-3.5 py-2 rounded-xl text-xs font-bold flex items-center space-x-1 transition">
                                 <i class="fa-solid fa-plus"></i>
-                                <span>Add Term Test</span>
+                                <span>Add Term Test Slot</span>
                             </button>
                         </div>
                     </div>
 
-                    <!-- Charts Row -->
+                    <!-- Charts Row (Default 0 for unrecorded months) -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="glass-panel p-5 space-y-3">
                             <div class="flex justify-between items-center">
-                                <h5 class="text-sm font-bold text-slate-200 font-cinzel"><i class="fa-solid fa-chart-line text-cyan-400 mr-2"></i>12-Month Unit Test Trend</h5>
-                                <span class="text-[10px] text-slate-400 font-mono">Monthly Average</span>
+                                <h5 class="text-sm font-bold text-slate-200 font-cinzel"><i class="fa-solid fa-chart-line text-amber-400 mr-2"></i>12-Month Unit Test Trend</h5>
+                                <span class="text-[10px] text-slate-400 font-mono">Default 0 for Uncompleted</span>
                             </div>
                             <div class="h-56 relative">
                                 <canvas id="adminAnnualTrendChart"></canvas>
@@ -344,7 +353,7 @@
 
                         <div class="glass-panel p-5 space-y-3">
                             <div class="flex justify-between items-center">
-                                <h5 class="text-sm font-bold text-slate-200 font-cinzel"><i class="fa-solid fa-chart-column text-amber-400 mr-2"></i>Term Assessment Marks</h5>
+                                <h5 class="text-sm font-bold text-slate-200 font-cinzel"><i class="fa-solid fa-chart-column text-rose-400 mr-2"></i>Term Assessment Marks</h5>
                                 <span class="text-[10px] text-slate-400 font-mono">Bar Chart</span>
                             </div>
                             <div class="h-56 relative">
@@ -357,7 +366,191 @@
             </section>
         </div>
 
-        <!-- VIEW 2: FILE SHARING & STUDY MATERIALS -->
+        <!-- VIEW 2: GRADE-WISE NOTIFICATIONS & BROADCAST CENTER -->
+        <div id="view-notifications" class="hidden space-y-8">
+            <div class="glass-panel p-6 space-y-6 border-cyan-500/30">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-slate-700">
+                    <div>
+                        <h3 class="text-xl font-bold font-cinzel text-slate-100">ERP Notification & Announcement Center</h3>
+                        <p class="text-xs text-slate-400">Compose and send grade-specific alerts to Grade 6, 7, 8, 9, 10, 11, or all classes.</p>
+                    </div>
+                </div>
+
+                <!-- Create Notification Form -->
+                <form id="broadcastNotificationForm" class="bg-slate-950/90 border border-amber-500/40 p-6 rounded-2xl space-y-4">
+                    <h4 class="text-sm font-bold text-amber-300 font-cinzel uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-paper-plane text-amber-400"></i> Send Grade-Specific Notification
+                    </h4>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="sm:col-span-2">
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Notice Title:</label>
+                            <input type="text" id="notifTitleInput" required placeholder="e.g. Unit 04 Revision Class & Lab Schedule" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-100 focus:border-amber-400">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Target Grade:</label>
+                            <select id="notifGradeInput" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-100 focus:border-amber-400 font-semibold">
+                                <option value="All Grades">All Grades (Broadcast)</option>
+                                <option value="06 - Science">Grade 06 - Science</option>
+                                <option value="07 - Science">Grade 07 - Science</option>
+                                <option value="08 - Science">Grade 08 - Science</option>
+                                <option value="09 - Science">Grade 09 - Science</option>
+                                <option value="10 - Science">Grade 10 - Science</option>
+                                <option value="11 - Science">Grade 11 - Science</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Priority / Category:</label>
+                            <select id="notifPriorityInput" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-100 focus:border-amber-400">
+                                <option value="Exam Alert">🚨 Exam Alert (High Priority)</option>
+                                <option value="Live Class">🎥 Live Class Notice</option>
+                                <option value="Homework">📚 Homework / Past Paper</option>
+                                <option value="General">📢 General Announcement</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Broadcast Channel:</label>
+                            <div class="flex items-center space-x-3 pt-2 text-xs text-slate-300">
+                                <span class="flex items-center gap-1 text-emerald-400 font-bold"><i class="fa-brands fa-whatsapp"></i> WhatsApp & ERP</span>
+                                <span class="flex items-center gap-1 text-cyan-400 font-bold"><i class="fa-solid fa-bell"></i> Student Portal</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">Notification Message / Details:</label>
+                        <textarea id="notifMessageInput" rows="3" required placeholder="Write the announcement details to be delivered to students..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-slate-100 focus:border-amber-400"></textarea>
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button type="submit" class="bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 text-slate-950 font-extrabold px-6 py-2.5 rounded-xl text-xs uppercase tracking-wider shadow-md flex items-center space-x-2">
+                            <i class="fa-solid fa-bullhorn"></i>
+                            <span>Broadcast Announcement</span>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Sent Notifications List -->
+                <div class="space-y-3">
+                    <h4 class="text-sm font-bold text-slate-200 font-cinzel">Active Broadcast Notifications:</h4>
+                    <div id="adminNotificationsList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 3: ACADEMIC CALENDAR (GOOGLE / MS TEAMS GRID VIEW) -->
+        <div id="view-calendar" class="hidden space-y-8">
+            <div class="glass-panel p-6 space-y-6 border-emerald-500/30">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-slate-700">
+                    <div>
+                        <h3 class="text-xl font-bold font-cinzel text-slate-100">Academic Calendar (Teams / Google Calendar View)</h3>
+                        <p class="text-xs text-slate-400">Interactive month calendar grid for scheduling exams, practicals, classes, and assignment deadlines.</p>
+                    </div>
+                    <button onclick="toggleAddEventForm()" class="bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-slate-950 font-bold px-4 py-2.5 rounded-xl text-xs flex items-center space-x-2 shadow-md">
+                        <i class="fa-solid fa-calendar-plus"></i>
+                        <span>Add Calendar Event</span>
+                    </button>
+                </div>
+
+                <!-- Calendar Navigation Header -->
+                <div class="flex items-center justify-between bg-slate-950 p-4 rounded-2xl border border-slate-800">
+                    <div class="flex items-center space-x-3">
+                        <button id="calPrevMonthBtn" class="bg-slate-900 hover:bg-slate-800 text-slate-300 p-2 rounded-xl border border-slate-700 transition"><i class="fa-solid fa-chevron-left text-xs"></i></button>
+                        <h4 id="calMonthYearLabel" class="text-lg font-bold font-cinzel text-amber-300">August 2026</h4>
+                        <button id="calNextMonthBtn" class="bg-slate-900 hover:bg-slate-800 text-slate-300 p-2 rounded-xl border border-slate-700 transition"><i class="fa-solid fa-chevron-right text-xs"></i></button>
+                        <button id="calTodayBtn" class="bg-slate-800 hover:bg-slate-700 text-cyan-300 text-xs px-3 py-1.5 rounded-lg border border-slate-700 font-bold">Today</button>
+                    </div>
+
+                    <div class="flex items-center space-x-2 text-xs">
+                        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> Exam</span>
+                        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span> Class</span>
+                        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> Assignment</span>
+                        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Holiday</span>
+                    </div>
+                </div>
+
+                <!-- Add Event Modal Form (Collapsible) -->
+                <form id="addEventForm" class="hidden bg-slate-950/90 border border-emerald-500/30 p-6 rounded-2xl space-y-4">
+                    <h4 class="text-sm font-bold text-emerald-300 font-cinzel uppercase tracking-wider">Schedule New Academic Event</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Event Title:</label>
+                            <input type="text" id="evtTitleInput" required placeholder="e.g. Term 2 Examination" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-100 focus:border-emerald-400">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Date:</label>
+                            <input type="date" id="evtDateInput" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-100 focus:border-emerald-400">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Time Window:</label>
+                            <input type="text" id="evtTimeInput" required placeholder="08:00 AM - 10:30 AM" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-100 focus:border-emerald-400">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Category:</label>
+                            <select id="evtCategoryInput" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-100 focus:border-emerald-400">
+                                <option value="Exam">Term Exam</option>
+                                <option value="Class">Live Class</option>
+                                <option value="Assignment">Assignment Deadline</option>
+                                <option value="Holiday">Holiday / Break</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Target Class:</label>
+                            <select id="evtGradeInput" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-100 focus:border-emerald-400">
+                                <option value="All Classes">All Classes</option>
+                                <option value="06 - Science">06 - Science</option>
+                                <option value="07 - Science">07 - Science</option>
+                                <option value="08 - Science">08 - Science</option>
+                                <option value="09 - Science">09 - Science</option>
+                                <option value="10 - Science">10 - Science</option>
+                                <option value="11 - Science">11 - Science</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">Description:</label>
+                        <textarea id="evtDescInput" rows="2" placeholder="Topics tested, instructions for students..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-slate-100 focus:border-emerald-400"></textarea>
+                    </div>
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" onclick="toggleAddEventForm()" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-xs">Cancel</button>
+                        <button type="submit" class="px-5 py-2 bg-emerald-500 text-slate-950 font-bold rounded-xl text-xs shadow-md">Add to Calendar</button>
+                    </div>
+                </form>
+
+                <!-- Month Calendar Grid (Microsoft Teams / Google Calendar style) -->
+                <div class="overflow-x-auto bg-slate-950/80 rounded-2xl border border-slate-800 p-3">
+                    <div class="grid grid-cols-7 gap-1 text-center font-bold font-mono text-xs text-amber-300 pb-2 border-b border-slate-800">
+                        <div>MON</div>
+                        <div>TUE</div>
+                        <div>WED</div>
+                        <div>THU</div>
+                        <div>FRI</div>
+                        <div>SAT</div>
+                        <div>SUN</div>
+                    </div>
+                    <div id="calendarGridCells" class="grid grid-cols-7 gap-1 pt-2">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Upcoming Agenda List -->
+                <div class="pt-4 border-t border-slate-800 space-y-3">
+                    <h4 class="text-sm font-bold text-slate-200 font-cinzel">Upcoming Academic Agenda:</h4>
+                    <div id="adminCalendarAgendaList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 4: FILE SHARING -->
         <div id="view-files" class="hidden space-y-8">
             <div class="glass-panel p-6 space-y-6">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-slate-700">
@@ -395,7 +588,8 @@
                                 <option value="07 - Science">07 - Science</option>
                                 <option value="08 - Science">08 - Science</option>
                                 <option value="09 - Science">09 - Science</option>
-                                <option value="O/L Revision">O/L Revision Science</option>
+                                <option value="10 - Science">10 - Science</option>
+                                <option value="11 - Science">11 - Science</option>
                                 <option value="All Grades">All Grades</option>
                             </select>
                         </div>
@@ -434,109 +628,80 @@
             </div>
         </div>
 
-        <!-- VIEW 3: ACADEMIC CALENDAR -->
-        <div id="view-calendar" class="hidden space-y-8">
-            <div class="glass-panel p-6 space-y-6">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-slate-700">
-                    <div>
-                        <h3 class="text-xl font-bold font-cinzel text-slate-100">Academic Calendar & Scheduled Events</h3>
-                        <p class="text-xs text-slate-400">Post term exam schedules, assignment submission deadlines, and live Zoom timings.</p>
-                    </div>
-                    <button onclick="toggleAddEventForm()" class="bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-slate-950 font-bold px-4 py-2.5 rounded-xl text-xs flex items-center space-x-2 shadow-md">
-                        <i class="fa-solid fa-calendar-plus"></i>
-                        <span>Add Calendar Event</span>
-                    </button>
-                </div>
-
-                <!-- Add Event Form -->
-                <form id="addEventForm" class="hidden bg-slate-950/90 border border-emerald-500/30 p-6 rounded-2xl space-y-4">
-                    <h4 class="text-sm font-bold text-emerald-300 font-cinzel uppercase tracking-wider">Schedule New Academic Event</h4>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-400 mb-1">Event Title:</label>
-                            <input type="text" id="evtTitleInput" required placeholder="e.g. Term 2 Examination" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-100 focus:border-emerald-400">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-400 mb-1">Date:</label>
-                            <input type="date" id="evtDateInput" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-100 focus:border-emerald-400">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-400 mb-1">Time Window:</label>
-                            <input type="text" id="evtTimeInput" required placeholder="08:00 AM - 10:30 AM" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-100 focus:border-emerald-400">
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-400 mb-1">Category:</label>
-                            <select id="evtCategoryInput" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-100 focus:border-emerald-400">
-                                <option value="Exam">Term Exam</option>
-                                <option value="Assignment">Assignment Deadline</option>
-                                <option value="Class">Live Class</option>
-                                <option value="Holiday">Holiday / Break</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-400 mb-1">Target Class:</label>
-                            <select id="evtGradeInput" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-100 focus:border-emerald-400">
-                                <option value="06 - Science">06 - Science</option>
-                                <option value="07 - Science">07 - Science</option>
-                                <option value="08 - Science">08 - Science</option>
-                                <option value="All Classes">All Classes</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-400 mb-1">Description:</label>
-                        <textarea id="evtDescInput" rows="2" placeholder="Topics tested, instructions for students..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-slate-100 focus:border-emerald-400"></textarea>
-                    </div>
-                    <div class="flex justify-end space-x-3">
-                        <button type="button" onclick="toggleAddEventForm()" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-xs">Cancel</button>
-                        <button type="submit" class="px-5 py-2 bg-emerald-500 text-slate-950 font-bold rounded-xl text-xs shadow-md">Add to Calendar</button>
-                    </div>
-                </form>
-
-                <div id="adminCalendarList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- Populated via JS -->
-                </div>
-            </div>
-        </div>
-
-        <!-- VIEW 4: LMS CUSTOMIZATION STUDIO -->
+        <!-- VIEW 5: ERP CUSTOMIZER STUDIO (TEACHER PHOTO, BACKGROUND, MOTTO, HOTLINES) -->
         <div id="view-custom" class="hidden space-y-8">
-            <div class="glass-panel p-6 space-y-6">
+            <div class="glass-panel p-6 space-y-6 border-amber-500/40">
                 <div class="pb-4 border-b border-slate-700">
-                    <h3 class="text-xl font-bold font-cinzel text-slate-100">LMS Customization Studio</h3>
-                    <p class="text-xs text-slate-400">Personalize academy name, instructor profile, announcements, and portal branding.</p>
+                    <h3 class="text-xl font-bold font-cinzel text-slate-100">ERP Customizer Studio</h3>
+                    <p class="text-xs text-slate-400">Personalize Educator Name, Slogan/Motto, Hotlines, Teacher Profile Picture, and Background Wallpaper across all pages.</p>
                 </div>
 
-                <form id="customizationForm" class="space-y-6 max-w-3xl">
+                <form id="customizationForm" class="space-y-6 max-w-4xl">
+                    
+                    <!-- Media Uploads: Teacher Profile Photo & Custom ERP Background -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-950/80 p-5 rounded-2xl border border-slate-800">
+                        
+                        <!-- Teacher Profile Picture Upload -->
+                        <div class="space-y-3">
+                            <label class="block text-xs font-bold text-amber-300 uppercase tracking-wider">Teacher Profile Picture:</label>
+                            <div class="flex items-center space-x-4">
+                                <img id="custTeacherPhotoPreview" src="assets/images/teacher_banner.png" alt="Teacher Preview" class="w-20 h-24 object-cover rounded-2xl border-2 border-amber-400 bg-slate-900 shadow-md">
+                                <div class="space-y-1 flex-grow">
+                                    <input type="file" id="custTeacherPhotoInput" accept="image/*" class="text-xs text-slate-400 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-500/20 file:text-amber-300 hover:file:bg-amber-500/30 cursor-pointer">
+                                    <p class="text-[10px] text-slate-500">Updates profile avatar across all ERP cards.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ERP Background Picture Upload -->
+                        <div class="space-y-3">
+                            <label class="block text-xs font-bold text-rose-300 uppercase tracking-wider">ERP Background Wallpaper:</label>
+                            <div class="flex items-center space-x-4">
+                                <div id="custBgPreviewBox" class="w-24 h-24 rounded-2xl border-2 border-rose-400/60 bg-cover bg-center shadow-md" style="background-image: url('assets/images/lms_background.png');"></div>
+                                <div class="space-y-1 flex-grow">
+                                    <input type="file" id="custBgImageInput" accept="image/*" class="text-xs text-slate-400 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-rose-500/20 file:text-rose-300 hover:file:bg-rose-500/30 cursor-pointer">
+                                    <p class="text-[10px] text-slate-500">Embeds custom background image to all pages.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Academy / Portal Name:</label>
-                            <input type="text" id="custAcademyName" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:border-amber-400">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Portal Subtitle / Tagline:</label>
-                            <input type="text" id="custTagline" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:border-amber-400">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Head Educator Name:</label>
+                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Head Educator Name:</label>
                             <input type="text" id="custTeacherName" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:border-amber-400">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Educator Title & Degrees:</label>
+                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Teacher Title & Degrees:</label>
                             <input type="text" id="custTeacherTitle" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:border-amber-400">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Slogan / Motto (Sinhala / English):</label>
+                            <input type="text" id="custMotto" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:border-amber-400 font-bold">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Telephone Hotlines:</label>
+                            <input type="text" id="custHotlines" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:border-amber-400 font-mono">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Academy Name:</label>
+                            <input type="text" id="custAcademyName" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:border-amber-400">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Tagline / Subtitle:</label>
+                            <input type="text" id="custTagline" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:border-amber-400">
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Student Banner Announcement:</label>
-                        <textarea id="custAnnouncement" rows="3" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-4 text-xs text-slate-100 focus:border-amber-400"></textarea>
+                        <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Student Banner Announcement:</label>
+                        <textarea id="custAnnouncement" rows="2" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs text-slate-100 focus:border-amber-400"></textarea>
                     </div>
 
                     <button type="submit" class="bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 text-slate-950 font-extrabold px-6 py-3 rounded-xl text-xs uppercase tracking-wider shadow-lg flex items-center space-x-2">
                         <i class="fa-solid fa-wand-magic-sparkles"></i>
-                        <span>Save Customization Settings</span>
+                        <span>Save & Apply ERP Customizations</span>
                     </button>
                 </form>
             </div>
@@ -544,62 +709,58 @@
 
     </main>
 
-    <!-- Classroom Live Launcher (Skype & Zoom) Modal -->
+    <!-- Classroom Live Launcher (WhatsApp & Zoom) Modal -->
     <div id="classroomModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-slate-900 border border-amber-500/50 rounded-3xl p-6 sm:p-8 max-w-lg w-full space-y-6 shadow-2xl">
+        <div class="bg-slate-900 border border-emerald-500/50 rounded-3xl p-6 sm:p-8 max-w-lg w-full space-y-6 shadow-2xl">
             <div class="flex justify-between items-center pb-3 border-b border-slate-800">
-                <h3 class="text-lg font-bold font-cinzel text-amber-300"><i class="fa-solid fa-tower-broadcast mr-2"></i>Configure Live Classroom (Skype & Zoom)</h3>
+                <h3 class="text-lg font-bold font-cinzel text-emerald-300"><i class="fa-brands fa-whatsapp mr-2 text-emerald-400"></i>Configure WhatsApp & Zoom Live Classroom</h3>
                 <button onclick="closeClassroomModal()" class="text-slate-400 hover:text-slate-200"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
 
             <form id="classroomConfigForm" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-semibold text-slate-400 mb-1">Live Topic / Title:</label>
-                    <input type="text" id="modalClassTitle" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-100 focus:border-amber-400">
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Session Topic / Title:</label>
+                    <input type="text" id="modalClassTitle" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-100 focus:border-emerald-400">
                 </div>
                 
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block text-xs font-semibold text-slate-400 mb-1">Target Class:</label>
-                        <select id="modalClassGrade" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 focus:border-amber-400">
+                        <select id="modalClassGrade" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 focus:border-emerald-400">
                             <option value="06 - Science">06 - Science</option>
                             <option value="07 - Science">07 - Science</option>
                             <option value="08 - Science">08 - Science</option>
                             <option value="09 - Science">09 - Science</option>
-                            <option value="O/L Revision">O/L Revision Science</option>
+                            <option value="10 - Science">10 - Science</option>
+                            <option value="11 - Science">11 - Science</option>
                             <option value="All Classes">All Classes</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-400 mb-1">Skype Mode:</label>
-                        <select id="modalSkypeMode" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 focus:border-amber-400">
-                            <option value="call">Direct App Call (skype:ID?call)</option>
-                            <option value="video">Video Call (skype:ID?call&video=true)</option>
-                            <option value="chat">Group Chat (skype:ID?chat)</option>
-                        </select>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">Teacher WhatsApp Phone:</label>
+                        <input type="text" id="modalWaPhone" required placeholder="94717812092" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-emerald-300 focus:border-emerald-400 font-mono">
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-semibold text-slate-400 mb-1">Teacher Skype Username / ID (or Meeting URL):</label>
-                    <input type="text" id="modalSkypeId" required placeholder="e.g. sheshadi.science or https://join.skype.com/..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2 text-sm text-sky-300 focus:border-sky-400 font-mono">
-                    <p class="text-[10px] text-slate-500 mt-1">Directly activates the Skype app logged in on your PC or Phone.</p>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">WhatsApp Group / Discussion URL:</label>
+                    <input type="url" id="modalWaGroupUrl" placeholder="https://chat.whatsapp.com/..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-100 focus:border-emerald-400 font-mono">
                 </div>
 
-                <div class="pt-2 border-t border-slate-800">
+                <div>
                     <label class="block text-xs font-semibold text-slate-400 mb-1">Optional Zoom Join URL (Backup):</label>
                     <input type="url" id="modalZoomUrl" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-100 focus:border-cyan-400 font-mono">
                 </div>
 
                 <div class="flex justify-end space-x-3 pt-3">
                     <button type="button" onclick="closeClassroomModal()" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-xs">Cancel</button>
-                    <button type="submit" class="px-5 py-2 bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-bold rounded-xl text-xs shadow-md">Broadcast Live Keys</button>
+                    <button type="submit" class="px-5 py-2 bg-gradient-to-r from-emerald-600 to-teal-500 text-slate-950 font-bold rounded-xl text-xs shadow-md">Broadcast Live Keys</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Student Registration Modal (Account Creation with Photo Upload) -->
+    <!-- Student Registration Modal -->
     <div id="registerModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4 overflow-y-auto">
         <div class="bg-slate-900 border border-amber-500/50 rounded-3xl p-6 sm:p-8 max-w-xl w-full space-y-6 shadow-2xl my-8">
             <div class="flex justify-between items-center pb-3 border-b border-slate-800">
@@ -611,7 +772,6 @@
             </div>
 
             <form id="studentRegistrationForm" class="space-y-4">
-                <!-- Photo Upload Area -->
                 <div class="flex items-center space-x-4 p-4 bg-slate-950 rounded-2xl border border-slate-800">
                     <img id="regPhotoPreview" src="https://api.dicebear.com/7.x/avataaars/svg?seed=NewStudent" alt="Preview" class="w-16 h-16 rounded-xl border-2 border-amber-500/40 bg-slate-900 object-cover">
                     <div class="flex-grow space-y-1">
@@ -651,12 +811,13 @@
                             <option value="07 - Science">07 - Science</option>
                             <option value="08 - Science">08 - Science</option>
                             <option value="09 - Science">09 - Science</option>
-                            <option value="O/L Revision">O/L Revision Science</option>
+                            <option value="10 - Science">10 - Science</option>
+                            <option value="11 - Science">11 - Science</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-400 mb-1">Homeroom Educator:</label>
-                        <input type="text" id="regTeacher" value="Mrs. Sheshadi Amarasinghe" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:border-amber-400">
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">Parent / Student WhatsApp:</label>
+                        <input type="text" id="regParentWa" value="+94771614260" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:border-amber-400 font-mono">
                     </div>
                 </div>
 
@@ -686,6 +847,11 @@
         let termChart = null;
         let practicalPieChart = null;
         let uploadedPhotoBase64 = null;
+        let customTeacherPhotoBase64 = null;
+        let customBgBase64 = null;
+
+        let calCurrentYear = 2026;
+        let calCurrentMonth = 7; // 0-indexed: 7 is August
 
         document.getElementById('logoutBtn').addEventListener('click', () => {
             sessionStorage.removeItem('admin_authenticated');
@@ -697,7 +863,9 @@
                 window.LMSCore.applyThemeAndBranding();
                 refreshLiveClassroomDisplay();
                 renderFilesList();
-                renderCalendarList();
+                renderCalendarGrid();
+                renderCalendarAgenda();
+                renderNotificationsList();
                 loadCustomizationForm();
             }
 
@@ -706,92 +874,44 @@
             selectAdminStudent(0);
         });
 
-        // Registration Modal Toggle
-        function toggleRegisterModal() {
-            document.getElementById('registerModal').classList.toggle('hidden');
-        }
-
-        // Student Photo File Upload Reader
-        document.getElementById('regPhotoInput').addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = (evt) => {
-                uploadedPhotoBase64 = evt.target.result;
-                document.getElementById('regPhotoPreview').src = uploadedPhotoBase64;
-            };
-            reader.readAsDataURL(file);
-        });
-
-        // Submit New Student Registration
-        document.getElementById('studentRegistrationForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const name = document.getElementById('regName').value.trim();
-            const stId = document.getElementById('regStudentId').value.trim().toUpperCase();
-            const username = document.getElementById('regUsername').value.trim().toLowerCase();
-            const password = document.getElementById('regPassword').value.trim();
-            const grade = document.getElementById('regGrade').value;
-            const teacher = document.getElementById('regTeacher').value.trim();
-
-            const res = await window.LMSCore.registerStudent({
-                name: name,
-                student_id: stId,
-                username: username,
-                password: password,
-                grade_class: grade,
-                homeroom_teacher: teacher,
-                avatar: uploadedPhotoBase64 || ("https://api.dicebear.com/7.x/avataaars/svg?seed=" + encodeURIComponent(name))
-            });
-
-            allStudents = res.students;
-            toggleRegisterModal();
-            renderTabs();
-            selectAdminStudent(allStudents.length - 1);
-            alert(`Student account created for ${name} (${stId})! Username: ${username} | Password: ${password}`);
-        });
-
         // Tab Switching
         function switchAdminTab(tabName) {
-            ['students', 'files', 'calendar', 'custom'].forEach(t => {
+            ['students', 'notifications', 'calendar', 'files', 'custom'].forEach(t => {
                 const view = document.getElementById(`view-${t}`);
                 const nav = document.getElementById(`nav-tab-${t}`);
-                if (t === tabName) {
-                    view.classList.remove('hidden');
-                    nav.className = "pb-3 text-amber-400 border-b-2 border-amber-400 flex items-center gap-2 whitespace-nowrap";
-                } else {
-                    view.classList.add('hidden');
-                    nav.className = "pb-3 text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap";
+                if (view && nav) {
+                    if (t === tabName) {
+                        view.classList.remove('hidden');
+                        nav.className = "pb-3 text-amber-400 border-b-2 border-amber-400 flex items-center gap-2 whitespace-nowrap";
+                    } else {
+                        view.classList.add('hidden');
+                        nav.className = "pb-3 text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap";
+                    }
                 }
             });
+            if (tabName === 'calendar') {
+                renderCalendarGrid();
+            }
         }
 
-        // --- SKYPE & ZOOM LIVE CLASSROOM LAUNCHER ---
+        // --- WHATSAPP & ZOOM LIVE CLASSROOM ---
         function refreshLiveClassroomDisplay() {
-            const skype = window.LMSCore.getSkypeSession();
-            const zoom = window.LMSCore.getZoomSession();
-
-            document.getElementById('liveSessionTitleDisplay').textContent = skype.title;
-            document.getElementById('liveTargetGradeDisplay').textContent = skype.grade || "06 - Science";
-            document.getElementById('liveSkypeUserDisplay').textContent = skype.teacherSkypeId || "sheshadi.science";
+            const wa = window.LMSCore.getWhatsappSession();
+            document.getElementById('liveSessionTitleDisplay').textContent = wa.title;
+            document.getElementById('liveTargetGradeDisplay').textContent = wa.grade || "06 - Science";
+            document.getElementById('liveWaPhoneDisplay').textContent = wa.teacherWhatsappNumber ? "+" + wa.teacherWhatsappNumber : "+94 71 781 2092";
 
             const badge = document.getElementById('liveClassBadge');
-            if (skype.isLive) {
+            if (wa.isLive) {
                 badge.className = "px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 animate-pulse";
-                badge.textContent = "LIVE ON SKYPE";
+                badge.textContent = "LIVE ON WHATSAPP";
             } else {
                 badge.className = "px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-slate-800 text-slate-400 border border-slate-700";
                 badge.textContent = "OFFLINE";
             }
-        }
 
-        document.getElementById('launchSkypeBtn').addEventListener('click', () => {
-            const skype = window.LMSCore.getSkypeSession();
-            window.LMSCore.toggleSkypeLive(true);
-            refreshLiveClassroomDisplay();
-            const uri = window.LMSCore.getSkypeDirectUri(skype);
-            window.location.href = uri; // Triggers the local Skype app on PC or Phone
-        });
+            document.getElementById('launchWhatsappBtn').href = window.LMSCore.getWhatsappDirectUri();
+        }
 
         document.getElementById('launchZoomBtn').addEventListener('click', () => {
             const z = window.LMSCore.getZoomSession();
@@ -800,12 +920,12 @@
         });
 
         document.getElementById('editClassroomModalBtn').addEventListener('click', () => {
-            const skype = window.LMSCore.getSkypeSession();
+            const wa = window.LMSCore.getWhatsappSession();
             const zoom = window.LMSCore.getZoomSession();
-            document.getElementById('modalClassTitle').value = skype.title;
-            document.getElementById('modalClassGrade').value = skype.grade || "06 - Science";
-            document.getElementById('modalSkypeMode').value = skype.callMode || "call";
-            document.getElementById('modalSkypeId').value = skype.teacherSkypeId || "sheshadi.science";
+            document.getElementById('modalClassTitle').value = wa.title;
+            document.getElementById('modalClassGrade').value = wa.grade || "06 - Science";
+            document.getElementById('modalWaPhone').value = wa.teacherWhatsappNumber || "94717812092";
+            document.getElementById('modalWaGroupUrl').value = wa.whatsappGroupUrl || "";
             document.getElementById('modalZoomUrl').value = zoom.meetingUrl || "";
             document.getElementById('classroomModal').classList.remove('hidden');
         });
@@ -818,15 +938,15 @@
             e.preventDefault();
             const title = document.getElementById('modalClassTitle').value.trim();
             const grade = document.getElementById('modalClassGrade').value;
-            const mode = document.getElementById('modalSkypeMode').value;
-            const skypeId = document.getElementById('modalSkypeId').value.trim();
+            const phone = document.getElementById('modalWaPhone').value.trim().replace(/[^0-9]/g, '');
+            const groupUrl = document.getElementById('modalWaGroupUrl').value.trim();
             const zoomUrl = document.getElementById('modalZoomUrl').value.trim();
 
-            window.LMSCore.saveSkypeSession({
+            window.LMSCore.saveWhatsappSession({
                 title: title,
                 grade: grade,
-                callMode: mode,
-                teacherSkypeId: skypeId,
+                teacherWhatsappNumber: phone,
+                whatsappGroupUrl: groupUrl,
                 isLive: true
             });
 
@@ -841,69 +961,162 @@
 
             closeClassroomModal();
             refreshLiveClassroomDisplay();
-            alert("Live classroom keys updated! Broadcasted to " + grade + " students.");
+            alert("WhatsApp Live Classroom configured and broadcasted to " + grade + "!");
         });
 
-        // --- FILE SHARING ---
-        function toggleUploadFileForm() {
-            document.getElementById('uploadFileForm').classList.toggle('hidden');
-        }
+        // --- NOTIFICATIONS & BROADCASTS (GRADE 6 - 11) ---
+        function renderNotificationsList() {
+            const notifs = window.LMSCore.getNotifications();
+            const container = document.getElementById('adminNotificationsList');
+            container.innerHTML = '';
 
-        function renderFilesList() {
-            const files = window.LMSCore.getFiles();
-            const tbody = document.getElementById('adminFilesTableBody');
-            tbody.innerHTML = '';
+            notifs.forEach(n => {
+                const card = document.createElement('div');
+                card.className = "glass-panel p-4 space-y-2 border-amber-500/30 flex justify-between items-start";
+                
+                const getPriorityBadge = (p) => {
+                    if (p.includes('Exam')) return 'bg-rose-500/20 text-rose-300 border-rose-500/40';
+                    if (p.includes('Live')) return 'bg-sky-500/20 text-sky-300 border-sky-500/40';
+                    if (p.includes('Homework')) return 'bg-amber-500/20 text-amber-300 border-amber-500/40';
+                    return 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40';
+                };
 
-            files.forEach(f => {
-                const tr = document.createElement('tr');
-                tr.className = "hover:bg-slate-800/40 border-b border-slate-800";
-                tr.innerHTML = `
-                    <td class="px-5 py-3.5 font-bold text-slate-100">
-                        ${f.title}
-                        <p class="text-[11px] text-slate-400 font-normal">${f.description}</p>
-                    </td>
-                    <td class="px-5 py-3.5"><span class="px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">${f.category}</span></td>
-                    <td class="px-5 py-3.5 font-semibold text-cyan-300">${f.grade}</td>
-                    <td class="px-5 py-3.5 text-slate-400 font-mono">${f.uploadDate}</td>
-                    <td class="px-5 py-3.5 flex items-center space-x-3">
-                        <a href="${f.fileUrl}" target="_blank" class="text-cyan-400 hover:underline font-bold"><i class="fa-solid fa-download mr-1"></i>View</a>
-                        <button onclick="deleteSharedFile('${f.id}')" class="text-red-400 hover:text-red-300"><i class="fa-solid fa-trash"></i></button>
-                    </td>
+                card.innerHTML = `
+                    <div class="space-y-1">
+                        <div class="flex items-center space-x-2">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase ${getPriorityBadge(n.priority)}">${n.priority}</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-900 text-cyan-300 border border-slate-700">${n.grade}</span>
+                            <span class="text-xs font-mono text-slate-400">${n.date} • ${n.time}</span>
+                        </div>
+                        <h4 class="font-bold text-slate-100 text-sm font-cinzel">${n.title}</h4>
+                        <p class="text-xs text-slate-300">${n.message}</p>
+                    </div>
+                    <button onclick="deleteNotification('${n.id}')" class="text-red-400 hover:text-red-300 text-xs p-1"><i class="fa-solid fa-trash"></i></button>
                 `;
-                tbody.appendChild(tr);
+                container.appendChild(card);
             });
         }
 
-        document.getElementById('uploadFileForm').addEventListener('submit', (e) => {
+        document.getElementById('broadcastNotificationForm').addEventListener('submit', (e) => {
             e.preventDefault();
-            window.LMSCore.addFile({
-                title: document.getElementById('fileTitleInput').value.trim(),
-                category: document.getElementById('fileCategoryInput').value,
-                grade: document.getElementById('fileGradeInput').value,
-                fileUrl: document.getElementById('fileUrlInput').value.trim(),
-                description: document.getElementById('fileDescInput').value.trim() || "No additional notes.",
-                fileSize: "15.0 MB"
+            const title = document.getElementById('notifTitleInput').value.trim();
+            const grade = document.getElementById('notifGradeInput').value;
+            const priority = document.getElementById('notifPriorityInput').value;
+            const message = document.getElementById('notifMessageInput').value.trim();
+
+            window.LMSCore.addNotification({
+                title: title,
+                grade: grade,
+                priority: priority,
+                message: message
             });
-            toggleUploadFileForm();
-            renderFilesList();
-            alert("New study file published to student portals!");
+
+            document.getElementById('notifTitleInput').value = '';
+            document.getElementById('notifMessageInput').value = '';
+            renderNotificationsList();
+            alert(`Notification broadcasted to ${grade} students!`);
         });
 
-        function deleteSharedFile(id) {
-            if (confirm("Are you sure you want to delete this file?")) {
-                window.LMSCore.deleteFile(id);
-                renderFilesList();
+        function deleteNotification(id) {
+            if (confirm("Delete this notification broadcast?")) {
+                window.LMSCore.deleteNotification(id);
+                renderNotificationsList();
             }
         }
 
-        // --- ACADEMIC CALENDAR ---
+        // --- ACADEMIC CALENDAR (TEAMS / GOOGLE CALENDAR GRID VIEW) ---
+        function renderCalendarGrid() {
+            const grid = document.getElementById('calendarGridCells');
+            grid.innerHTML = '';
+
+            const date = new Date(calCurrentYear, calCurrentMonth, 1);
+            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            document.getElementById('calMonthYearLabel').textContent = `${monthNames[calCurrentMonth]} ${calCurrentYear}`;
+
+            const firstDayIndex = (date.getDay() + 6) % 7; // Monday = 0
+            const lastDay = new Date(calCurrentYear, calCurrentMonth + 1, 0).getDate();
+            const prevLastDay = new Date(calCurrentYear, calCurrentMonth, 0).getDate();
+
+            const events = window.LMSCore.getCalendarEvents();
+
+            // Previous month trailing days
+            for (let x = firstDayIndex; x > 0; x--) {
+                const cell = document.createElement('div');
+                cell.className = "h-24 p-1.5 bg-slate-950/40 rounded-xl border border-slate-900/60 opacity-30 text-xs";
+                cell.innerHTML = `<span class="font-mono text-slate-500">${prevLastDay - x + 1}</span>`;
+                grid.appendChild(cell);
+            }
+
+            // Current month days
+            const today = new Date();
+            for (let i = 1; i <= lastDay; i++) {
+                const cell = document.createElement('div');
+                const isToday = (today.getFullYear() === calCurrentYear && today.getMonth() === calCurrentMonth && today.getDate() === i);
+                
+                const curDateStr = `${calCurrentYear}-${String(calCurrentMonth + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
+                const dayEvents = events.filter(e => e.date === curDateStr);
+
+                cell.className = `h-24 p-1.5 rounded-xl border transition flex flex-col justify-between overflow-hidden cursor-pointer ${isToday ? 'bg-amber-500/10 border-amber-400' : 'bg-slate-900/70 border-slate-800 hover:border-amber-400/40'}`;
+                
+                let eventsHtml = '';
+                dayEvents.forEach(ev => {
+                    let color = 'bg-rose-500/20 text-rose-300 border-rose-500/30';
+                    if (ev.category === 'Class') color = 'bg-sky-500/20 text-sky-300 border-sky-500/30';
+                    if (ev.category === 'Assignment') color = 'bg-amber-500/20 text-amber-300 border-amber-500/30';
+                    if (ev.category === 'Holiday') color = 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30';
+
+                    eventsHtml += `
+                        <div class="text-[9px] px-1 py-0.5 rounded truncate font-bold border ${color}" title="${ev.title}">
+                            ${ev.title}
+                        </div>
+                    `;
+                });
+
+                cell.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <span class="font-mono text-[11px] ${isToday ? 'font-black text-amber-300' : 'text-slate-400'}">${i}</span>
+                        ${isToday ? '<span class="text-[8px] px-1 bg-amber-500 text-slate-950 font-bold rounded">TODAY</span>' : ''}
+                    </div>
+                    <div class="space-y-1 overflow-y-auto max-h-16 py-0.5">
+                        ${eventsHtml}
+                    </div>
+                `;
+
+                cell.addEventListener('click', () => {
+                    document.getElementById('evtDateInput').value = curDateStr;
+                    document.getElementById('addEventForm').classList.remove('hidden');
+                });
+
+                grid.appendChild(cell);
+            }
+        }
+
+        document.getElementById('calPrevMonthBtn').addEventListener('click', () => {
+            calCurrentMonth--;
+            if (calCurrentMonth < 0) { calCurrentMonth = 11; calCurrentYear--; }
+            renderCalendarGrid();
+        });
+
+        document.getElementById('calNextMonthBtn').addEventListener('click', () => {
+            calCurrentMonth++;
+            if (calCurrentMonth > 11) { calCurrentMonth = 0; calCurrentYear++; }
+            renderCalendarGrid();
+        });
+
+        document.getElementById('calTodayBtn').addEventListener('click', () => {
+            const d = new Date();
+            calCurrentYear = d.getFullYear();
+            calCurrentMonth = d.getMonth();
+            renderCalendarGrid();
+        });
+
         function toggleAddEventForm() {
             document.getElementById('addEventForm').classList.toggle('hidden');
         }
 
-        function renderCalendarList() {
+        function renderCalendarAgenda() {
             const events = window.LMSCore.getCalendarEvents();
-            const container = document.getElementById('adminCalendarList');
+            const container = document.getElementById('adminCalendarAgendaList');
             container.innerHTML = '';
 
             events.forEach(e => {
@@ -914,6 +1127,7 @@
                         <div class="flex items-center space-x-2">
                             <span class="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">${e.category}</span>
                             <span class="text-xs font-mono text-cyan-300">${e.date} • ${e.time}</span>
+                            <span class="text-[10px] text-amber-300 font-bold font-mono">(${e.grade})</span>
                         </div>
                         <h4 class="font-bold text-slate-100 text-sm font-cinzel">${e.title}</h4>
                         <p class="text-xs text-slate-400">${e.description}</p>
@@ -935,38 +1149,69 @@
                 description: document.getElementById('evtDescInput').value.trim() || "Academic scheduled activity."
             });
             toggleAddEventForm();
-            renderCalendarList();
-            alert("New event added to LMS Academic Calendar!");
+            renderCalendarGrid();
+            renderCalendarAgenda();
+            alert("New event scheduled in Academic Calendar!");
         });
 
         function deleteCalendarEvt(id) {
             if (confirm("Delete this event from the academic calendar?")) {
                 window.LMSCore.deleteCalendarEvent(id);
-                renderCalendarList();
+                renderCalendarGrid();
+                renderCalendarAgenda();
             }
         }
 
-        // --- LMS CUSTOMIZATION STUDIO ---
+        // --- ERP CUSTOMIZATION STUDIO ---
         function loadCustomizationForm() {
             const s = window.LMSCore.getSettings();
-            document.getElementById('custAcademyName').value = s.academyName;
-            document.getElementById('custTagline').value = s.tagline;
-            document.getElementById('custTeacherName').value = s.teacherName;
-            document.getElementById('custTeacherTitle').value = s.teacherTitle;
-            document.getElementById('custAnnouncement').value = s.announcement;
+            document.getElementById('custAcademyName').value = s.academyName || "";
+            document.getElementById('custTagline').value = s.tagline || "";
+            document.getElementById('custTeacherName').value = s.teacherName || "";
+            document.getElementById('custTeacherTitle').value = s.teacherTitle || "";
+            document.getElementById('custMotto').value = s.motto || "";
+            document.getElementById('custHotlines').value = s.hotlines || "";
+            document.getElementById('custAnnouncement').value = s.announcement || "";
         }
+
+        document.getElementById('custTeacherPhotoInput').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (evt) => {
+                customTeacherPhotoBase64 = evt.target.result;
+                document.getElementById('custTeacherPhotoPreview').src = customTeacherPhotoBase64;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        document.getElementById('custBgImageInput').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (evt) => {
+                customBgBase64 = evt.target.result;
+                document.getElementById('custBgPreviewBox').style.backgroundImage = `url('${customBgBase64}')`;
+            };
+            reader.readAsDataURL(file);
+        });
 
         document.getElementById('customizationForm').addEventListener('submit', (e) => {
             e.preventDefault();
+            const current = window.LMSCore.getSettings();
             window.LMSCore.saveSettings({
                 academyName: document.getElementById('custAcademyName').value.trim(),
                 tagline: document.getElementById('custTagline').value.trim(),
                 teacherName: document.getElementById('custTeacherName').value.trim(),
                 teacherTitle: document.getElementById('custTeacherTitle').value.trim(),
-                announcement: document.getElementById('custAnnouncement').value.trim()
+                motto: document.getElementById('custMotto').value.trim(),
+                hotlines: document.getElementById('custHotlines').value.trim(),
+                announcement: document.getElementById('custAnnouncement').value.trim(),
+                teacherPhoto: customTeacherPhotoBase64 || current.teacherPhoto,
+                bgImage: customBgBase64 || current.bgImage
             });
             window.LMSCore.applyThemeAndBranding();
-            alert("Customization settings updated successfully!");
+            alert("ERP Customizations applied successfully across all pages!");
         });
 
         // --- STUDENT EVALUATION & WEEKLY TABLES ---
@@ -1021,7 +1266,7 @@
                 });
             }
 
-            const guideOpts = STATUS_OPTIONS; // ["Completed", "Incomplete", "0.5 Done", "Pending", "Still not attended"]
+            const guideOpts = STATUS_OPTIONS;
             const prOpts = STATUS_OPTIONS;
 
             mData.forEach((row, idx) => {
@@ -1053,7 +1298,7 @@
                     <td class="px-4 py-3">${makeSelect(guideOpts, row.past_paper, 'past_paper')}</td>
                     <td class="px-4 py-3">${makeSelect(prOpts, row.practical, 'practical')}</td>
                     <td class="px-4 py-3">
-                        <input type="number" data-week="${idx}" data-field="unit_test" value="${utValue}" min="0" max="100" placeholder="(Still not attended)" class="bg-slate-950 border border-amber-500/50 rounded px-2.5 py-1 text-xs w-28 text-emerald-400 font-bold focus:border-cyan-400"> <span class="text-xs text-slate-400">/ 100</span>
+                        <input type="number" data-week="${idx}" data-field="unit_test" value="${utValue}" min="0" max="100" placeholder="(Still not attended)" class="bg-slate-950 border border-amber-500/50 rounded px-2.5 py-1 text-xs w-32 text-emerald-400 font-bold focus:border-cyan-400"> <span class="text-xs text-slate-400">/ 100</span>
                     </td>
                 `;
                 tbody.appendChild(tr);
@@ -1097,24 +1342,30 @@
             alert(`Weekly table saved for ${st.student_info.name} (${selectedMonth})!`);
         });
 
-        // --- TERM TEST MARKS MANAGEMENT ---
+        // --- TERM TEST MARKS MANAGEMENT & SAVE SLOTS ---
         function renderTermMarksList(st) {
             const container = document.getElementById('termMarksContainer');
             container.innerHTML = '';
 
             const list = st.assessments || [
                 { term: "Term 1 Exam", score: 80 },
-                { term: "Term 2 Exam", score: 68 },
-                { term: "Final Exam", score: 100 }
+                { term: "Term 2 Exam", score: 85 },
+                { term: "Final Exam", score: 90 }
             ];
 
             list.forEach((item, idx) => {
                 const row = document.createElement('div');
                 row.className = "flex items-center space-x-3 bg-slate-950 p-2.5 rounded-xl border border-slate-800";
                 row.innerHTML = `
-                    <input type="text" value="${item.term}" data-term-idx="${idx}" class="term-name-input bg-slate-900 border border-slate-700 rounded-lg px-3 py-1 text-xs text-slate-100 flex-grow font-bold focus:border-amber-400">
-                    <input type="number" min="0" max="100" value="${item.score}" data-term-idx="${idx}" class="term-score-input bg-slate-900 border border-amber-500/50 rounded-lg px-3 py-1 text-xs text-emerald-400 font-extrabold w-28 focus:border-amber-400">
-                    <button onclick="removeTermExam(${idx})" class="text-red-400 hover:text-red-300 p-1"><i class="fa-solid fa-trash text-xs"></i></button>
+                    <div class="flex-grow">
+                        <label class="block text-[10px] text-slate-400 uppercase font-mono">Exam Slot #${idx + 1}:</label>
+                        <input type="text" value="${item.term}" data-term-idx="${idx}" class="term-name-input w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1 text-xs text-slate-100 font-bold focus:border-amber-400">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] text-slate-400 uppercase font-mono">Score (0-100):</label>
+                        <input type="number" min="0" max="100" value="${item.score}" data-term-idx="${idx}" class="term-score-input bg-slate-900 border border-amber-500/50 rounded-lg px-3 py-1 text-xs text-emerald-400 font-extrabold w-28 focus:border-amber-400">
+                    </div>
+                    <button onclick="removeTermExam(${idx})" class="text-red-400 hover:text-red-300 p-1 self-end mb-1"><i class="fa-solid fa-trash text-xs"></i></button>
                 `;
                 container.appendChild(row);
             });
@@ -1127,7 +1378,7 @@
             const tScore = parseInt(scoreInput.value) || 0;
 
             if (!tName) {
-                alert("Please enter a Term Exam name (e.g. Term 3 Exam).");
+                alert("Please enter a Term Exam name (e.g. Term 3 Examination).");
                 return;
             }
 
@@ -1164,7 +1415,7 @@
 
             allStudents = await window.LMSCore.saveStudentTermMarks(st.student_info.student_id, updatedTerms);
             selectAdminStudent(curIndex);
-            alert(`Term Test Marks updated for ${st.student_info.name}!`);
+            alert(`Term Assessment Marks saved and synchronized for ${st.student_info.name}!`);
         });
 
         function selectAdminStudent(idx) {
@@ -1222,10 +1473,10 @@
             if (termChart) termChart.destroy();
             if (practicalPieChart) practicalPieChart.destroy();
 
-            // 1. 12-Month Unit Test Line Chart (Calculated strictly by completed tests in each month)
+            // 1. 12-Month Unit Test Line Chart (Default 0 for each unrecorded month)
             const monthlyAverages = MONTHS.map(m => {
                 const weeks = (st.monthly_progress && st.monthly_progress[m]) ? st.monthly_progress[m] : [];
-                return window.LMSCore.calculateMonthlyUnitTestAverage(weeks);
+                return window.LMSCore.calculateMonthlyUnitTestAverage(weeks); // Returns 0 if no tests done!
             });
 
             annualChart = new Chart(document.getElementById('adminAnnualTrendChart').getContext('2d'), {
@@ -1233,7 +1484,7 @@
                 data: {
                     labels: MONTHS.map(m => m.substring(0, 3)),
                     datasets: [{
-                        label: 'Monthly Unit Test Average',
+                        label: 'Monthly Unit Test Average (Default 0)',
                         data: monthlyAverages,
                         borderColor: '#fbbf24',
                         backgroundColor: 'rgba(251, 191, 36, 0.15)',
@@ -1244,8 +1495,7 @@
                         pointBorderColor: '#0c0710',
                         pointBorderWidth: 2,
                         pointRadius: 5,
-                        pointHoverRadius: 7,
-                        spanGaps: true
+                        pointHoverRadius: 7
                     }]
                 },
                 options: {
@@ -1257,7 +1507,6 @@
                             callbacks: {
                                 label: function(context) {
                                     const val = context.raw;
-                                    if (val === null || val === undefined) return ' (Still not attended)';
                                     const mName = MONTHS[context.dataIndex];
                                     const weeks = (st.monthly_progress && st.monthly_progress[mName]) || [];
                                     const done = weeks.filter(w => w && typeof w.unit_test === 'number' && !isNaN(w.unit_test) && w.unit_test !== null).length;
@@ -1351,6 +1600,100 @@
             );
             renderTabs(filtered);
         });
+
+        // Register Form Modal Handler
+        function toggleRegisterModal() {
+            document.getElementById('registerModal').classList.toggle('hidden');
+        }
+
+        document.getElementById('regPhotoInput').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (evt) => {
+                uploadedPhotoBase64 = evt.target.result;
+                document.getElementById('regPhotoPreview').src = uploadedPhotoBase64;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        document.getElementById('studentRegistrationForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('regName').value.trim();
+            const stId = document.getElementById('regStudentId').value.trim().toUpperCase();
+            const username = document.getElementById('regUsername').value.trim().toLowerCase();
+            const password = document.getElementById('regPassword').value.trim();
+            const grade = document.getElementById('regGrade').value;
+            const parentWa = document.getElementById('regParentWa').value.trim();
+
+            const res = await window.LMSCore.registerStudent({
+                name: name,
+                student_id: stId,
+                username: username,
+                password: password,
+                grade_class: grade,
+                parent_whatsapp: parentWa,
+                avatar: uploadedPhotoBase64 || ("https://api.dicebear.com/7.x/avataaars/svg?seed=" + encodeURIComponent(name))
+            });
+
+            allStudents = res.students;
+            toggleRegisterModal();
+            renderTabs();
+            selectAdminStudent(allStudents.length - 1);
+            alert(`Student account created for ${name} (${stId})! Username: ${username} | Password: ${password}`);
+        });
+
+        // File Sharing Functions
+        function toggleUploadFileForm() {
+            document.getElementById('uploadFileForm').classList.toggle('hidden');
+        }
+
+        function renderFilesList() {
+            const files = window.LMSCore.getFiles();
+            const tbody = document.getElementById('adminFilesTableBody');
+            tbody.innerHTML = '';
+
+            files.forEach(f => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-800/40 border-b border-slate-800";
+                tr.innerHTML = `
+                    <td class="px-5 py-3.5 font-bold text-slate-100">
+                        ${f.title}
+                        <p class="text-[11px] text-slate-400 font-normal">${f.description}</p>
+                    </td>
+                    <td class="px-5 py-3.5"><span class="px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">${f.category}</span></td>
+                    <td class="px-5 py-3.5 font-semibold text-cyan-300">${f.grade}</td>
+                    <td class="px-5 py-3.5 text-slate-400 font-mono">${f.uploadDate}</td>
+                    <td class="px-5 py-3.5 flex items-center space-x-3">
+                        <a href="${f.fileUrl}" target="_blank" class="text-cyan-400 hover:underline font-bold"><i class="fa-solid fa-download mr-1"></i>View</a>
+                        <button onclick="deleteSharedFile('${f.id}')" class="text-red-400 hover:text-red-300"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        document.getElementById('uploadFileForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            window.LMSCore.addFile({
+                title: document.getElementById('fileTitleInput').value.trim(),
+                category: document.getElementById('fileCategoryInput').value,
+                grade: document.getElementById('fileGradeInput').value,
+                fileUrl: document.getElementById('fileUrlInput').value.trim(),
+                description: document.getElementById('fileDescInput').value.trim() || "No additional notes.",
+                fileSize: "15.0 MB"
+            });
+            toggleUploadFileForm();
+            renderFilesList();
+            alert("New study file published to student portals!");
+        });
+
+        function deleteSharedFile(id) {
+            if (confirm("Are you sure you want to delete this file?")) {
+                window.LMSCore.deleteFile(id);
+                renderFilesList();
+            }
+        }
     </script>
 </body>
 </html>
