@@ -3,18 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Educator Management Portal - Science with Sheshadi LMS</title>
-
+    <title>Educator Management Portal | Sathsarani Science Academy LMS</title>
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css">
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script>
         if (sessionStorage.getItem('admin_authenticated') !== 'true') {
             window.location.href = 'admin_login.html';
@@ -35,12 +31,12 @@
 <body class="antialiased text-slate-100 min-h-screen flex flex-col justify-between">
 
     <!-- Header Navigation -->
-    <header class="bg-slate-900/90 border-b border-slate-700 sticky top-0 z-50 backdrop-blur-md no-print">
+    <header class="bg-slate-950/90 border-b border-rose-900/40 sticky top-0 z-50 backdrop-blur-md no-print">
         <div class="max-w-7xl mx-auto px-4 flex justify-between items-center h-20">
             <div class="flex items-center space-x-3">
                 <img src="assets/images/logo.png" alt="Logo" class="h-12 w-12 object-contain rounded-xl border border-amber-500/30 p-1 bg-slate-950">
                 <div>
-                    <h1 class="text-xl font-bold font-cinzel text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-500 branding-academy-name">
+                    <h1 class="text-xl font-bold font-cinzel text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-yellow-400 to-rose-400 branding-academy-name">
                         SCIENCE with SHESHADI
                     </h1>
                     <p class="text-xs text-amber-400 font-rajdhani tracking-widest uppercase">Educator LMS Management Hub</p>
@@ -49,17 +45,17 @@
 
             <!-- Action Controls -->
             <div class="flex items-center space-x-3">
-                <button onclick="toggleRegisterModal()" class="bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 px-3.5 py-2 rounded-xl text-xs font-extrabold flex items-center space-x-1.5 shadow-md">
+                <button onclick="toggleRegisterModal()" class="bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 text-slate-950 px-3.5 py-2 rounded-xl text-xs font-extrabold flex items-center space-x-1.5 shadow-md transition">
                     <i class="fa-solid fa-user-plus"></i>
                     <span>Register New Student</span>
                 </button>
 
-                <button id="syncSheetsBtn" class="bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-cyan-500/40 px-3 py-2 rounded-xl text-xs font-semibold flex items-center space-x-1.5 transition">
+                <button id="syncSheetsBtn" class="bg-slate-900 hover:bg-slate-800 text-cyan-400 border border-cyan-500/40 px-3 py-2 rounded-xl text-xs font-semibold flex items-center space-x-1.5 transition">
                     <i class="fa-solid fa-rotate-right"></i>
                     <span class="hidden sm:inline">Sync Sheets</span>
                 </button>
 
-                <label class="bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 px-3 py-2 rounded-xl text-xs font-semibold cursor-pointer flex items-center space-x-1.5 transition">
+                <label class="bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/40 px-3 py-2 rounded-xl text-xs font-semibold cursor-pointer flex items-center space-x-1.5 transition">
                     <i class="fa-solid fa-file-excel"></i>
                     <span class="hidden sm:inline">Upload Excel</span>
                     <input type="file" id="excelFileInput" accept=".xlsx, .xls" class="hidden">
@@ -76,49 +72,74 @@
     <!-- Main Container -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full space-y-8">
 
-        <!-- Top Teacher & Class-Wise Zoom Launcher Banner -->
-        <section class="glass-panel p-6 sm:p-8 relative overflow-hidden">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+        <!-- Top Teacher Showcase & Live Classroom (Skype / Zoom) Launcher Banner -->
+        <section class="glass-panel p-6 sm:p-8 relative overflow-hidden border-rose-500/30">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
                 
-                <!-- Teacher Profile Info -->
-                <div class="flex items-center space-x-5 md:col-span-2">
-                    <img src="assets/images/teacher.png" alt="Mrs. Sheshadi Sathsarani" class="w-24 h-28 object-cover rounded-2xl border-2 border-amber-500/50 shadow-xl">
-                    <div class="space-y-1">
-                        <span class="px-3 py-1 bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold rounded-full uppercase tracking-wider">
-                            Administrator & Head Educator
-                        </span>
-                        <h2 class="text-2xl sm:text-3xl font-bold font-cinzel text-slate-100 branding-teacher-name">Mrs. Sheshadi Sathsarani</h2>
-                        <p class="text-xs text-slate-300 branding-announcement">
-                            Manage student registration, account creation, photo uploads, weekly progress tables, term test marks, and Zoom live keys.
+                <!-- Teacher Profile Info & Credentials Artwork -->
+                <div class="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6 lg:col-span-7">
+                    <div class="relative">
+                        <img src="assets/images/teacher_banner.png" alt="Mrs. Sheshadi Amarasinghe" class="w-28 h-32 object-cover rounded-2xl border-2 border-amber-400 shadow-2xl bg-slate-950">
+                        <span class="absolute -bottom-2 -right-2 bg-amber-500 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded-full uppercase shadow">Grade 6-11</span>
+                    </div>
+                    <div class="space-y-1.5">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span class="px-3 py-0.5 bg-rose-500/20 border border-rose-500/40 text-rose-300 text-xs font-bold rounded-full uppercase tracking-wider">
+                                Head Science Specialist
+                            </span>
+                            <span class="px-3 py-0.5 bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-mono font-bold rounded-full branding-motto">
+                                SCIENCE වල අපි ශේෂ..!!
+                            </span>
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold font-cinzel text-slate-100 branding-teacher-name">
+                            Mrs. Sheshadi Amarasinghe
+                        </h2>
+                        <p class="text-xs text-amber-300 font-bold branding-teacher-title">
+                            B.Sc. (Chemistry Special), Grad.Chem (IChem)
+                        </p>
+                        <p class="text-xs text-slate-300 font-mono flex items-center gap-2">
+                            <i class="fa-solid fa-phone text-rose-400"></i>
+                            <span class="branding-hotlines">071 781 2092 | 077 161 4260</span>
                         </p>
                     </div>
                 </div>
 
-                <!-- Zoom Meeting Launcher Box -->
-                <div class="bg-slate-900/90 border border-cyan-500/40 p-5 rounded-2xl space-y-3 shadow-lg no-print">
+                <!-- Live Classroom Launcher Box (Skype & Zoom Local Account Integration) -->
+                <div class="lg:col-span-5 bg-slate-950/90 border border-amber-500/40 p-5 rounded-2xl space-y-3 shadow-2xl no-print">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold uppercase text-cyan-300 tracking-wider">
-                            <i class="fa-solid fa-video mr-1 text-cyan-400"></i> Zoom Classroom
-                        </span>
-                        <span id="zoomLiveBadge" class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 animate-pulse">
-                            LIVE NOW
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs font-bold uppercase text-amber-300 tracking-wider">
+                                <i class="fa-brands fa-skype text-sky-400 mr-1 text-sm"></i> Live Classroom
+                            </span>
+                        </div>
+                        <span id="liveClassBadge" class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 animate-pulse">
+                            LIVE ON SKYPE
                         </span>
                     </div>
 
-                    <div class="text-xs text-slate-300 space-y-1">
-                        <p id="zoomSessionTitleDisplay" class="font-bold text-slate-100 truncate">Grade 06 Science - Live Class</p>
-                        <p class="text-[11px] text-slate-400 font-mono">Target Class: <span id="zoomTargetGradeDisplay" class="text-amber-300 font-bold">06 - Science</span></p>
-                        <p class="text-[11px] text-slate-400 font-mono">Meeting Key/Passcode: <span id="zoomPasscodeDisplay" class="text-cyan-300">SCIENCE2026</span></p>
+                    <div class="text-xs space-y-1">
+                        <p id="liveSessionTitleDisplay" class="font-bold text-slate-100 truncate font-cinzel">Grade 06 Science - Live Skype Classroom</p>
+                        <div class="flex justify-between items-center text-slate-400 text-[11px]">
+                            <span>Target: <strong id="liveTargetGradeDisplay" class="text-cyan-300">06 - Science</strong></span>
+                            <span>Skype: <strong id="liveSkypeUserDisplay" class="text-amber-300 font-mono">sheshadi.science</strong></span>
+                        </div>
                     </div>
 
-                    <div class="flex items-center space-x-2 pt-1">
-                        <button id="launchZoomBtn" class="flex-grow bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-slate-950 font-extrabold py-2.5 rounded-xl text-xs flex items-center justify-center space-x-2 shadow-md transition">
-                            <i class="fa-solid fa-paper-plane"></i>
-                            <span id="zoomBtnText">Broadcast Class Zoom Key</span>
+                    <div class="grid grid-cols-2 gap-2 pt-1">
+                        <button id="launchSkypeBtn" class="bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white font-bold py-2 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow-md" title="Opens local Skype app on PC or Phone">
+                            <i class="fa-brands fa-skype text-sm"></i>
+                            <span>Launch Skype App</span>
                         </button>
-                        
-                        <button id="editZoomModalBtn" class="p-2.5 bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-slate-700 rounded-xl text-xs" title="Edit Zoom Meeting Settings">
-                            <i class="fa-solid fa-gear"></i>
+                        <button id="launchZoomBtn" class="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-2 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow-md">
+                            <i class="fa-solid fa-video text-xs"></i>
+                            <span>Launch Zoom</span>
+                        </button>
+                    </div>
+                    
+                    <div class="flex justify-between items-center pt-1 border-t border-slate-800">
+                        <span class="text-[10px] text-slate-400 italic">Syncs with local Skype account on PC/Phone</span>
+                        <button id="editClassroomModalBtn" class="text-[11px] text-amber-400 hover:underline font-bold flex items-center gap-1">
+                            <i class="fa-solid fa-gear"></i> Configure Live Keys
                         </button>
                     </div>
                 </div>
@@ -126,23 +147,21 @@
             </div>
         </section>
 
-        <!-- Main Navigation Tabs Bar -->
-        <div class="border-b border-slate-700 no-print">
-            <nav class="flex space-x-6 text-sm font-semibold overflow-x-auto pb-1" aria-label="LMS Admin Navigation">
-                <button id="nav-tab-students" onclick="switchAdminTab('students')" class="pb-3 text-amber-400 border-b-2 border-amber-400 flex items-center gap-2 whitespace-nowrap">
-                    <i class="fa-solid fa-users-gear"></i> Student Evaluation & Weekly Tables
-                </button>
-                <button id="nav-tab-files" onclick="switchAdminTab('files')" class="pb-3 text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
-                    <i class="fa-solid fa-folder-open text-cyan-400"></i> File Sharing & Study Materials
-                </button>
-                <button id="nav-tab-calendar" onclick="switchAdminTab('calendar')" class="pb-3 text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
-                    <i class="fa-solid fa-calendar-days text-emerald-400"></i> Academic Calendar & Schedule
-                </button>
-                <button id="nav-tab-custom" onclick="switchAdminTab('custom')" class="pb-3 text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
-                    <i class="fa-solid fa-sliders text-purple-400"></i> LMS Customization Studio
-                </button>
-            </nav>
-        </div>
+        <!-- Navigation Tabs for LMS Management -->
+        <nav class="flex border-b border-slate-700 space-x-6 text-sm font-bold no-print overflow-x-auto">
+            <button onclick="switchAdminTab('students')" id="nav-tab-students" class="pb-3 text-amber-400 border-b-2 border-amber-400 flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-users-gear"></i> Student Evaluation & Weekly Tables
+            </button>
+            <button onclick="switchAdminTab('files')" id="nav-tab-files" class="pb-3 text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-folder-open"></i> File Sharing & Study Materials
+            </button>
+            <button onclick="switchAdminTab('calendar')" id="nav-tab-calendar" class="pb-3 text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-calendar-days"></i> Academic Calendar
+            </button>
+            <button onclick="switchAdminTab('custom')" id="nav-tab-custom" class="pb-3 text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-sliders"></i> LMS Customizer Studio
+            </button>
+        </nav>
 
         <!-- VIEW 1: STUDENT EVALUATION & WEEKLY TABLES -->
         <div id="view-students" class="space-y-8">
@@ -152,10 +171,10 @@
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 no-print">
                     <div class="relative flex-grow max-w-md">
                         <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
-                        <input type="text" id="adminSearchInput" placeholder="Search student name, ID or tab..." class="w-full bg-slate-900 border border-slate-700 rounded-xl pl-11 pr-4 py-2.5 text-sm focus:outline-none focus:border-amber-400 text-slate-100">
+                        <input type="text" id="adminSearchInput" placeholder="Search student name, ID or tab..." class="w-full bg-slate-950 border border-slate-700 rounded-xl pl-11 pr-4 py-2.5 text-sm focus:outline-none focus:border-amber-400 text-slate-100">
                     </div>
                     
-                    <button onclick="toggleRegisterModal()" class="bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-extrabold px-4 py-2.5 rounded-xl text-xs flex items-center space-x-2 shadow-lg">
+                    <button onclick="toggleRegisterModal()" class="bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-extrabold px-4 py-2.5 rounded-xl text-xs flex items-center space-x-2 shadow-lg hover:brightness-110 transition">
                         <i class="fa-solid fa-user-plus"></i>
                         <span>Register / Create Student Account</span>
                     </button>
@@ -171,7 +190,7 @@
             <!-- Selected Student Profile View -->
             <section class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 
-                <!-- Left Column: Student Details + Practical Pie Chart + Photo & Remarks -->
+                <!-- Left Column: Student Details + Practical Pie Chart + QR Code Link & Remarks -->
                 <div class="lg:col-span-1 glass-panel p-6 space-y-6">
                     <div class="flex items-center space-x-4 pb-6 border-b border-slate-700">
                         <img id="adminStAvatar" src="" alt="Student Avatar" class="w-20 h-20 rounded-2xl border-2 border-amber-400/50 bg-slate-900 p-1 shadow-md object-cover">
@@ -185,8 +204,8 @@
                         </div>
                     </div>
 
-                    <!-- Practical Results Breakdown Pie Chart -->
-                    <div class="bg-slate-900/90 border border-emerald-500/30 p-5 rounded-2xl space-y-3">
+                    <!-- Practical Results Breakdown Pie Chart (Completed, 0.5 Done, Pending, Incomplete, Still not attended) -->
+                    <div class="bg-slate-950/90 border border-emerald-500/30 p-5 rounded-2xl space-y-3">
                         <h4 class="text-xs font-bold font-cinzel text-emerald-300 uppercase tracking-wider flex items-center justify-between">
                             <span><i class="fa-solid fa-chart-pie mr-1.5 text-emerald-400"></i>Practical Results Breakdown</span>
                             <span class="text-[10px] text-slate-400 font-mono">Pie Chart</span>
@@ -199,23 +218,38 @@
                     <!-- Academic Stats & Remarks -->
                     <div class="space-y-4 text-sm">
                         <div class="flex justify-between items-center text-slate-300">
-                            <span class="text-slate-400">Annual Unit Test Avg</span>
+                            <span class="text-slate-400">Annual Unit Test Avg:</span>
                             <span id="adminStAvg" class="font-bold text-amber-300">0.0 / 100</span>
                         </div>
                         <div class="flex justify-between items-center text-slate-300">
-                            <span class="text-slate-400">Class Attendance</span>
+                            <span class="text-slate-400">Class Attendance:</span>
                             <span id="adminStAttendance" class="font-semibold text-emerald-400">95%</span>
                         </div>
 
-                        <!-- QR Code Link Preview -->
-                        <div class="pt-2 border-t border-slate-700/70 text-center">
-                            <div id="qrcodeBox" class="bg-white p-2 rounded-xl inline-block shadow-md mx-auto mb-2"></div>
-                            <p id="qrUrlText" class="text-[10px] font-mono text-cyan-300 break-all px-2 py-1 bg-slate-950 rounded-lg">student.html?id=...</p>
+                        <!-- QR Code Link & Direct Student Access Box -->
+                        <div class="pt-3 border-t border-slate-700/70 text-center space-y-2">
+                            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
+                                <i class="fa-solid fa-qrcode mr-1 text-cyan-400"></i> Student QR Code Pass
+                            </span>
+                            <div class="bg-white p-2.5 rounded-xl inline-block shadow-md mx-auto">
+                                <div id="qrcodeBox"></div>
+                            </div>
+                            <div class="space-y-1">
+                                <a id="qrDirectLink" href="#" target="_blank" class="text-xs text-cyan-400 hover:text-cyan-300 underline font-semibold flex items-center justify-center gap-1.5 font-mono">
+                                    <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Open Student Dashboard
+                                </a>
+                                <div class="flex items-center justify-center gap-2 pt-1">
+                                    <button id="copyQrLinkBtn" class="bg-slate-900 hover:bg-slate-800 text-cyan-300 border border-cyan-500/30 px-3 py-1.5 rounded-lg text-[11px] font-bold flex items-center gap-1 transition">
+                                        <i class="fa-solid fa-copy"></i>
+                                        <span id="copyQrBtnText">Copy Direct Link</span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="pt-2 border-t border-slate-700/70 space-y-2">
+                        <div class="pt-3 border-t border-slate-700/70 space-y-2">
                             <label class="block text-xs font-bold text-slate-300">Teacher Remarks:</label>
-                            <textarea id="adminStRemarks" rows="2" placeholder="Enter feedback for student..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-slate-100 focus:outline-none focus:border-amber-400"></textarea>
+                            <textarea id="adminStRemarks" rows="2" placeholder="Enter feedback for student..." class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs text-slate-100 focus:outline-none focus:border-amber-400"></textarea>
                             <button id="saveRemarksBtn" class="w-full bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 py-2 rounded-xl text-xs font-bold transition">
                                 <i class="fa-solid fa-floppy-disk mr-1"></i> Save Teacher Remarks
                             </button>
@@ -237,14 +271,14 @@
                         </div>
                     </div>
 
-                    <!-- Weekly Progress Table with Dropdowns -->
+                    <!-- Weekly Progress Table with Dropdowns & (Still not attended) State -->
                     <div class="glass-panel p-6 space-y-4">
-                        <div class="flex items-center justify-between pb-2 border-b border-slate-700">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-700">
                             <div>
                                 <h4 class="text-lg font-bold font-cinzel text-slate-100"><span id="adminTableMonthTitle">January</span> Weekly Table Controls</h4>
-                                <p class="text-xs text-slate-400">Select guidebook completion, past paper status, practical rating & unit test score</p>
+                                <p class="text-xs text-slate-400">Options: Completed, Incomplete, 0.5 Done, Pending, (Still not attended)</p>
                             </div>
-                            <button id="saveWeeklyTableBtn" class="bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-slate-950 font-extrabold px-4 py-2 rounded-xl text-xs flex items-center space-x-1.5 shadow-md">
+                            <button id="saveWeeklyTableBtn" class="bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-slate-950 font-extrabold px-4 py-2 rounded-xl text-xs flex items-center space-x-1.5 shadow-md transition">
                                 <i class="fa-solid fa-floppy-disk"></i>
                                 <span>Save Weekly Table</span>
                             </button>
@@ -252,7 +286,7 @@
 
                         <div class="overflow-x-auto">
                             <table class="w-full text-left text-sm text-slate-300">
-                                <thead class="bg-slate-900/90 text-slate-300 font-semibold uppercase text-xs border-b border-slate-700">
+                                <thead class="bg-slate-950/90 text-slate-300 font-semibold uppercase text-xs border-b border-slate-700">
                                     <tr>
                                         <th class="px-4 py-3">Week</th>
                                         <th class="px-4 py-3">Guidebook 1</th>
@@ -263,7 +297,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="adminWeeklyTableBody" class="divide-y divide-slate-800">
-                                    <!-- Dynamic Rows -->
+                                    <!-- Dynamic Rows with Dropdowns -->
                                 </tbody>
                             </table>
                         </div>
@@ -271,12 +305,12 @@
 
                     <!-- Term Test Marks Management -->
                     <div class="glass-panel p-6 space-y-4 border-amber-500/30">
-                        <div class="flex items-center justify-between pb-2 border-b border-slate-700">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-700">
                             <div>
                                 <h4 class="text-lg font-bold font-cinzel text-amber-300"><i class="fa-solid fa-award mr-2"></i>Term Test Marks Management</h4>
                                 <p class="text-xs text-slate-400">Add or edit Term 1, Term 2, and Final Examination marks.</p>
                             </div>
-                            <button id="saveTermMarksBtn" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold px-4 py-2 rounded-xl text-xs flex items-center space-x-1.5 shadow-md">
+                            <button id="saveTermMarksBtn" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold px-4 py-2 rounded-xl text-xs flex items-center space-x-1.5 shadow-md transition">
                                 <i class="fa-solid fa-floppy-disk"></i>
                                 <span>Save Term Test Marks</span>
                             </button>
@@ -289,7 +323,7 @@
                         <div class="pt-3 border-t border-slate-800 flex items-center space-x-3">
                             <input type="text" id="newTermNameInput" placeholder="e.g. Term 3 Examination" class="bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 flex-grow focus:border-amber-400">
                             <input type="number" id="newTermScoreInput" min="0" max="100" placeholder="Score (0-100)" class="bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 w-32 focus:border-amber-400 font-bold">
-                            <button id="addTermExamBtn" class="bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/40 px-3.5 py-2 rounded-xl text-xs font-bold flex items-center space-x-1">
+                            <button id="addTermExamBtn" class="bg-slate-900 hover:bg-slate-800 text-amber-300 border border-amber-500/40 px-3.5 py-2 rounded-xl text-xs font-bold flex items-center space-x-1 transition">
                                 <i class="fa-solid fa-plus"></i>
                                 <span>Add Term Test</span>
                             </button>
@@ -299,14 +333,20 @@
                     <!-- Charts Row -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="glass-panel p-5 space-y-3">
-                            <h5 class="text-sm font-bold text-slate-200 font-cinzel"><i class="fa-solid fa-chart-line text-cyan-400 mr-2"></i>12-Month Unit Test Trend</h5>
+                            <div class="flex justify-between items-center">
+                                <h5 class="text-sm font-bold text-slate-200 font-cinzel"><i class="fa-solid fa-chart-line text-cyan-400 mr-2"></i>12-Month Unit Test Trend</h5>
+                                <span class="text-[10px] text-slate-400 font-mono">Monthly Average</span>
+                            </div>
                             <div class="h-56 relative">
                                 <canvas id="adminAnnualTrendChart"></canvas>
                             </div>
                         </div>
 
                         <div class="glass-panel p-5 space-y-3">
-                            <h5 class="text-sm font-bold text-slate-200 font-cinzel"><i class="fa-solid fa-chart-column text-amber-400 mr-2"></i>Term Assessment Marks</h5>
+                            <div class="flex justify-between items-center">
+                                <h5 class="text-sm font-bold text-slate-200 font-cinzel"><i class="fa-solid fa-chart-column text-amber-400 mr-2"></i>Term Assessment Marks</h5>
+                                <span class="text-[10px] text-slate-400 font-mono">Bar Chart</span>
+                            </div>
                             <div class="h-56 relative">
                                 <canvas id="adminTermChart"></canvas>
                             </div>
@@ -332,142 +372,131 @@
                 </div>
 
                 <!-- Upload File Form -->
-                <form id="uploadFileForm" class="hidden bg-slate-900/90 border border-amber-500/30 p-6 rounded-2xl space-y-4">
-                    <h4 class="text-sm font-bold text-amber-300 font-cinzel uppercase"><i class="fa-solid fa-file-circle-plus mr-2"></i>Share New Study Material</h4>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <form id="uploadFileForm" class="hidden bg-slate-950/90 border border-amber-500/30 p-6 rounded-2xl space-y-4">
+                    <h4 class="text-sm font-bold text-amber-300 font-cinzel uppercase tracking-wider">Add New Study Material</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs font-semibold text-slate-400 mb-1">Document Title</label>
-                            <input type="text" id="fileTitleInput" required placeholder="e.g. Grade 06 Science Master Guide 03" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-amber-400">
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">File Title:</label>
+                            <input type="text" id="fileTitleInput" required placeholder="e.g. Grade 06 Science - Master Guidebook 03" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-100 focus:border-amber-400">
                         </div>
-
                         <div>
-                            <label class="block text-xs font-semibold text-slate-400 mb-1">Material Category</label>
-                            <select id="fileCategoryInput" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-amber-400">
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Category:</label>
+                            <select id="fileCategoryInput" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-100 focus:border-amber-400">
                                 <option value="Master Guide">Master Guidebook</option>
-                                <option value="Past Papers">Past Paper / Model Paper</option>
-                                <option value="Lab Manual">Practical Lab Manual</option>
-                                <option value="Revision Notes">Short Notes & Diagrams</option>
+                                <option value="Past Papers">Past Papers & Marking</option>
+                                <option value="Lab Manual">Lab & Practical Worksheets</option>
+                                <option value="Revision Notes">Short Revision Notes</option>
                             </select>
                         </div>
-
                         <div>
-                            <label class="block text-xs font-semibold text-slate-400 mb-1">Target Grade / Subject</label>
-                            <select id="fileGradeInput" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-amber-400">
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Target Grade:</label>
+                            <select id="fileGradeInput" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-100 focus:border-amber-400">
                                 <option value="06 - Science">06 - Science</option>
                                 <option value="07 - Science">07 - Science</option>
                                 <option value="08 - Science">08 - Science</option>
-                                <option value="O/L Revision">O/L Revision</option>
-                                <option value="All Classes">All Classes</option>
+                                <option value="09 - Science">09 - Science</option>
+                                <option value="O/L Revision">O/L Revision Science</option>
+                                <option value="All Grades">All Grades</option>
                             </select>
                         </div>
-
                         <div>
-                            <label class="block text-xs font-semibold text-slate-400 mb-1">File URL / Download Link</label>
-                            <input type="url" id="fileUrlInput" required placeholder="https://drive.google.com/... or PDF link" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-amber-400">
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Download / Cloud File URL (PDF):</label>
+                            <input type="url" id="fileUrlInput" required placeholder="https://example.com/guidebook.pdf" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-100 focus:border-amber-400">
                         </div>
                     </div>
-
                     <div>
-                        <label class="block text-xs font-semibold text-slate-400 mb-1">Description & Instructions</label>
-                        <textarea id="fileDescInput" rows="2" placeholder="Brief summary of what this document contains..." class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs text-slate-100 focus:outline-none focus:border-amber-400"></textarea>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">Description / Instructions:</label>
+                        <textarea id="fileDescInput" rows="2" placeholder="Unit coverage, instructions for homework..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-slate-100 focus:border-amber-400"></textarea>
                     </div>
-
-                    <div class="flex justify-end space-x-3 pt-2">
-                        <button type="button" onclick="toggleUploadFileForm()" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-xs font-semibold">Cancel</button>
-                        <button type="submit" class="px-5 py-2 bg-amber-500 text-slate-950 font-bold rounded-xl text-xs shadow-md">Publish File to LMS</button>
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" onclick="toggleUploadFileForm()" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-xs">Cancel</button>
+                        <button type="submit" class="px-5 py-2 bg-amber-500 text-slate-950 font-bold rounded-xl text-xs shadow-md">Publish to Students</button>
                     </div>
                 </form>
 
                 <!-- Files Table -->
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left text-xs sm:text-sm text-slate-300">
-                        <thead class="bg-slate-900/90 text-slate-300 font-semibold uppercase text-xs border-b border-slate-700">
+                    <table class="w-full text-left text-sm text-slate-300">
+                        <thead class="bg-slate-950/90 text-slate-300 font-semibold uppercase text-xs border-b border-slate-700">
                             <tr>
-                                <th class="px-5 py-3">Document Title</th>
-                                <th class="px-5 py-3">Category</th>
-                                <th class="px-5 py-3">Target Grade</th>
-                                <th class="px-5 py-3">Upload Date</th>
-                                <th class="px-5 py-3">Action</th>
+                                <th class="px-5 py-3.5">Document Title</th>
+                                <th class="px-5 py-3.5">Category</th>
+                                <th class="px-5 py-3.5">Target Grade</th>
+                                <th class="px-5 py-3.5">Date Added</th>
+                                <th class="px-5 py-3.5">Actions</th>
                             </tr>
                         </thead>
                         <tbody id="adminFilesTableBody" class="divide-y divide-slate-800">
-                            <!-- Dynamic Rows -->
+                            <!-- Populated via JS -->
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
 
-        <!-- VIEW 3: ACADEMIC CALENDAR & SCHEDULE -->
+        <!-- VIEW 3: ACADEMIC CALENDAR -->
         <div id="view-calendar" class="hidden space-y-8">
             <div class="glass-panel p-6 space-y-6">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-slate-700">
                     <div>
-                        <h3 class="text-xl font-bold font-cinzel text-slate-100">Academic Calendar & Events</h3>
-                        <p class="text-xs text-slate-400">Schedule evaluation dates, assignment deadlines, practical labs, and live classes.</p>
+                        <h3 class="text-xl font-bold font-cinzel text-slate-100">Academic Calendar & Scheduled Events</h3>
+                        <p class="text-xs text-slate-400">Post term exam schedules, assignment submission deadlines, and live Zoom timings.</p>
                     </div>
                     <button onclick="toggleAddEventForm()" class="bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-slate-950 font-bold px-4 py-2.5 rounded-xl text-xs flex items-center space-x-2 shadow-md">
                         <i class="fa-solid fa-calendar-plus"></i>
-                        <span>Add New Academic Event</span>
+                        <span>Add Calendar Event</span>
                     </button>
                 </div>
 
                 <!-- Add Event Form -->
-                <form id="addEventForm" class="hidden bg-slate-900/90 border border-emerald-500/30 p-6 rounded-2xl space-y-4">
-                    <h4 class="text-sm font-bold text-emerald-300 font-cinzel uppercase"><i class="fa-solid fa-calendar-check mr-2"></i>New Calendar Entry</h4>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <form id="addEventForm" class="hidden bg-slate-950/90 border border-emerald-500/30 p-6 rounded-2xl space-y-4">
+                    <h4 class="text-sm font-bold text-emerald-300 font-cinzel uppercase tracking-wider">Schedule New Academic Event</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div>
-                            <label class="block text-xs font-semibold text-slate-400 mb-1">Event Title</label>
-                            <input type="text" id="evtTitleInput" required placeholder="e.g. Term 2 Examination" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-400">
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Event Title:</label>
+                            <input type="text" id="evtTitleInput" required placeholder="e.g. Term 2 Examination" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-100 focus:border-emerald-400">
                         </div>
-
                         <div>
-                            <label class="block text-xs font-semibold text-slate-400 mb-1">Date</label>
-                            <input type="date" id="evtDateInput" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-400">
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Date:</label>
+                            <input type="date" id="evtDateInput" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-100 focus:border-emerald-400">
                         </div>
-
                         <div>
-                            <label class="block text-xs font-semibold text-slate-400 mb-1">Time</label>
-                            <input type="text" id="evtTimeInput" required placeholder="e.g. 08:30 AM - 10:30 AM" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-400">
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Time Window:</label>
+                            <input type="text" id="evtTimeInput" required placeholder="08:00 AM - 10:30 AM" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-100 focus:border-emerald-400">
                         </div>
-
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs font-semibold text-slate-400 mb-1">Category</label>
-                            <select id="evtCategoryInput" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-400">
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Category:</label>
+                            <select id="evtCategoryInput" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-100 focus:border-emerald-400">
                                 <option value="Exam">Term Exam</option>
+                                <option value="Assignment">Assignment Deadline</option>
                                 <option value="Class">Live Class</option>
-                                <option value="Deadline">Submission Deadline</option>
-                                <option value="Practical">Practical Demonstration</option>
-                                <option value="Holiday">Academy Holiday</option>
+                                <option value="Holiday">Holiday / Break</option>
                             </select>
                         </div>
-
                         <div>
-                            <label class="block text-xs font-semibold text-slate-400 mb-1">Target Grade</label>
-                            <select id="evtGradeInput" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-400">
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Target Class:</label>
+                            <select id="evtGradeInput" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-100 focus:border-emerald-400">
                                 <option value="06 - Science">06 - Science</option>
                                 <option value="07 - Science">07 - Science</option>
+                                <option value="08 - Science">08 - Science</option>
                                 <option value="All Classes">All Classes</option>
                             </select>
                         </div>
-
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-400 mb-1">Short Description</label>
-                            <input type="text" id="evtDescInput" placeholder="Brief detail about this event..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-400">
-                        </div>
                     </div>
-
-                    <div class="flex justify-end space-x-3 pt-2">
-                        <button type="button" onclick="toggleAddEventForm()" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-xs font-semibold">Cancel</button>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">Description:</label>
+                        <textarea id="evtDescInput" rows="2" placeholder="Topics tested, instructions for students..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-slate-100 focus:border-emerald-400"></textarea>
+                    </div>
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" onclick="toggleAddEventForm()" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-xs">Cancel</button>
                         <button type="submit" class="px-5 py-2 bg-emerald-500 text-slate-950 font-bold rounded-xl text-xs shadow-md">Add to Calendar</button>
                     </div>
                 </form>
 
-                <!-- Calendar Events List -->
                 <div id="adminCalendarList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- Dynamic Event Cards -->
+                    <!-- Populated via JS -->
                 </div>
             </div>
         </div>
@@ -477,161 +506,163 @@
             <div class="glass-panel p-6 space-y-6">
                 <div class="pb-4 border-b border-slate-700">
                     <h3 class="text-xl font-bold font-cinzel text-slate-100">LMS Customization Studio</h3>
-                    <p class="text-xs text-slate-400">Personalize academy branding, educator profile, custom announcement banners, and color themes.</p>
+                    <p class="text-xs text-slate-400">Personalize academy name, instructor profile, announcements, and portal branding.</p>
                 </div>
 
-                <form id="customizationForm" class="space-y-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <form id="customizationForm" class="space-y-6 max-w-3xl">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-xs font-bold text-slate-300 mb-1">Academy / Institute Name</label>
-                            <input type="text" id="custAcademyName" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-slate-100 focus:outline-none focus:border-purple-400">
+                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Academy / Portal Name:</label>
+                            <input type="text" id="custAcademyName" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:border-amber-400">
                         </div>
-
                         <div>
-                            <label class="block text-xs font-bold text-slate-300 mb-1">Portal Subtitle / Tagline</label>
-                            <input type="text" id="custTagline" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-slate-100 focus:outline-none focus:border-purple-400">
+                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Portal Subtitle / Tagline:</label>
+                            <input type="text" id="custTagline" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:border-amber-400">
                         </div>
-
                         <div>
-                            <label class="block text-xs font-bold text-slate-300 mb-1">Head Educator Name</label>
-                            <input type="text" id="custTeacherName" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-slate-100 focus:outline-none focus:border-purple-400">
+                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Head Educator Name:</label>
+                            <input type="text" id="custTeacherName" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:border-amber-400">
                         </div>
-
                         <div>
-                            <label class="block text-xs font-bold text-slate-300 mb-1">Educator Designation</label>
-                            <input type="text" id="custTeacherTitle" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-slate-100 focus:outline-none focus:border-purple-400">
+                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Educator Title & Degrees:</label>
+                            <input type="text" id="custTeacherTitle" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:border-amber-400">
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold text-slate-300 mb-1">Student Portal Banner Announcement</label>
-                        <textarea id="custAnnouncement" rows="3" required class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-slate-100 focus:outline-none focus:border-purple-400"></textarea>
+                        <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Student Banner Announcement:</label>
+                        <textarea id="custAnnouncement" rows="3" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-4 text-xs text-slate-100 focus:border-amber-400"></textarea>
                     </div>
 
-                    <div class="flex justify-end pt-4 border-t border-slate-800">
-                        <button type="submit" class="bg-gradient-to-r from-purple-600 to-indigo-500 hover:from-purple-500 hover:to-indigo-400 text-white font-bold px-6 py-3 rounded-xl text-xs uppercase tracking-wider shadow-lg shadow-purple-600/30 transition">
-                            <i class="fa-solid fa-wand-magic-sparkles mr-1.5"></i> Save & Apply Customization
-                        </button>
-                    </div>
+                    <button type="submit" class="bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 text-slate-950 font-extrabold px-6 py-3 rounded-xl text-xs uppercase tracking-wider shadow-lg flex items-center space-x-2">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span>Save Customization Settings</span>
+                    </button>
                 </form>
             </div>
         </div>
 
     </main>
 
-    <!-- Student Registration Modal (with Photo Upload & Credentials) -->
-    <div id="registerModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="glass-panel p-6 sm:p-8 max-w-lg w-full space-y-5 border-amber-500/50 shadow-2xl relative max-h-[90vh] overflow-y-auto">
-            <div class="flex justify-between items-center pb-3 border-b border-slate-700">
-                <h3 class="font-bold font-cinzel text-amber-300 text-lg flex items-center gap-2">
-                    <i class="fa-solid fa-user-plus text-amber-400"></i> Register New Student Account
-                </h3>
-                <button onclick="toggleRegisterModal()" class="text-slate-400 hover:text-slate-200"><i class="fa-solid fa-xmark text-xl"></i></button>
+    <!-- Classroom Live Launcher (Skype & Zoom) Modal -->
+    <div id="classroomModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-slate-900 border border-amber-500/50 rounded-3xl p-6 sm:p-8 max-w-lg w-full space-y-6 shadow-2xl">
+            <div class="flex justify-between items-center pb-3 border-b border-slate-800">
+                <h3 class="text-lg font-bold font-cinzel text-amber-300"><i class="fa-solid fa-tower-broadcast mr-2"></i>Configure Live Classroom (Skype & Zoom)</h3>
+                <button onclick="closeClassroomModal()" class="text-slate-400 hover:text-slate-200"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
 
-            <form id="studentRegistrationForm" class="space-y-4 text-xs">
-                
-                <!-- Student Photo Upload & Preview -->
-                <div class="flex items-center space-x-4 p-3 bg-slate-950 rounded-xl border border-slate-800">
-                    <img id="regPhotoPreview" src="https://api.dicebear.com/7.x/avataaars/svg?seed=NewStudent" alt="Preview" class="w-16 h-16 rounded-xl object-cover border-2 border-amber-400/60 bg-slate-900 p-0.5">
-                    <div class="flex-grow space-y-1">
-                        <label class="block font-bold text-slate-200">Upload Student Photo:</label>
-                        <input type="file" id="regPhotoInput" accept="image/*" class="text-slate-400 text-[11px] file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-[11px] file:font-semibold file:bg-amber-500/20 file:text-amber-300 hover:file:bg-amber-500/30">
-                        <p class="text-[10px] text-slate-500">Supports JPG, PNG, WEBP (stored in Student_Improvement_Tracker)</p>
-                    </div>
+            <form id="classroomConfigForm" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Live Topic / Title:</label>
+                    <input type="text" id="modalClassTitle" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-100 focus:border-amber-400">
                 </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                
+                <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block font-semibold text-slate-300 mb-1">Full Student Name *</label>
-                        <input type="text" id="regName" required placeholder="e.g. Samantha Perera" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-100 focus:border-amber-400">
-                    </div>
-
-                    <div>
-                        <label class="block font-semibold text-slate-300 mb-1">Student Registration ID *</label>
-                        <input type="text" id="regStudentId" required placeholder="e.g. ST-90001" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-cyan-300 font-mono focus:border-amber-400">
-                    </div>
-
-                    <div>
-                        <label class="block font-semibold text-slate-300 mb-1">Login Username / Email *</label>
-                        <input type="text" id="regUsername" required placeholder="e.g. samantha or st-90001" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-100 focus:border-amber-400">
-                    </div>
-
-                    <div>
-                        <label class="block font-semibold text-slate-300 mb-1">Account Password *</label>
-                        <input type="password" id="regPassword" required placeholder="student123" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-100 focus:border-amber-400 font-mono">
-                    </div>
-
-                    <div>
-                        <label class="block font-semibold text-slate-300 mb-1">Grade / Class *</label>
-                        <select id="regGrade" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-100 focus:border-amber-400">
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">Target Class:</label>
+                        <select id="modalClassGrade" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 focus:border-amber-400">
                             <option value="06 - Science">06 - Science</option>
                             <option value="07 - Science">07 - Science</option>
                             <option value="08 - Science">08 - Science</option>
                             <option value="09 - Science">09 - Science</option>
-                            <option value="O/L Revision">O/L Revision</option>
+                            <option value="O/L Revision">O/L Revision Science</option>
+                            <option value="All Classes">All Classes</option>
                         </select>
                     </div>
-
                     <div>
-                        <label class="block font-semibold text-slate-300 mb-1">Homeroom Teacher</label>
-                        <input type="text" id="regTeacher" value="Mrs. Sheshadi Sathsarani" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-100 focus:border-amber-400">
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">Skype Mode:</label>
+                        <select id="modalSkypeMode" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 focus:border-amber-400">
+                            <option value="call">Direct App Call (skype:ID?call)</option>
+                            <option value="video">Video Call (skype:ID?call&video=true)</option>
+                            <option value="chat">Group Chat (skype:ID?chat)</option>
+                        </select>
                     </div>
                 </div>
 
-                <div class="pt-2 flex justify-end space-x-2 border-t border-slate-800">
-                    <button type="button" onclick="toggleRegisterModal()" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl font-semibold">Cancel</button>
-                    <button type="submit" class="px-5 py-2 bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-extrabold rounded-xl shadow-lg flex items-center space-x-1.5">
-                        <i class="fa-solid fa-user-check"></i>
-                        <span>Register Student Account</span>
-                    </button>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Teacher Skype Username / ID (or Meeting URL):</label>
+                    <input type="text" id="modalSkypeId" required placeholder="e.g. sheshadi.science or https://join.skype.com/..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2 text-sm text-sky-300 focus:border-sky-400 font-mono">
+                    <p class="text-[10px] text-slate-500 mt-1">Directly activates the Skype app logged in on your PC or Phone.</p>
+                </div>
+
+                <div class="pt-2 border-t border-slate-800">
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Optional Zoom Join URL (Backup):</label>
+                    <input type="url" id="modalZoomUrl" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-100 focus:border-cyan-400 font-mono">
+                </div>
+
+                <div class="flex justify-end space-x-3 pt-3">
+                    <button type="button" onclick="closeClassroomModal()" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-xs">Cancel</button>
+                    <button type="submit" class="px-5 py-2 bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-bold rounded-xl text-xs shadow-md">Broadcast Live Keys</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Zoom Settings Modal -->
-    <div id="zoomModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="glass-panel p-6 max-w-md w-full space-y-4 border-cyan-500/40">
-            <div class="flex justify-between items-center pb-3 border-b border-slate-700">
-                <h3 class="font-bold font-cinzel text-cyan-300 text-base"><i class="fa-solid fa-video mr-2"></i>Configure Class-Wise Zoom Key</h3>
-                <button onclick="closeZoomModal()" class="text-slate-400 hover:text-slate-200"><i class="fa-solid fa-xmark text-lg"></i></button>
+    <!-- Student Registration Modal (Account Creation with Photo Upload) -->
+    <div id="registerModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4 overflow-y-auto">
+        <div class="bg-slate-900 border border-amber-500/50 rounded-3xl p-6 sm:p-8 max-w-xl w-full space-y-6 shadow-2xl my-8">
+            <div class="flex justify-between items-center pb-3 border-b border-slate-800">
+                <div>
+                    <h3 class="text-xl font-bold font-cinzel text-amber-300"><i class="fa-solid fa-user-plus mr-2"></i>Register New Student Account</h3>
+                    <p class="text-xs text-slate-400">Create login credentials, assign grade, and upload student photo.</p>
+                </div>
+                <button onclick="toggleRegisterModal()" class="text-slate-400 hover:text-slate-200"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
 
-            <form id="zoomConfigForm" class="space-y-3 text-xs">
-                <div>
-                    <label class="block text-slate-400 font-semibold mb-1">Target Class / Grade</label>
-                    <select id="modalZoomGrade" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-amber-300 font-bold focus:border-cyan-400">
-                        <option value="06 - Science">06 - Science</option>
-                        <option value="07 - Science">07 - Science</option>
-                        <option value="08 - Science">08 - Science</option>
-                        <option value="09 - Science">09 - Science</option>
-                        <option value="O/L Revision">O/L Revision</option>
-                        <option value="All Classes">All Classes</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-slate-400 font-semibold mb-1">Class Topic / Session Title</label>
-                    <input type="text" id="modalZoomTitle" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-100 focus:border-cyan-400">
-                </div>
-                <div>
-                    <label class="block text-slate-400 font-semibold mb-1">Zoom Meeting Join Link (URL)</label>
-                    <input type="url" id="modalZoomUrl" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-100 focus:border-cyan-400">
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-slate-400 font-semibold mb-1">Meeting ID</label>
-                        <input type="text" id="modalZoomId" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-100 focus:border-cyan-400 font-mono">
-                    </div>
-                    <div>
-                        <label class="block text-slate-400 font-semibold mb-1">Class Passcode / Key</label>
-                        <input type="text" id="modalZoomPass" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-100 focus:border-cyan-400 font-mono">
+            <form id="studentRegistrationForm" class="space-y-4">
+                <!-- Photo Upload Area -->
+                <div class="flex items-center space-x-4 p-4 bg-slate-950 rounded-2xl border border-slate-800">
+                    <img id="regPhotoPreview" src="https://api.dicebear.com/7.x/avataaars/svg?seed=NewStudent" alt="Preview" class="w-16 h-16 rounded-xl border-2 border-amber-500/40 bg-slate-900 object-cover">
+                    <div class="flex-grow space-y-1">
+                        <label class="block text-xs font-bold text-slate-300">Upload Student Photo:</label>
+                        <input type="file" id="regPhotoInput" accept="image/*" class="text-xs text-slate-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-500/20 file:text-amber-300 hover:file:bg-amber-500/30 cursor-pointer">
+                        <p class="text-[10px] text-slate-500">Supports JPG, PNG, WEBP</p>
                     </div>
                 </div>
 
-                <div class="pt-3 flex justify-end space-x-2">
-                    <button type="button" onclick="closeZoomModal()" class="px-3.5 py-2 bg-slate-800 text-slate-300 rounded-xl font-bold">Cancel</button>
-                    <button type="submit" class="px-4 py-2 bg-cyan-500 text-slate-950 font-bold rounded-xl shadow-md">Broadcast Zoom Key</button>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">Full Student Name:</label>
+                        <input type="text" id="regName" required placeholder="e.g. Kasun Fernando" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:border-amber-400">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">Student Registration ID:</label>
+                        <input type="text" id="regStudentId" required placeholder="e.g. ST-90002" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:border-amber-400 font-mono uppercase">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">Student Login Username / Email:</label>
+                        <input type="text" id="regUsername" required placeholder="e.g. kasun or ST-90002" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:border-amber-400 font-mono">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">Account Password:</label>
+                        <input type="text" id="regPassword" required value="student123" placeholder="Default: student123" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:border-amber-400 font-mono">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">Grade / Class:</label>
+                        <select id="regGrade" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:border-amber-400">
+                            <option value="06 - Science">06 - Science</option>
+                            <option value="07 - Science">07 - Science</option>
+                            <option value="08 - Science">08 - Science</option>
+                            <option value="09 - Science">09 - Science</option>
+                            <option value="O/L Revision">O/L Revision Science</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">Homeroom Educator:</label>
+                        <input type="text" id="regTeacher" value="Mrs. Sheshadi Amarasinghe" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:border-amber-400">
+                    </div>
+                </div>
+
+                <div class="flex justify-end space-x-3 pt-4 border-t border-slate-800">
+                    <button type="button" onclick="toggleRegisterModal()" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-xs">Cancel</button>
+                    <button type="submit" class="px-5 py-2 bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-extrabold rounded-xl text-xs shadow-md">Create Student Account</button>
                 </div>
             </form>
         </div>
@@ -639,15 +670,14 @@
 
     <!-- Footer -->
     <footer class="bg-slate-950 border-t border-slate-800 py-6 text-center text-xs text-slate-500 no-print">
-        <p>&copy; 2026 Sathsarani Science Academy. LMS Educator Management Portal.</p>
+        <p>&copy; 2026 Sathsarani Science Academy. Educator Management Hub.</p>
     </footer>
 
-    <!-- Scripts -->
+    <!-- Core LMS Engine & Scripts -->
     <script src="assets/js/lms-core.js"></script>
-    <script src="assets/js/sheet-sync.js"></script>
-    <script src="assets/js/excel-parser.js"></script>
     <script>
         const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const STATUS_OPTIONS = ["Completed", "Incomplete", "0.5 Done", "Pending", "Still not attended"];
 
         let allStudents = [];
         let curIndex = 0;
@@ -665,7 +695,7 @@
         document.addEventListener('DOMContentLoaded', async () => {
             if (window.LMSCore) {
                 window.LMSCore.applyThemeAndBranding();
-                refreshZoomDisplay();
+                refreshLiveClassroomDisplay();
                 renderFilesList();
                 renderCalendarList();
                 loadCustomizationForm();
@@ -711,14 +741,14 @@
                 password: password,
                 grade_class: grade,
                 homeroom_teacher: teacher,
-                avatar: uploadedPhotoBase64 || `https://api.dicebear.com/7.x/avataaars/svg?seed=${name}`
+                avatar: uploadedPhotoBase64 || ("https://api.dicebear.com/7.x/avataaars/svg?seed=" + encodeURIComponent(name))
             });
 
             allStudents = res.students;
             toggleRegisterModal();
             renderTabs();
             selectAdminStudent(allStudents.length - 1);
-            alert(`Student account successfully created for ${name} (${stId})! Username: ${username} | Password: ${password}`);
+            alert(`Student account created for ${name} (${stId})! Username: ${username} | Password: ${password}`);
         });
 
         // Tab Switching
@@ -736,61 +766,82 @@
             });
         }
 
-        // --- ZOOM CLASS-WISE KEY MANAGEMENT ---
-        function refreshZoomDisplay() {
-            const z = window.LMSCore.getZoomSession();
-            document.getElementById('zoomSessionTitleDisplay').textContent = z.title;
-            document.getElementById('zoomTargetGradeDisplay').textContent = z.grade || "06 - Science";
-            document.getElementById('zoomPasscodeDisplay').textContent = z.passcode || "SCIENCE2026";
-            
-            const badge = document.getElementById('zoomLiveBadge');
-            const btnText = document.getElementById('zoomBtnText');
+        // --- SKYPE & ZOOM LIVE CLASSROOM LAUNCHER ---
+        function refreshLiveClassroomDisplay() {
+            const skype = window.LMSCore.getSkypeSession();
+            const zoom = window.LMSCore.getZoomSession();
 
-            if (z.isLive) {
+            document.getElementById('liveSessionTitleDisplay').textContent = skype.title;
+            document.getElementById('liveTargetGradeDisplay').textContent = skype.grade || "06 - Science";
+            document.getElementById('liveSkypeUserDisplay').textContent = skype.teacherSkypeId || "sheshadi.science";
+
+            const badge = document.getElementById('liveClassBadge');
+            if (skype.isLive) {
                 badge.className = "px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 animate-pulse";
-                badge.textContent = "LIVE NOW";
-                btnText.textContent = "Broadcast Class Zoom Key";
+                badge.textContent = "LIVE ON SKYPE";
             } else {
                 badge.className = "px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-slate-800 text-slate-400 border border-slate-700";
                 badge.textContent = "OFFLINE";
-                btnText.textContent = "Start Live Zoom Session";
             }
         }
+
+        document.getElementById('launchSkypeBtn').addEventListener('click', () => {
+            const skype = window.LMSCore.getSkypeSession();
+            window.LMSCore.toggleSkypeLive(true);
+            refreshLiveClassroomDisplay();
+            const uri = window.LMSCore.getSkypeDirectUri(skype);
+            window.location.href = uri; // Triggers the local Skype app on PC or Phone
+        });
 
         document.getElementById('launchZoomBtn').addEventListener('click', () => {
             const z = window.LMSCore.getZoomSession();
             window.LMSCore.toggleZoomLive(true);
-            refreshZoomDisplay();
             window.open(z.meetingUrl, '_blank');
         });
 
-        document.getElementById('editZoomModalBtn').addEventListener('click', () => {
-            const z = window.LMSCore.getZoomSession();
-            document.getElementById('modalZoomTitle').value = z.title;
-            document.getElementById('modalZoomGrade').value = z.grade || "06 - Science";
-            document.getElementById('modalZoomUrl').value = z.meetingUrl;
-            document.getElementById('modalZoomId').value = z.meetingId;
-            document.getElementById('modalZoomPass').value = z.passcode;
-            document.getElementById('zoomModal').classList.remove('hidden');
+        document.getElementById('editClassroomModalBtn').addEventListener('click', () => {
+            const skype = window.LMSCore.getSkypeSession();
+            const zoom = window.LMSCore.getZoomSession();
+            document.getElementById('modalClassTitle').value = skype.title;
+            document.getElementById('modalClassGrade').value = skype.grade || "06 - Science";
+            document.getElementById('modalSkypeMode').value = skype.callMode || "call";
+            document.getElementById('modalSkypeId').value = skype.teacherSkypeId || "sheshadi.science";
+            document.getElementById('modalZoomUrl').value = zoom.meetingUrl || "";
+            document.getElementById('classroomModal').classList.remove('hidden');
         });
 
-        function closeZoomModal() {
-            document.getElementById('zoomModal').classList.add('hidden');
+        function closeClassroomModal() {
+            document.getElementById('classroomModal').classList.add('hidden');
         }
 
-        document.getElementById('zoomConfigForm').addEventListener('submit', (e) => {
+        document.getElementById('classroomConfigForm').addEventListener('submit', (e) => {
             e.preventDefault();
-            window.LMSCore.saveZoomSession({
-                title: document.getElementById('modalZoomTitle').value.trim(),
-                grade: document.getElementById('modalZoomGrade').value,
-                meetingUrl: document.getElementById('modalZoomUrl').value.trim(),
-                meetingId: document.getElementById('modalZoomId').value.trim(),
-                passcode: document.getElementById('modalZoomPass').value.trim(),
+            const title = document.getElementById('modalClassTitle').value.trim();
+            const grade = document.getElementById('modalClassGrade').value;
+            const mode = document.getElementById('modalSkypeMode').value;
+            const skypeId = document.getElementById('modalSkypeId').value.trim();
+            const zoomUrl = document.getElementById('modalZoomUrl').value.trim();
+
+            window.LMSCore.saveSkypeSession({
+                title: title,
+                grade: grade,
+                callMode: mode,
+                teacherSkypeId: skypeId,
                 isLive: true
             });
-            closeZoomModal();
-            refreshZoomDisplay();
-            alert("Zoom Class-Wise Key updated and broadcasted to " + document.getElementById('modalZoomGrade').value + " students!");
+
+            if (zoomUrl) {
+                window.LMSCore.saveZoomSession({
+                    title: title,
+                    grade: grade,
+                    meetingUrl: zoomUrl,
+                    isLive: true
+                });
+            }
+
+            closeClassroomModal();
+            refreshLiveClassroomDisplay();
+            alert("Live classroom keys updated! Broadcasted to " + grade + " students.");
         });
 
         // --- FILE SHARING ---
@@ -940,7 +991,7 @@
 
             MONTHS.forEach(m => {
                 const btn = document.createElement('button');
-                btn.className = `px-3 py-1.5 text-xs font-bold rounded-lg border transition ${m === selectedMonth ? 'bg-amber-500 text-slate-950 border-amber-400' : 'bg-slate-900/80 text-slate-300 border-slate-700 hover:border-amber-400/50'}`;
+                btn.className = `px-3 py-1.5 text-xs font-bold rounded-lg border transition ${m === selectedMonth ? 'bg-amber-500 text-slate-950 border-amber-400 font-extrabold' : 'bg-slate-900/80 text-slate-300 border-slate-700 hover:border-amber-400/50'}`;
                 btn.textContent = m.substring(0, 3).toUpperCase();
                 btn.addEventListener('click', () => selectAdminMonth(m));
                 container.appendChild(btn);
@@ -957,37 +1008,53 @@
             const tbody = document.getElementById('adminWeeklyTableBody');
             tbody.innerHTML = '';
 
-            const mData = (st.monthly_progress && st.monthly_progress[mName]) ? st.monthly_progress[mName] : [
-                { week: "1 week", master_guide_1: "Incomplete", master_guide_2: "Incomplete", past_paper: "Incomplete", practical: "Good", unit_test: 50 },
-                { week: "2 week", master_guide_1: "Incomplete", master_guide_2: "Incomplete", past_paper: "Incomplete", practical: "Good", unit_test: 50 },
-                { week: "3 week", master_guide_1: "Incomplete", master_guide_2: "Incomplete", past_paper: "Incomplete", practical: "Good", unit_test: 50 },
-                { week: "4 week", master_guide_1: "Incomplete", master_guide_2: "Incomplete", past_paper: "Incomplete", practical: "Good", unit_test: 50 }
-            ];
+            let mData = (st.monthly_progress && st.monthly_progress[mName]) ? st.monthly_progress[mName] : [];
+            mData = mData.filter(r => r && String(r.week).toLowerCase() !== 'weeks');
+            while (mData.length < 4) {
+                mData.push({
+                    week: `${mData.length + 1} week`,
+                    master_guide_1: "(Still not attended)",
+                    master_guide_2: "(Still not attended)",
+                    past_paper: "(Still not attended)",
+                    practical: "(Still not attended)",
+                    unit_test: null
+                });
+            }
 
-            const guideOpts = ["Completed", "Incomplete", "0.5 Done", "Pending"];
-            const prOpts = ["Excellent", "Good", "Needs Improvement", "Incomplete"];
+            const guideOpts = STATUS_OPTIONS; // ["Completed", "Incomplete", "0.5 Done", "Pending", "Still not attended"]
+            const prOpts = STATUS_OPTIONS;
 
             mData.forEach((row, idx) => {
                 const tr = document.createElement('tr');
-                tr.className = idx % 2 === 0 ? 'bg-slate-900/40' : 'bg-slate-800/20';
+                tr.className = idx % 2 === 0 ? 'bg-slate-900/50' : 'bg-slate-950/40';
 
                 const makeSelect = (opts, currentVal, attrName) => {
+                    let curStr = String(currentVal || 'Still not attended').trim();
                     let html = `<select data-week="${idx}" data-field="${attrName}" class="bg-slate-950 border border-slate-700 rounded px-2.5 py-1 text-xs text-slate-100 font-semibold focus:border-amber-400">`;
                     opts.forEach(o => {
-                        const sel = (String(currentVal).toLowerCase() === o.toLowerCase() || (o === 'Completed' && String(currentVal).toLowerCase().includes('complete'))) ? 'selected' : '';
-                        html += `<option value="${o}" ${sel}>${o}</option>`;
+                        let isSelected = false;
+                        if (curStr.toLowerCase() === o.toLowerCase() || (curStr.includes('not attended') && o === 'Still not attended')) isSelected = true;
+                        else if (o === 'Completed' && (curStr.toLowerCase() === 'good' || curStr.toLowerCase() === 'excellent')) isSelected = true;
+                        else if (o === '0.5 Done' && curStr.toLowerCase() === 'average') isSelected = true;
+                        else if (o === 'Incomplete' && curStr.toLowerCase() === 'bad') isSelected = true;
+                        
+                        html += `<option value="${o}" ${isSelected ? 'selected' : ''}>${o === 'Still not attended' ? '(Still not attended)' : o}</option>`;
                     });
                     html += `</select>`;
                     return html;
                 };
 
+                const utValue = (row.unit_test !== null && row.unit_test !== undefined && !isNaN(row.unit_test)) ? row.unit_test : '';
+
                 tr.innerHTML = `
-                    <td class="px-4 py-3 font-bold text-cyan-400">${row.week}</td>
+                    <td class="px-4 py-3 font-bold text-cyan-400">${row.week || `${idx + 1} week`}</td>
                     <td class="px-4 py-3">${makeSelect(guideOpts, row.master_guide_1, 'master_guide_1')}</td>
                     <td class="px-4 py-3">${makeSelect(guideOpts, row.master_guide_2, 'master_guide_2')}</td>
                     <td class="px-4 py-3">${makeSelect(guideOpts, row.past_paper, 'past_paper')}</td>
                     <td class="px-4 py-3">${makeSelect(prOpts, row.practical, 'practical')}</td>
-                    <td class="px-4 py-3"><input type="number" data-week="${idx}" data-field="unit_test" value="${row.unit_test}" min="0" max="100" class="bg-slate-950 border border-amber-500/50 rounded px-2.5 py-1 text-xs w-20 text-emerald-400 font-bold"> / 100</td>
+                    <td class="px-4 py-3">
+                        <input type="number" data-week="${idx}" data-field="unit_test" value="${utValue}" min="0" max="100" placeholder="(Still not attended)" class="bg-slate-950 border border-amber-500/50 rounded px-2.5 py-1 text-xs w-28 text-emerald-400 font-bold focus:border-cyan-400"> <span class="text-xs text-slate-400">/ 100</span>
+                    </td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -1005,7 +1072,15 @@
                 const mg2 = tr.querySelector('[data-field="master_guide_2"]').value;
                 const pp = tr.querySelector('[data-field="past_paper"]').value;
                 const pr = tr.querySelector('[data-field="practical"]').value;
-                const ut = parseInt(tr.querySelector('[data-field="unit_test"]').value) || 0;
+                const utInput = tr.querySelector('[data-field="unit_test"]').value.trim();
+                
+                let ut = null;
+                if (utInput !== '' && !utInput.toLowerCase().includes('not attended') && utInput.toLowerCase() !== 'null') {
+                    const parsed = parseFloat(utInput);
+                    if (!isNaN(parsed) && parsed >= 0 && parsed <= 100) {
+                        ut = parsed;
+                    }
+                }
 
                 newWeeklyData.push({
                     week: `${wIdx + 1} week`,
@@ -1103,23 +1178,34 @@
             document.getElementById('adminStId').textContent = st.student_info.student_id;
             document.getElementById('adminStUsername').textContent = st.student_info.username || st.student_info.student_id.toLowerCase();
             document.getElementById('adminStGrade').textContent = st.student_info.grade_class;
-            document.getElementById('adminStAvatar').src = st.student_info.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${st.student_info.name}`;
-            document.getElementById('adminStAvg').textContent = st.summary.average_unit_test + ' / 100';
+            document.getElementById('adminStAvatar').src = st.student_info.avatar || ("https://api.dicebear.com/7.x/avataaars/svg?seed=" + encodeURIComponent(st.student_info.name));
+            document.getElementById('adminStAvg').textContent = (st.summary.average_unit_test || 0) + ' / 100';
             document.getElementById('adminStAttendance').textContent = st.summary.attendance || '95%';
             document.getElementById('adminStRemarks').value = st.teacher_notes || "Demonstrates strong understanding in weekly practicals.";
 
-            // QR Code
-            const currentOrigin = window.location.origin + window.location.pathname.replace('admin.html', '');
-            const targetUrl = `${currentOrigin}student.html?id=${st.student_info.student_id}`;
-
-            document.getElementById('qrUrlText').textContent = `student.html?id=${st.student_info.student_id}`;
+            // Dynamic QR Code & Direct Student URL
+            const targetUrl = window.LMSCore.getStudentDirectUrl(st.student_info.student_id);
+            const qrLink = document.getElementById('qrDirectLink');
+            qrLink.href = targetUrl;
 
             const qrBox = document.getElementById('qrcodeBox');
             qrBox.innerHTML = '';
-            new QRCode(qrBox, { text: targetUrl, width: 90, height: 90, colorDark: "#0f172a", colorLight: "#ffffff" });
+            new QRCode(qrBox, { text: targetUrl, width: 100, height: 100, colorDark: "#0c0710", colorLight: "#ffffff" });
+
+            // Setup Copy Link Button
+            const copyBtn = document.getElementById('copyQrLinkBtn');
+            const copyText = document.getElementById('copyQrBtnText');
+            copyBtn.onclick = () => {
+                navigator.clipboard.writeText(targetUrl).then(() => {
+                    copyText.textContent = "Copied!";
+                    setTimeout(() => { copyText.textContent = "Copy Direct Link"; }, 2000);
+                }).catch(() => {
+                    prompt("Copy link manually:", targetUrl);
+                });
+            };
 
             renderMonthTabs();
-            selectAdminMonth("January");
+            selectAdminMonth(selectedMonth || "January");
             renderTermMarksList(st);
             renderCharts(st);
         }
@@ -1136,12 +1222,10 @@
             if (termChart) termChart.destroy();
             if (practicalPieChart) practicalPieChart.destroy();
 
-            // 1. Monthly Unit Test Line Chart
+            // 1. 12-Month Unit Test Line Chart (Calculated strictly by completed tests in each month)
             const monthlyAverages = MONTHS.map(m => {
                 const weeks = (st.monthly_progress && st.monthly_progress[m]) ? st.monthly_progress[m] : [];
-                if (weeks.length === 0) return 50;
-                const sum = weeks.reduce((a, b) => a + (typeof b.unit_test === 'number' ? b.unit_test : 0), 0);
-                return Math.round(sum / weeks.length);
+                return window.LMSCore.calculateMonthlyUnitTestAverage(weeks);
             });
 
             annualChart = new Chart(document.getElementById('adminAnnualTrendChart').getContext('2d'), {
@@ -1151,35 +1235,57 @@
                     datasets: [{
                         label: 'Monthly Unit Test Average',
                         data: monthlyAverages,
-                        borderColor: '#00d2ff',
-                        backgroundColor: 'rgba(0, 210, 255, 0.15)',
+                        borderColor: '#fbbf24',
+                        backgroundColor: 'rgba(251, 191, 36, 0.15)',
                         borderWidth: 3,
                         fill: true,
-                        tension: 0.3,
-                        pointBackgroundColor: '#d4af37',
-                        pointRadius: 4
+                        tension: 0.35,
+                        pointBackgroundColor: '#e11d48',
+                        pointBorderColor: '#0c0710',
+                        pointBorderWidth: 2,
+                        pointRadius: 5,
+                        pointHoverRadius: 7,
+                        spanGaps: true
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    plugins: {
+                        legend: { labels: { color: '#cbd5e1', font: { family: 'Rajdhani', size: 12 } } },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const val = context.raw;
+                                    if (val === null || val === undefined) return ' (Still not attended)';
+                                    const mName = MONTHS[context.dataIndex];
+                                    const weeks = (st.monthly_progress && st.monthly_progress[mName]) || [];
+                                    const done = weeks.filter(w => w && typeof w.unit_test === 'number' && !isNaN(w.unit_test) && w.unit_test !== null).length;
+                                    return ` Avg: ${val} / 100 (${done} of ${weeks.length} tests completed)`;
+                                }
+                            }
+                        }
+                    },
                     scales: {
-                        x: { ticks: { color: '#94a3b8' } },
-                        y: { min: 0, max: 100, ticks: { color: '#94a3b8' } }
+                        x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255, 255, 255, 0.05)' } },
+                        y: { min: 0, max: 100, ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255, 255, 255, 0.05)' } }
                     }
                 }
             });
 
             // 2. Term Assessment Marks Bar Chart
+            const termLabels = (st.assessments || []).map(a => a.term);
+            const termScores = (st.assessments || []).map(a => a.score);
+
             termChart = new Chart(document.getElementById('adminTermChart').getContext('2d'), {
                 type: 'bar',
                 data: {
-                    labels: (st.assessments || []).map(a => a.term),
+                    labels: termLabels,
                     datasets: [{
                         label: 'Score',
-                        data: (st.assessments || []).map(a => a.score),
-                        backgroundColor: ['rgba(79, 70, 229, 0.8)', 'rgba(14, 165, 233, 0.8)', 'rgba(212, 175, 55, 0.8)', 'rgba(16, 185, 129, 0.8)'],
-                        borderColor: ['#4f46e5', '#0ea5e9', '#d4af37', '#10b981'],
+                        data: termScores,
+                        backgroundColor: ['rgba(225, 29, 72, 0.85)', 'rgba(245, 158, 11, 0.85)', 'rgba(14, 165, 233, 0.85)', 'rgba(16, 185, 129, 0.85)', 'rgba(168, 85, 247, 0.85)'],
+                        borderColor: ['#e11d48', '#f59e0b', '#0ea5e9', '#10b981', '#a855f7'],
                         borderWidth: 2,
                         borderRadius: 6
                     }]
@@ -1187,14 +1293,17 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
                     scales: {
-                        x: { ticks: { color: '#94a3b8' } },
-                        y: { min: 0, max: 100, ticks: { color: '#94a3b8' } }
+                        x: { ticks: { color: '#94a3b8' }, grid: { display: false } },
+                        y: { min: 0, max: 100, ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255, 255, 255, 0.05)' } }
                     }
                 }
             });
 
-            // 3. Practical Results Pie Chart
+            // 3. Practical Results Pie Chart (Completed, 0.5 Done, Pending, Incomplete, Still not attended)
             const pieCounts = window.LMSCore.getPracticalPieData(st);
             practicalPieChart = new Chart(document.getElementById('adminPracticalPieChart').getContext('2d'), {
                 type: 'pie',
@@ -1202,16 +1311,26 @@
                     labels: Object.keys(pieCounts),
                     datasets: [{
                         data: Object.values(pieCounts),
-                        backgroundColor: ['#10b981', '#0ea5e9', '#f59e0b', '#ef4444'],
+                        backgroundColor: ['#10b981', '#f59e0b', '#06b6d4', '#ef4444', '#64748b'],
                         borderWidth: 2,
-                        borderColor: '#0f172a'
+                        borderColor: '#0c0710'
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { position: 'bottom', labels: { color: '#cbd5e1', font: { size: 10 } } }
+                        legend: { position: 'bottom', labels: { color: '#cbd5e1', font: { size: 10 }, boxWidth: 12 } },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const val = context.raw;
+                                    const pct = total > 0 ? ((val / total) * 100).toFixed(1) : 0;
+                                    return ` ${context.label}: ${val} (${pct}%)`;
+                                }
+                            }
+                        }
                     }
                 }
             });
