@@ -1,0 +1,53 @@
+{
+  "adminAuth": {
+    "username": "sheshadi",
+    "password": "password123"
+  },
+  "settings": {
+    "academyName": "Sathsarani Science Academy",
+    "tagline": "GRADE 6-11 SCIENCE SPECIALIST",
+    "motto": "UNDERSTAND TODAY, SUCCEED TOMORROW",
+    "teacherName": "Mrs. Sheshadi Amarasinghe",
+    "teacherTitle": "B.Sc. (Chemistry Special), Grad.Chem (IChem) | Head Science Specialist",
+    "hotlines": "071 781 2092 | 077 161 4260",
+    "teacherPhoto": "assets/images/teacher_banner.png",
+    "bgImage": "assets/images/lms_background.png",
+    "subjectList": ["06 - Science", "07 - Science", "08 - Science", "09 - Science", "10 - Science", "11 - Science"],
+    "announcement": "Welcome to Sathsarani Science Academy LMS! Grade 06-11 Science Master Guidebooks, past paper revisions, WhatsApp & Zoom live classes are active.",
+    "offerings": [
+      "Clear Explanations",
+      "Exam Focused Learning",
+      "Concept Building",
+      "Past Paper Practice",
+      "Live Practical Sessions on Classroom"
+    ],
+    "gradingScale": { "A": 75, "B": 65, "C": 50, "S": 35 }
+  },
+  "whatsapp": {
+    "isLive": true,
+    "teacherWhatsappNumber": "94717812092",
+    "whatsappGroupUrl": "https://chat.whatsapp.com/ScienceWithSheshadi2026",
+    "title": "Grade 06 Science - Live Class WhatsApp Q&A & Support",
+    "grade": "06 - Science",
+    "broadcastText": "Hello students, today's Science Master Guidebook and practical review questions are now published.",
+    "statusText": "LIVE ON WHATSAPP"
+  },
+  "zoom": {
+    "isLive": true,
+    "title": "Grade 06 Science - Live Theory & Practical Zoom Session",
+    "grade": "06 - Science",
+    "meetingUrl": "https://zoom.us/j/9876543210?pwd=SCIENCE2026CLASS",
+    "meetingId": "987 654 3210",
+    "passcode": "SCIENCE2026",
+    "hostName": "Mrs. Sheshadi Amarasinghe",
+    "startTime": "Saturday 8:00 AM - 10:30 AM",
+    "statusText": "LIVE ON ZOOM"
+  },
+  "weeklyColumns": [
+    { "id": "col_mg1", "key": "master_guide_1", "label": "Guidebook 1", "type": "dropdown", "removable": false },
+    { "id": "col_mg2", "key": "master_guide_2", "label": "Guidebook 2", "type": "dropdown", "removable": false },
+    { "id": "col_pp", "key": "past_paper", "label": "Past Paper", "type": "dropdown", "removable": false },
+    { "id": "col_pr", "key": "practical", "label": "Practical Rating", "type": "dropdown", "removable": false },
+    { "id": "col_ut", "key": "unit_test", "label": "Unit Test Score", "type": "number", "removable": false }
+  ]
+}

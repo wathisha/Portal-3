@@ -743,6 +743,60 @@
                 </form>
             </div>
 
+            
+            <!-- Section 3: Global System Sync & Codebase Export (GitHub Pages / Multi-Device Persistence) -->
+            <div class="glass-panel p-6 space-y-6 border-cyan-500/40 mt-8">
+                <div class="pb-4 border-b border-slate-700 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                    <div>
+                        <h3 class="text-xl font-bold font-cinzel text-cyan-300"><i class="fa-solid fa-cloud-arrow-down mr-2"></i>Global System Synchronization & Codebase Export</h3>
+                        <p class="text-xs text-slate-400">Apply customizations and password changes across every device (phones, PCs, laptops) on GitHub Pages / hosting.</p>
+                    </div>
+                    <span class="px-3 py-1 bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 rounded-full text-xs font-bold font-mono">Multi-Device Global Sync</span>
+                </div>
+
+                <div class="space-y-4">
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        When you customize settings or reset passwords in this studio, your browser's local state is updated immediately. To propagate these changes globally so that <strong class="text-amber-300">any student or visitor on any phone or device sees the changes</strong>, download the updated global files below and replace them in your GitHub repository:
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                        <!-- Download Updated lms-core.js -->
+                        <div class="bg-slate-950/90 p-5 rounded-2xl border border-slate-800 space-y-3 flex flex-col justify-between">
+                            <div class="space-y-1.5">
+                                <div class="flex items-center space-x-2 text-amber-300 text-sm font-bold font-mono">
+                                    <i class="fa-brands fa-js text-base"></i>
+                                    <span>assets/js/lms-core.js</span>
+                                </div>
+                                <p class="text-xs text-slate-400">
+                                    Contains updated <code class="text-rose-400 font-mono">DEFAULT_ADMIN_AUTH</code>, <code class="text-amber-300 font-mono">DEFAULT_SETTINGS</code>, teacher contact details, and custom background wallpaper constants.
+                                </p>
+                            </div>
+                            <button type="button" onclick="exportUpdatedLmsCore()" class="w-full bg-slate-900 hover:bg-slate-800 text-amber-300 border border-amber-500/40 py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-2 shadow-md">
+                                <i class="fa-solid fa-download text-xs"></i>
+                                <span>Download Updated lms-core.js</span>
+                            </button>
+                        </div>
+
+                        <!-- Download Updated erp-config.json -->
+                        <div class="bg-slate-950/90 p-5 rounded-2xl border border-slate-800 space-y-3 flex flex-col justify-between">
+                            <div class="space-y-1.5">
+                                <div class="flex items-center space-x-2 text-cyan-300 text-sm font-bold font-mono">
+                                    <i class="fa-solid fa-file-code text-base"></i>
+                                    <span>assets/data/erp-config.json</span>
+                                </div>
+                                <p class="text-xs text-slate-400">
+                                    Central global configuration file automatically fetched on startup by all devices and browsers across every page.
+                                </p>
+                            </div>
+                            <button type="button" onclick="exportUpdatedErpConfig()" class="w-full bg-slate-900 hover:bg-slate-800 text-cyan-300 border border-cyan-500/40 py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-2 shadow-md">
+                                <i class="fa-solid fa-download text-xs"></i>
+                                <span>Download Updated erp-config.json</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Section 2: Teacher & Admin Password Reset -->
             <div class="glass-panel p-6 space-y-6 border-rose-500/40 mt-8">
                 <div class="pb-4 border-b border-slate-700">
