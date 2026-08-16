@@ -34,8 +34,8 @@ body {
 /* Glassmorphism Panels */
 .glass-panel {
     background: var(--panel-bg);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
     border: 1px solid var(--border-color);
     box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
     border-radius: 1.25rem;
