@@ -42,7 +42,7 @@
 
     const DEFAULT_ADMIN_AUTH = {
         username: "sheshadi",
-        password: "password123"
+        password: "Dog@0305"
     };
 
     const DEFAULT_WEEKLY_COLUMNS = [
