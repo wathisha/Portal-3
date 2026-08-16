@@ -39,8 +39,8 @@
     };
 
     const DEFAULT_ADMIN_AUTH = {
-        username: "sheshadi",
-        password: "Admin@0305"
+        username: "admin",
+        password: "admin@0305"
     };
 
     const DEFAULT_WEEKLY_COLUMNS = [
