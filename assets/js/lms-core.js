@@ -1,13 +1,16 @@
 /**
- * LMS Core Management Engine - Science with Sheshadi LMS
- * Handles LocalStorage persistence for:
- * 1. LMS Customization, Branding & Educator Profile (Mrs. Sheshadi Amarasinghe, Slogan, Hotlines, Teacher Photo, Custom Background)
- * 2. File Sharing & Study Materials
- * 3. Academic Calendar & Events (Google Calendar / Microsoft Teams Grid View)
- * 4. WhatsApp & Zoom Live Classroom (Class-Wise Broadcast & Direct WhatsApp Links)
- * 5. Grade-Wise Notifications Center (Grade 6, 7, 8, 9, 10, 11)
- * 6. Student Registration, Accounts, Username/Password Authentication, Weekly Tables with '(Still not attended)' & Term Test Marks
- * 7. 12-Month Unit Test Trend (Default 0 for uncompleted months) & Accurate Practical Pie Chart
+ * LMS Core Management Engine - Science with Sheshadi LMS & ERP
+ * Complete Feature Set:
+ * 1. LMS Customization, Branding & Educator Profile (Admin configurable: Teacher Name, Slogan/Motto, Hotlines, Teacher Photo, Custom Background Wallpaper for Every Page)
+ * 2. Teacher Grade-Wise Document Storage Vault (Protected - Teacher/Admin Only)
+ * 3. Class-Wise Student Directory (Protected - Teacher/Admin Only)
+ * 4. Google Calendar-styled Interactive Academic Calendar (Month Grid, Day Badges, Category Chips & Agenda)
+ * 5. WhatsApp Live Classroom Hub (Class-Wise Broadcast & Direct WhatsApp Links)
+ * 6. Grade-Wise Notifications Center (Grades 6, 7, 8, 9, 10, 11)
+ * 7. Blank Default Term Assessment Marks Slots & Chart Controls
+ * 8. Dynamic Weekly Table Column Configuration (Add / Remove custom columns)
+ * 9. Student Profile Editing (Name, Avatar photo, WhatsApp number, Grade, Credentials, Remarks)
+ * 10. Student & Shared File Deletion
  */
 
 (function () {
@@ -15,8 +18,8 @@
 
     const DEFAULT_SETTINGS = {
         academyName: "Sathsarani Science Academy",
-        tagline: "GRADE 6-11 SCIENCE | UNDERSTAND TODAY, SUCCEED TOMORROW",
-        motto: "SCIENCE වල අපි ශේෂ..!!",
+        tagline: "GRADE 6-11 SCIENCE SPECIALIST",
+        motto: "UNDERSTAND TODAY, SUCCEED TOMORROW",
         teacherName: "Mrs. Sheshadi Amarasinghe",
         teacherTitle: "B.Sc. (Chemistry Special), Grad.Chem (IChem) | Head Science Specialist",
         hotlines: "071 781 2092 | 077 161 4260",
@@ -33,6 +36,14 @@
         ],
         gradingScale: { A: 75, B: 65, C: 50, S: 35 }
     };
+
+    const DEFAULT_WEEKLY_COLUMNS = [
+        { id: "col_mg1", key: "master_guide_1", label: "Guidebook 1", type: "dropdown", removable: false },
+        { id: "col_mg2", key: "master_guide_2", label: "Guidebook 2", type: "dropdown", removable: false },
+        { id: "col_pp", key: "past_paper", label: "Past Paper", type: "dropdown", removable: false },
+        { id: "col_pr", key: "practical", label: "Practical Rating", type: "dropdown", removable: false },
+        { id: "col_ut", key: "unit_test", label: "Unit Test Score", type: "number", removable: false }
+    ];
 
     const DEFAULT_WHATSAPP = {
         isLive: true,
@@ -125,6 +136,59 @@
         }
     ];
 
+    const DEFAULT_TEACHER_DOCS = [
+        {
+            id: "TDOC-101",
+            title: "Grade 06 - Term 2 Master Examination Paper & Marking Rubric",
+            grade: "06 - Science",
+            category: "Official Marking Scheme",
+            fileUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+            fileSize: "4.8 MB",
+            uploadDate: "2026-08-10",
+            description: "Confidential official marking scheme and evaluation criteria for Term 2 Science paper."
+        },
+        {
+            id: "TDOC-102",
+            title: "Grade 07 - Plant & Animal Tissue Lab Practical Protocol Guide",
+            grade: "07 - Science",
+            category: "Lab Practical Protocol",
+            fileUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+            fileSize: "6.2 MB",
+            uploadDate: "2026-08-08",
+            description: "Detailed laboratory setup, chemical reagent preparations, and teacher notes."
+        },
+        {
+            id: "TDOC-103",
+            title: "Grade 08 - Annual Syllabus Timeline & Teaching Lesson Plans",
+            grade: "08 - Science",
+            category: "Lesson Plan",
+            fileUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+            fileSize: "3.5 MB",
+            uploadDate: "2026-08-02",
+            description: "Curriculum breakdown, unit targets, and weekly pedagogical timeline."
+        },
+        {
+            id: "TDOC-104",
+            title: "Grade 10 & 11 - O/L Chemistry Master Question Bank (Top 500 Questions)",
+            grade: "11 - Science",
+            category: "Question Bank",
+            fileUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+            fileSize: "12.4 MB",
+            uploadDate: "2026-08-12",
+            description: "Curated collection of national past paper questions with step-by-step chemical equations."
+        },
+        {
+            id: "TDOC-105",
+            title: "Confidential - Academic Year Student Performance Master Roster",
+            grade: "Confidential Master Files",
+            category: "Secretarial Record",
+            fileUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+            fileSize: "2.1 MB",
+            uploadDate: "2026-08-14",
+            description: "Master administrative student records, contact numbers, and parent communication log."
+        }
+    ];
+
     const DEFAULT_CALENDAR = [
         {
             id: "EVT-201",
@@ -178,6 +242,69 @@
             localStorage.setItem('lms_settings', JSON.stringify(updated));
             this.applyThemeAndBranding();
             return updated;
+        },
+
+        // --- Dynamic Weekly Table Columns Configuration ---
+        getWeeklyColumns() {
+            const stored = localStorage.getItem('lms_weekly_columns');
+            return stored ? JSON.parse(stored) : DEFAULT_WEEKLY_COLUMNS;
+        },
+        saveWeeklyColumns(columnsArray) {
+            localStorage.setItem('lms_weekly_columns', JSON.stringify(columnsArray));
+            return columnsArray;
+        },
+        addWeeklyColumn(label, type) {
+            const cols = this.getWeeklyColumns();
+            const cleanKey = label.toLowerCase().replace(/[^a-z0-9]/g, '_') + '_' + Date.now().toString().slice(-4);
+            const newCol = {
+                id: 'col_' + Date.now(),
+                key: cleanKey,
+                label: label.trim(),
+                type: type || 'dropdown', // 'dropdown', 'number', 'text'
+                removable: true
+            };
+            cols.push(newCol);
+            this.saveWeeklyColumns(cols);
+            return { cols, newCol };
+        },
+        removeWeeklyColumn(columnKey) {
+            let cols = this.getWeeklyColumns();
+            cols = cols.filter(c => c.key !== columnKey || c.removable === false);
+            this.saveWeeklyColumns(cols);
+            return cols;
+        },
+        resetWeeklyColumns() {
+            localStorage.removeItem('lms_weekly_columns');
+            return DEFAULT_WEEKLY_COLUMNS;
+        },
+
+        // --- Teacher Confidential Document Storage Vault ---
+        getTeacherDocs() {
+            const stored = localStorage.getItem('teacher_vault_documents');
+            return stored ? JSON.parse(stored) : DEFAULT_TEACHER_DOCS;
+        },
+        addTeacherDoc(docObj) {
+            const docs = this.getTeacherDocs();
+            const newDoc = {
+                id: "TDOC-" + Date.now(),
+                uploadDate: new Date().toISOString().split('T')[0],
+                ...docObj
+            };
+            docs.unshift(newDoc);
+            localStorage.setItem('teacher_vault_documents', JSON.stringify(docs));
+            return newDoc;
+        },
+        deleteTeacherDoc(docId) {
+            let docs = this.getTeacherDocs();
+            docs = docs.filter(d => d.id !== docId);
+            localStorage.setItem('teacher_vault_documents', JSON.stringify(docs));
+            return docs;
+        },
+        getTeacherDocsByGrade(grade) {
+            const docs = this.getTeacherDocs();
+            if (!grade || grade === 'All' || grade === 'All Grades') return docs;
+            const cleanGrade = grade.toLowerCase();
+            return docs.filter(d => (d.grade || '').toLowerCase().includes(cleanGrade));
         },
 
         // --- WhatsApp Live Session Engine ---
@@ -260,7 +387,7 @@
             });
         },
 
-        // --- File Sharing & Study Materials ---
+        // --- File Sharing & Study Materials (with Delete Capability) ---
         getFiles() {
             const stored = localStorage.getItem('lms_files');
             return stored ? JSON.parse(stored) : DEFAULT_FILES;
@@ -283,8 +410,11 @@
             localStorage.setItem('lms_files', JSON.stringify(files));
             return files;
         },
+        deleteStudentFile(fileId) {
+            return this.deleteFile(fileId);
+        },
 
-        // --- Academic Calendar Events ---
+        // --- Academic Calendar Events (Google Calendar Model) ---
         getCalendarEvents() {
             const stored = localStorage.getItem('lms_calendar_events');
             return stored ? JSON.parse(stored) : DEFAULT_CALENDAR;
@@ -304,7 +434,7 @@
             return events;
         },
 
-        // --- Student Accounts & Persistence ---
+        // --- Student Accounts, Registration & Editing ---
         async getStudents() {
             const stored = localStorage.getItem('lms_students');
             if (stored) {
@@ -335,12 +465,11 @@
                     count++;
                 }
             });
-            // Default value is 0 in the beginning / unrecorded months
             if (count === 0) return 0;
             return Math.round((sum / count) * 10) / 10;
         },
 
-        // Student Account Registration
+        // Student Account Registration (with blank default assessments)
         async registerStudent(newSt) {
             const students = await this.getStudents();
             const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -372,9 +501,9 @@
                 weekly_progress: monthlyProgress["January"],
                 monthly_progress: monthlyProgress,
                 assessments: [
-                    { term: "Term 1 Exam", score: 80 },
-                    { term: "Term 2 Exam", score: 85 },
-                    { term: "Final Exam", score: 90 }
+                    { term: "Term 1 Exam", score: null },
+                    { term: "Term 2 Exam", score: null },
+                    { term: "Final Exam", score: null }
                 ],
                 summary: {
                     attendance: newSt.attendance || "95%",
@@ -387,6 +516,41 @@
             students.push(newRecord);
             this.saveStudents(students);
             return { students, newRecord };
+        },
+
+        // Edit Student Profile After Creation (Name, Avatar photo, WhatsApp, Grade, Credentials, Remarks)
+        async updateStudent(studentId, updatedFields) {
+            const students = await this.getStudents();
+            const idx = students.findIndex(s => s.student_info && s.student_info.student_id === studentId);
+            if (idx !== -1) {
+                const st = students[idx];
+                if (updatedFields.name) {
+                    st.student_info.name = updatedFields.name.trim();
+                    st.tab_name = updatedFields.name.trim().split(' ')[0] + ' ' + st.student_info.student_id;
+                }
+                if (updatedFields.avatar) st.student_info.avatar = updatedFields.avatar;
+                if (updatedFields.username) st.student_info.username = updatedFields.username.trim().toLowerCase();
+                if (updatedFields.password) st.student_info.password = updatedFields.password.trim();
+                if (updatedFields.grade_class) st.student_info.grade_class = updatedFields.grade_class;
+                if (updatedFields.parent_whatsapp) st.student_info.parent_whatsapp = updatedFields.parent_whatsapp.trim();
+                if (updatedFields.homeroom_teacher) st.student_info.homeroom_teacher = updatedFields.homeroom_teacher.trim();
+                if (updatedFields.teacher_notes !== undefined) st.teacher_notes = updatedFields.teacher_notes.trim();
+                if (updatedFields.attendance !== undefined) st.summary.attendance = updatedFields.attendance.trim();
+                if (updatedFields.overall_status !== undefined) st.summary.overall_status = updatedFields.overall_status.trim();
+
+                students[idx] = st;
+                this.saveStudents(students);
+                return { success: true, student: st, students };
+            }
+            return { success: false, error: "Student not found" };
+        },
+
+        // Delete Student Record
+        async deleteStudent(studentId) {
+            let students = await this.getStudents();
+            students = students.filter(s => s.student_info && s.student_info.student_id !== studentId);
+            this.saveStudents(students);
+            return students;
         },
 
         // Student Authentication (Username/ID & Password)
@@ -443,7 +607,7 @@
             return students;
         },
 
-        // Practical Results Breakdown Distribution for Pie Chart (Completed, 0.5 Done, Pending, Incomplete, Still not attended)
+        // Practical Results Breakdown Distribution for Pie Chart
         getPracticalPieData(student) {
             const counts = { "Completed": 0, "0.5 Done": 0, "Pending": 0, "Incomplete": 0, "Still not attended": 0 };
             if (student && student.monthly_progress) {
@@ -485,6 +649,7 @@
             }
         },
 
+        // Dynamic ERP Customizer for Every Page (Teacher Photo, Custom Background Wallpaper, Slogan/Motto)
         applyThemeAndBranding() {
             const settings = this.getSettings();
             document.querySelectorAll('.branding-academy-name').forEach(el => { el.textContent = settings.academyName; });
@@ -495,14 +660,14 @@
             document.querySelectorAll('.branding-hotlines').forEach(el => { el.textContent = settings.hotlines; });
             document.querySelectorAll('.branding-motto').forEach(el => { el.textContent = settings.motto; });
 
-            // Apply custom teacher photo if present
+            // Apply custom teacher photo across all pages
             if (settings.teacherPhoto) {
                 document.querySelectorAll('.branding-teacher-photo').forEach(el => {
                     el.src = settings.teacherPhoto;
                 });
             }
 
-            // Apply custom background image across all pages if set
+            // Apply custom background image wallpaper across every page
             if (settings.bgImage) {
                 document.body.style.backgroundImage = `
                     linear-gradient(to bottom, rgba(12, 7, 16, 0.88), rgba(15, 8, 20, 0.94)),

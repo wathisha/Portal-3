@@ -460,15 +460,15 @@
     "assessments": [
       {
         "term": "Term 1 Exam",
-        "score": 75
+        "score": null
       },
       {
         "term": "Term 2 Exam",
-        "score": 80
+        "score": null
       },
       {
         "term": "Final Exam",
-        "score": 85
+        "score": null
       }
     ],
     "summary": {
@@ -476,7 +476,27 @@
       "average_unit_test": 76.4,
       "overall_status": "Active Progress"
     },
-    "teacher_notes": "Active participant in 06 - Science theory discussions and lab practicals."
+    "teacher_notes": "Active participant in 06 - Science theory discussions and lab practicals.",
+    "student_files": [
+      {
+        "id": "SF-ST-84092-1",
+        "title": "Grade 06 Science Practical Log Sheet",
+        "category": "Lab Practical",
+        "fileSize": "2.8 MB",
+        "uploadDate": "2026-08-04",
+        "fileUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        "uploadedBy": "Student Submission"
+      },
+      {
+        "id": "SF-ST-84092-2",
+        "title": "Unit Revision Assignment & Diagram Notes",
+        "category": "Assignment",
+        "fileSize": "1.5 MB",
+        "uploadDate": "2026-08-10",
+        "fileUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        "uploadedBy": "Student Submission"
+      }
+    ]
   },
   {
     "tab_name": "Sarah ST-84093",
@@ -939,15 +959,15 @@
     "assessments": [
       {
         "term": "Term 1 Exam",
-        "score": 80
+        "score": null
       },
       {
         "term": "Term 2 Exam",
-        "score": 85
+        "score": null
       },
       {
         "term": "Final Exam",
-        "score": 90
+        "score": null
       }
     ],
     "summary": {
@@ -955,7 +975,27 @@
       "average_unit_test": 78.4,
       "overall_status": "Active Progress"
     },
-    "teacher_notes": "Active participant in 06 - Science theory discussions and lab practicals."
+    "teacher_notes": "Active participant in 06 - Science theory discussions and lab practicals.",
+    "student_files": [
+      {
+        "id": "SF-ST-84093-1",
+        "title": "Grade 06 Science Practical Log Sheet",
+        "category": "Lab Practical",
+        "fileSize": "2.8 MB",
+        "uploadDate": "2026-08-04",
+        "fileUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        "uploadedBy": "Student Submission"
+      },
+      {
+        "id": "SF-ST-84093-2",
+        "title": "Unit Revision Assignment & Diagram Notes",
+        "category": "Assignment",
+        "fileSize": "1.5 MB",
+        "uploadDate": "2026-08-10",
+        "fileUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        "uploadedBy": "Student Submission"
+      }
+    ]
   },
   {
     "tab_name": "Samantha ST-90001",
@@ -1418,15 +1458,15 @@
     "assessments": [
       {
         "term": "Term 1 Exam",
-        "score": 85
+        "score": null
       },
       {
         "term": "Term 2 Exam",
-        "score": 90
+        "score": null
       },
       {
         "term": "Final Exam",
-        "score": 95
+        "score": null
       }
     ],
     "summary": {
@@ -1434,7 +1474,27 @@
       "average_unit_test": 86.4,
       "overall_status": "Active Progress"
     },
-    "teacher_notes": "Active participant in 06 - Science theory discussions and lab practicals."
+    "teacher_notes": "Active participant in 06 - Science theory discussions and lab practicals.",
+    "student_files": [
+      {
+        "id": "SF-ST-90001-1",
+        "title": "Grade 06 Science Practical Log Sheet",
+        "category": "Lab Practical",
+        "fileSize": "2.8 MB",
+        "uploadDate": "2026-08-04",
+        "fileUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        "uploadedBy": "Student Submission"
+      },
+      {
+        "id": "SF-ST-90001-2",
+        "title": "Unit Revision Assignment & Diagram Notes",
+        "category": "Assignment",
+        "fileSize": "1.5 MB",
+        "uploadDate": "2026-08-10",
+        "fileUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        "uploadedBy": "Student Submission"
+      }
+    ]
   },
   {
     "tab_name": "David ST-84094",
@@ -1897,15 +1957,15 @@
     "assessments": [
       {
         "term": "Term 1 Exam",
-        "score": 90
+        "score": null
       },
       {
         "term": "Term 2 Exam",
-        "score": 95
+        "score": null
       },
       {
         "term": "Final Exam",
-        "score": 100
+        "score": null
       }
     ],
     "summary": {
@@ -1913,7 +1973,27 @@
       "average_unit_test": 88.4,
       "overall_status": "Active Progress"
     },
-    "teacher_notes": "Active participant in 07 - Science theory discussions and lab practicals."
+    "teacher_notes": "Active participant in 07 - Science theory discussions and lab practicals.",
+    "student_files": [
+      {
+        "id": "SF-ST-84094-1",
+        "title": "Grade 07 Science Practical Log Sheet",
+        "category": "Lab Practical",
+        "fileSize": "2.8 MB",
+        "uploadDate": "2026-08-04",
+        "fileUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        "uploadedBy": "Student Submission"
+      },
+      {
+        "id": "SF-ST-84094-2",
+        "title": "Unit Revision Assignment & Diagram Notes",
+        "category": "Assignment",
+        "fileSize": "1.5 MB",
+        "uploadDate": "2026-08-10",
+        "fileUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        "uploadedBy": "Student Submission"
+      }
+    ]
   },
   {
     "tab_name": "Nethmi ST-84096",
@@ -2376,15 +2456,15 @@
     "assessments": [
       {
         "term": "Term 1 Exam",
-        "score": 95
+        "score": null
       },
       {
         "term": "Term 2 Exam",
-        "score": 100
+        "score": null
       },
       {
         "term": "Final Exam",
-        "score": 100
+        "score": null
       }
     ],
     "summary": {
@@ -2392,7 +2472,27 @@
       "average_unit_test": 95.8,
       "overall_status": "Active Progress"
     },
-    "teacher_notes": "Active participant in 07 - Science theory discussions and lab practicals."
+    "teacher_notes": "Active participant in 07 - Science theory discussions and lab practicals.",
+    "student_files": [
+      {
+        "id": "SF-ST-84096-1",
+        "title": "Grade 07 Science Practical Log Sheet",
+        "category": "Lab Practical",
+        "fileSize": "2.8 MB",
+        "uploadDate": "2026-08-04",
+        "fileUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        "uploadedBy": "Student Submission"
+      },
+      {
+        "id": "SF-ST-84096-2",
+        "title": "Unit Revision Assignment & Diagram Notes",
+        "category": "Assignment",
+        "fileSize": "1.5 MB",
+        "uploadDate": "2026-08-10",
+        "fileUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        "uploadedBy": "Student Submission"
+      }
+    ]
   },
   {
     "tab_name": "Kavisha ST-84095",
@@ -2855,15 +2955,15 @@
     "assessments": [
       {
         "term": "Term 1 Exam",
-        "score": 75
+        "score": null
       },
       {
         "term": "Term 2 Exam",
-        "score": 80
+        "score": null
       },
       {
         "term": "Final Exam",
-        "score": 85
+        "score": null
       }
     ],
     "summary": {
@@ -2871,7 +2971,27 @@
       "average_unit_test": 73.4,
       "overall_status": "Active Progress"
     },
-    "teacher_notes": "Active participant in 08 - Science theory discussions and lab practicals."
+    "teacher_notes": "Active participant in 08 - Science theory discussions and lab practicals.",
+    "student_files": [
+      {
+        "id": "SF-ST-84095-1",
+        "title": "Grade 08 Science Practical Log Sheet",
+        "category": "Lab Practical",
+        "fileSize": "2.8 MB",
+        "uploadDate": "2026-08-04",
+        "fileUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        "uploadedBy": "Student Submission"
+      },
+      {
+        "id": "SF-ST-84095-2",
+        "title": "Unit Revision Assignment & Diagram Notes",
+        "category": "Assignment",
+        "fileSize": "1.5 MB",
+        "uploadDate": "2026-08-10",
+        "fileUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        "uploadedBy": "Student Submission"
+      }
+    ]
   },
   {
     "tab_name": "Dineth ST-84097",
@@ -3334,15 +3454,15 @@
     "assessments": [
       {
         "term": "Term 1 Exam",
-        "score": 80
+        "score": null
       },
       {
         "term": "Term 2 Exam",
-        "score": 85
+        "score": null
       },
       {
         "term": "Final Exam",
-        "score": 90
+        "score": null
       }
     ],
     "summary": {
@@ -3350,7 +3470,27 @@
       "average_unit_test": 81.4,
       "overall_status": "Active Progress"
     },
-    "teacher_notes": "Active participant in 08 - Science theory discussions and lab practicals."
+    "teacher_notes": "Active participant in 08 - Science theory discussions and lab practicals.",
+    "student_files": [
+      {
+        "id": "SF-ST-84097-1",
+        "title": "Grade 08 Science Practical Log Sheet",
+        "category": "Lab Practical",
+        "fileSize": "2.8 MB",
+        "uploadDate": "2026-08-04",
+        "fileUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        "uploadedBy": "Student Submission"
+      },
+      {
+        "id": "SF-ST-84097-2",
+        "title": "Unit Revision Assignment & Diagram Notes",
+        "category": "Assignment",
+        "fileSize": "1.5 MB",
+        "uploadDate": "2026-08-10",
+        "fileUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        "uploadedBy": "Student Submission"
+      }
+    ]
   },
   {
     "tab_name": "Chamodi ST-84098",
@@ -3813,15 +3953,15 @@
     "assessments": [
       {
         "term": "Term 1 Exam",
-        "score": 85
+        "score": null
       },
       {
         "term": "Term 2 Exam",
-        "score": 90
+        "score": null
       },
       {
         "term": "Final Exam",
-        "score": 95
+        "score": null
       }
     ],
     "summary": {
@@ -3829,7 +3969,27 @@
       "average_unit_test": 83.4,
       "overall_status": "Active Progress"
     },
-    "teacher_notes": "Active participant in 09 - Science theory discussions and lab practicals."
+    "teacher_notes": "Active participant in 09 - Science theory discussions and lab practicals.",
+    "student_files": [
+      {
+        "id": "SF-ST-84098-1",
+        "title": "Grade 09 Science Practical Log Sheet",
+        "category": "Lab Practical",
+        "fileSize": "2.8 MB",
+        "uploadDate": "2026-08-04",
+        "fileUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        "uploadedBy": "Student Submission"
+      },
+      {
+        "id": "SF-ST-84098-2",
+        "title": "Unit Revision Assignment & Diagram Notes",
+        "category": "Assignment",
+        "fileSize": "1.5 MB",
+        "uploadDate": "2026-08-10",
+        "fileUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        "uploadedBy": "Student Submission"
+      }
+    ]
   },
   {
     "tab_name": "Thisura ST-84099",
@@ -4292,15 +4452,15 @@
     "assessments": [
       {
         "term": "Term 1 Exam",
-        "score": 90
+        "score": null
       },
       {
         "term": "Term 2 Exam",
-        "score": 95
+        "score": null
       },
       {
         "term": "Final Exam",
-        "score": 100
+        "score": null
       }
     ],
     "summary": {
@@ -4308,7 +4468,27 @@
       "average_unit_test": 91.4,
       "overall_status": "Active Progress"
     },
-    "teacher_notes": "Active participant in 09 - Science theory discussions and lab practicals."
+    "teacher_notes": "Active participant in 09 - Science theory discussions and lab practicals.",
+    "student_files": [
+      {
+        "id": "SF-ST-84099-1",
+        "title": "Grade 09 Science Practical Log Sheet",
+        "category": "Lab Practical",
+        "fileSize": "2.8 MB",
+        "uploadDate": "2026-08-04",
+        "fileUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        "uploadedBy": "Student Submission"
+      },
+      {
+        "id": "SF-ST-84099-2",
+        "title": "Unit Revision Assignment & Diagram Notes",
+        "category": "Assignment",
+        "fileSize": "1.5 MB",
+        "uploadDate": "2026-08-10",
+        "fileUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        "uploadedBy": "Student Submission"
+      }
+    ]
   },
   {
     "tab_name": "Praveen ST-84100",
@@ -4771,15 +4951,15 @@
     "assessments": [
       {
         "term": "Term 1 Exam",
-        "score": 95
+        "score": null
       },
       {
         "term": "Term 2 Exam",
-        "score": 100
+        "score": null
       },
       {
         "term": "Final Exam",
-        "score": 100
+        "score": null
       }
     ],
     "summary": {
@@ -4787,7 +4967,27 @@
       "average_unit_test": 93.3,
       "overall_status": "Active Progress"
     },
-    "teacher_notes": "Active participant in 10 - Science theory discussions and lab practicals."
+    "teacher_notes": "Active participant in 10 - Science theory discussions and lab practicals.",
+    "student_files": [
+      {
+        "id": "SF-ST-84100-1",
+        "title": "Grade 10 Science Practical Log Sheet",
+        "category": "Lab Practical",
+        "fileSize": "2.8 MB",
+        "uploadDate": "2026-08-04",
+        "fileUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        "uploadedBy": "Student Submission"
+      },
+      {
+        "id": "SF-ST-84100-2",
+        "title": "Unit Revision Assignment & Diagram Notes",
+        "category": "Assignment",
+        "fileSize": "1.5 MB",
+        "uploadDate": "2026-08-10",
+        "fileUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        "uploadedBy": "Student Submission"
+      }
+    ]
   },
   {
     "tab_name": "Hiruni ST-84101",
@@ -5250,15 +5450,15 @@
     "assessments": [
       {
         "term": "Term 1 Exam",
-        "score": 75
+        "score": null
       },
       {
         "term": "Term 2 Exam",
-        "score": 80
+        "score": null
       },
       {
         "term": "Final Exam",
-        "score": 85
+        "score": null
       }
     ],
     "summary": {
@@ -5266,7 +5466,27 @@
       "average_unit_test": 76.4,
       "overall_status": "Active Progress"
     },
-    "teacher_notes": "Active participant in 10 - Science theory discussions and lab practicals."
+    "teacher_notes": "Active participant in 10 - Science theory discussions and lab practicals.",
+    "student_files": [
+      {
+        "id": "SF-ST-84101-1",
+        "title": "Grade 10 Science Practical Log Sheet",
+        "category": "Lab Practical",
+        "fileSize": "2.8 MB",
+        "uploadDate": "2026-08-04",
+        "fileUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        "uploadedBy": "Student Submission"
+      },
+      {
+        "id": "SF-ST-84101-2",
+        "title": "Unit Revision Assignment & Diagram Notes",
+        "category": "Assignment",
+        "fileSize": "1.5 MB",
+        "uploadDate": "2026-08-10",
+        "fileUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        "uploadedBy": "Student Submission"
+      }
+    ]
   },
   {
     "tab_name": "Kusal ST-84102",
@@ -5729,15 +5949,15 @@
     "assessments": [
       {
         "term": "Term 1 Exam",
-        "score": 80
+        "score": null
       },
       {
         "term": "Term 2 Exam",
-        "score": 85
+        "score": null
       },
       {
         "term": "Final Exam",
-        "score": 90
+        "score": null
       }
     ],
     "summary": {
@@ -5745,7 +5965,27 @@
       "average_unit_test": 78.4,
       "overall_status": "Active Progress"
     },
-    "teacher_notes": "Active participant in 11 - Science theory discussions and lab practicals."
+    "teacher_notes": "Active participant in 11 - Science theory discussions and lab practicals.",
+    "student_files": [
+      {
+        "id": "SF-ST-84102-1",
+        "title": "Grade 11 Science Practical Log Sheet",
+        "category": "Lab Practical",
+        "fileSize": "2.8 MB",
+        "uploadDate": "2026-08-04",
+        "fileUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        "uploadedBy": "Student Submission"
+      },
+      {
+        "id": "SF-ST-84102-2",
+        "title": "Unit Revision Assignment & Diagram Notes",
+        "category": "Assignment",
+        "fileSize": "1.5 MB",
+        "uploadDate": "2026-08-10",
+        "fileUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        "uploadedBy": "Student Submission"
+      }
+    ]
   },
   {
     "tab_name": "Ananya ST-84103",
@@ -6208,15 +6448,15 @@
     "assessments": [
       {
         "term": "Term 1 Exam",
-        "score": 85
+        "score": null
       },
       {
         "term": "Term 2 Exam",
-        "score": 90
+        "score": null
       },
       {
         "term": "Final Exam",
-        "score": 95
+        "score": null
       }
     ],
     "summary": {
@@ -6224,6 +6464,26 @@
       "average_unit_test": 86.4,
       "overall_status": "Active Progress"
     },
-    "teacher_notes": "Active participant in 11 - Science theory discussions and lab practicals."
+    "teacher_notes": "Active participant in 11 - Science theory discussions and lab practicals.",
+    "student_files": [
+      {
+        "id": "SF-ST-84103-1",
+        "title": "Grade 11 Science Practical Log Sheet",
+        "category": "Lab Practical",
+        "fileSize": "2.8 MB",
+        "uploadDate": "2026-08-04",
+        "fileUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        "uploadedBy": "Student Submission"
+      },
+      {
+        "id": "SF-ST-84103-2",
+        "title": "Unit Revision Assignment & Diagram Notes",
+        "category": "Assignment",
+        "fileSize": "1.5 MB",
+        "uploadDate": "2026-08-10",
+        "fileUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        "uploadedBy": "Student Submission"
+      }
+    ]
   }
 ]

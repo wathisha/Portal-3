@@ -6,7 +6,7 @@
     <title>Student Academic Results & Progress Portal | Sathsarani Science Academy LMS</title>
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Rajdhani:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -18,6 +18,7 @@
                     fontFamily: {
                         cinzel: ['Cinzel', 'serif'],
                         rajdhani: ['Rajdhani', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
                     }
                 }
             }
@@ -41,11 +42,6 @@
 
             <!-- Header Actions -->
             <div class="flex items-center space-x-3">
-                <a href="students_directory.html" class="bg-slate-900 hover:bg-slate-800 text-amber-300 border border-amber-500/40 px-3 py-2 rounded-xl text-xs font-bold flex items-center space-x-1.5 transition">
-                    <i class="fa-solid fa-users text-xs"></i>
-                    <span class="hidden sm:inline">Students Directory</span>
-                </a>
-
                 <button onclick="window.print()" class="bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center space-x-1.5 transition">
                     <i class="fa-solid fa-print"></i>
                     <span class="hidden sm:inline">Print Scorecard</span>
@@ -120,7 +116,7 @@
                     <span id="stNotifBadgeCount" class="ml-1.5 px-1.5 py-0.2 bg-rose-500 text-white text-[10px] font-bold rounded-full">3</span>
                 </button>
                 <button onclick="switchStTab('cal')" id="st-tab-btn-cal" class="pb-3 text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
-                    <i class="fa-solid fa-calendar-days"></i> Academic Calendar (Grid View)
+                    <i class="fa-solid fa-calendar-days"></i> Academic Calendar (Google Calendar View)
                 </button>
                 <button onclick="switchStTab('files')" id="st-tab-btn-files" class="pb-3 text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
                     <i class="fa-solid fa-folder-open"></i> Shared Study Files
@@ -145,7 +141,7 @@
                             </div>
                         </div>
 
-                        <!-- Practical Results Breakdown Pie Chart (Completed, 0.5 Done, Pending, Incomplete, Still not attended) -->
+                        <!-- Practical Results Breakdown Pie Chart -->
                         <div class="bg-slate-950/90 border border-emerald-500/30 p-5 rounded-2xl space-y-3">
                             <h4 class="text-xs font-bold font-cinzel text-emerald-300 uppercase tracking-wider flex items-center justify-between">
                                 <span><i class="fa-solid fa-chart-pie mr-1.5 text-emerald-400"></i>Practical Results Breakdown</span>
@@ -207,33 +203,28 @@
                             </div>
                         </div>
 
-                        <!-- Selected Month Weekly Progress Table with (Still not attended) State -->
+                        <!-- Selected Month Weekly Progress Table with Dynamic Columns & (Still not attended) State -->
                         <div class="glass-panel p-6 space-y-4">
                             <div class="pb-2 border-b border-slate-700">
                                 <h4 class="text-lg font-bold font-cinzel text-slate-100"><span id="tableMonthTitle">January</span> Weekly Progress Table</h4>
-                                <p class="text-xs text-slate-400">Guidebook completion, past paper status, practical ratings & unit test scores</p>
+                                <p class="text-xs text-slate-400">Weekly guidebook completion, past paper status, practical ratings & unit scores</p>
                             </div>
 
                             <div class="overflow-x-auto">
                                 <table class="w-full text-left text-sm text-slate-300">
                                     <thead class="bg-slate-950/90 text-slate-300 font-semibold uppercase text-xs border-b border-slate-700">
-                                        <tr>
-                                            <th class="px-4 py-3">Week</th>
-                                            <th class="px-4 py-3">Guidebook 1</th>
-                                            <th class="px-4 py-3">Guidebook 2</th>
-                                            <th class="px-4 py-3">Past Paper</th>
-                                            <th class="px-4 py-3">Practical Rating</th>
-                                            <th class="px-4 py-3">Unit Test Score</th>
+                                        <tr id="stWeeklyTableHeadRow">
+                                            <!-- Dynamically populated from LMSCore.getWeeklyColumns() -->
                                         </tr>
                                     </thead>
                                     <tbody id="stWeeklyTableBody" class="divide-y divide-slate-800">
-                                        <!-- Populated via JS -->
+                                        <!-- Dynamically populated -->
                                     </tbody>
                                 </table>
                             </div>
                         </div>
 
-                        <!-- Charts Row (Default 0 for unrecorded months) -->
+                        <!-- Charts Row (Default 0 for unrecorded months & Blank-Default Term Marks) -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="glass-panel p-5 space-y-3">
                                 <div class="flex justify-between items-center">
@@ -248,7 +239,7 @@
                             <div class="glass-panel p-5 space-y-3">
                                 <div class="flex justify-between items-center">
                                     <h5 class="text-sm font-bold text-slate-200 font-cinzel"><i class="fa-solid fa-chart-column text-rose-400 mr-2"></i>Term Assessment Marks</h5>
-                                    <span class="text-[10px] text-slate-400 font-mono">Bar Chart</span>
+                                    <span class="text-[10px] text-slate-400 font-mono">Blank by Default</span>
                                 </div>
                                 <div class="h-56 relative">
                                     <canvas id="stTermChart"></canvas>
@@ -278,36 +269,41 @@
                 </div>
             </div>
 
-            <!-- TAB 3: ACADEMIC CALENDAR (GOOGLE / MS TEAMS GRID VIEW) -->
+            <!-- TAB 3: ACADEMIC CALENDAR (GOOGLE CALENDAR LAYOUT) -->
             <div id="st-tab-cal" class="hidden space-y-6">
                 <div class="glass-panel p-6 space-y-6 border-emerald-500/30">
-                    <div class="flex justify-between items-center pb-4 border-b border-slate-700">
-                        <div>
-                            <h3 class="text-xl font-bold font-cinzel text-slate-100">Academic Calendar (Teams / Google Calendar View)</h3>
-                            <p class="text-xs text-slate-400">View upcoming term exams, live class schedules, and assignment submission deadlines.</p>
-                        </div>
-                    </div>
-
-                    <!-- Calendar Navigation Header -->
-                    <div class="flex items-center justify-between bg-slate-950 p-4 rounded-2xl border border-slate-800">
+                    
+                    <!-- Google Calendar Top Bar -->
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-4 border-b border-slate-700">
                         <div class="flex items-center space-x-3">
-                            <button id="stCalPrevBtn" class="bg-slate-900 hover:bg-slate-800 text-slate-300 p-2 rounded-xl border border-slate-700 transition"><i class="fa-solid fa-chevron-left text-xs"></i></button>
-                            <h4 id="stCalMonthYearLabel" class="text-lg font-bold font-cinzel text-amber-300">August 2026</h4>
-                            <button id="stCalNextBtn" class="bg-slate-900 hover:bg-slate-800 text-slate-300 p-2 rounded-xl border border-slate-700 transition"><i class="fa-solid fa-chevron-right text-xs"></i></button>
-                            <button id="stCalTodayBtn" class="bg-slate-800 hover:bg-slate-700 text-cyan-300 text-xs px-3 py-1.5 rounded-lg border border-slate-700 font-bold">Today</button>
+                            <button id="stCalTodayBtn" class="border border-slate-700 hover:bg-slate-800 text-slate-200 px-4 py-1.5 rounded-full text-xs font-semibold transition">
+                                Today
+                            </button>
+                            <div class="flex items-center space-x-1">
+                                <button id="stCalPrevBtn" class="w-8 h-8 rounded-full hover:bg-slate-800 text-slate-300 flex items-center justify-center transition">
+                                    <i class="fa-solid fa-chevron-left text-xs"></i>
+                                </button>
+                                <button id="stCalNextBtn" class="w-8 h-8 rounded-full hover:bg-slate-800 text-slate-300 flex items-center justify-center transition">
+                                    <i class="fa-solid fa-chevron-right text-xs"></i>
+                                </button>
+                            </div>
+                            <h3 id="stCalMonthYearLabel" class="text-xl font-bold font-sans text-slate-100 pl-2">
+                                August 2026
+                            </h3>
                         </div>
 
-                        <div class="flex items-center space-x-2 text-xs">
-                            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> Exam</span>
-                            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span> Class</span>
+                        <!-- Legend Chips -->
+                        <div class="flex items-center space-x-3 text-xs">
+                            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span> Live Class</span>
+                            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-red-500"></span> Exam</span>
                             <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> Assignment</span>
                             <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Holiday</span>
                         </div>
                     </div>
 
-                    <!-- Month Calendar Grid -->
-                    <div class="overflow-x-auto bg-slate-950/80 rounded-2xl border border-slate-800 p-3">
-                        <div class="grid grid-cols-7 gap-1 text-center font-bold font-mono text-xs text-amber-300 pb-2 border-b border-slate-800">
+                    <!-- Month Calendar Grid (Google Calendar Layout) -->
+                    <div class="bg-slate-950/90 rounded-2xl border border-slate-800 overflow-hidden shadow-2xl">
+                        <div class="grid grid-cols-7 text-center font-bold text-[11px] text-slate-400 py-3 bg-slate-900/60 border-b border-slate-800 tracking-wider uppercase">
                             <div>MON</div>
                             <div>TUE</div>
                             <div>WED</div>
@@ -316,8 +312,8 @@
                             <div>SAT</div>
                             <div>SUN</div>
                         </div>
-                        <div id="stCalendarGridCells" class="grid grid-cols-7 gap-1 pt-2">
-                            <!-- Populated by JS -->
+                        <div id="stCalendarGridCells" class="grid grid-cols-7 gap-[1px] bg-slate-800">
+                            <!-- Populated dynamically by JS -->
                         </div>
                     </div>
                 </div>
@@ -526,6 +522,7 @@
             });
         }
 
+        // --- GOOGLE CALENDAR STYLED MONTH GRID ---
         function renderStudentCalendarGrid() {
             const grid = document.getElementById('stCalendarGridCells');
             grid.innerHTML = '';
@@ -542,8 +539,8 @@
 
             for (let x = firstDayIndex; x > 0; x--) {
                 const cell = document.createElement('div');
-                cell.className = "h-24 p-1.5 bg-slate-950/40 rounded-xl border border-slate-900/60 opacity-30 text-xs";
-                cell.innerHTML = `<span class="font-mono text-slate-500">${prevLastDay - x + 1}</span>`;
+                cell.className = "min-h-[100px] p-2 bg-slate-950/40 opacity-35 border-b border-r border-slate-800/80 text-xs";
+                cell.innerHTML = `<span class="font-sans text-slate-500 text-[11px] font-medium">${prevLastDay - x + 1}</span>`;
                 grid.appendChild(cell);
             }
 
@@ -555,32 +552,44 @@
                 const curDateStr = `${stCalYear}-${String(stCalMonth + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
                 const dayEvents = events.filter(e => e.date === curDateStr);
 
-                cell.className = `h-24 p-1.5 rounded-xl border transition flex flex-col justify-between overflow-hidden ${isToday ? 'bg-amber-500/10 border-amber-400' : 'bg-slate-900/70 border-slate-800'}`;
+                cell.className = `min-h-[100px] p-2 bg-slate-950/95 border-b border-r border-slate-800/80 transition flex flex-col justify-between`;
                 
                 let eventsHtml = '';
                 dayEvents.forEach(ev => {
-                    let color = 'bg-rose-500/20 text-rose-300 border-rose-500/30';
-                    if (ev.category === 'Class') color = 'bg-sky-500/20 text-sky-300 border-sky-500/30';
-                    if (ev.category === 'Assignment') color = 'bg-amber-500/20 text-amber-300 border-amber-500/30';
-                    if (ev.category === 'Holiday') color = 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30';
+                    let color = 'bg-red-500/20 text-red-300 border-l-2 border-red-500';
+                    if (ev.category === 'Class') color = 'bg-blue-500/20 text-blue-300 border-l-2 border-blue-500';
+                    if (ev.category === 'Assignment') color = 'bg-amber-500/20 text-amber-300 border-l-2 border-amber-500';
+                    if (ev.category === 'Holiday') color = 'bg-emerald-500/20 text-emerald-300 border-l-2 border-emerald-500';
 
                     eventsHtml += `
-                        <div class="text-[9px] px-1 py-0.5 rounded truncate font-bold border ${color}" title="${ev.title} (${ev.time})">
-                            ${ev.title}
+                        <div class="text-[10px] px-1.5 py-0.5 rounded truncate font-medium ${color}" title="${ev.title} (${ev.time})">
+                            <span class="font-bold">${ev.time.split(' ')[0]}</span> ${ev.title}
                         </div>
                     `;
                 });
 
                 cell.innerHTML = `
-                    <div class="flex justify-between items-center">
-                        <span class="font-mono text-[11px] ${isToday ? 'font-black text-amber-300' : 'text-slate-400'}">${i}</span>
-                        ${isToday ? '<span class="text-[8px] px-1 bg-amber-500 text-slate-950 font-bold rounded">TODAY</span>' : ''}
+                    <div class="flex justify-between items-center mb-1">
+                        ${isToday 
+                            ? `<span class="w-6 h-6 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center shadow">${i}</span>` 
+                            : `<span class="font-sans text-[12px] font-semibold text-slate-300">${i}</span>`
+                        }
                     </div>
                     <div class="space-y-1 overflow-y-auto max-h-16 py-0.5">
                         ${eventsHtml}
                     </div>
                 `;
 
+                grid.appendChild(cell);
+            }
+
+            // Next month trailing days
+            const totalCells = firstDayIndex + lastDay;
+            const remaining = (7 - (totalCells % 7)) % 7;
+            for (let y = 1; y <= remaining; y++) {
+                const cell = document.createElement('div');
+                cell.className = "min-h-[100px] p-2 bg-slate-950/40 opacity-35 border-b border-r border-slate-800/80 text-xs";
+                cell.innerHTML = `<span class="font-sans text-slate-500 text-[11px] font-medium">${y}</span>`;
                 grid.appendChild(cell);
             }
         }
@@ -617,26 +626,35 @@
             });
         }
 
+        // --- WEEKLY TABLE WITH DYNAMIC COLUMNS ---
         function selectMonth(monthName) {
             selectedMonth = monthName;
             document.getElementById('selectedMonthLabel').textContent = monthName;
             document.getElementById('tableMonthTitle').textContent = monthName;
             renderMonthTabs();
 
+            const theadRow = document.getElementById('stWeeklyTableHeadRow');
             const tbody = document.getElementById('stWeeklyTableBody');
+            
+            theadRow.innerHTML = `<th class="px-4 py-3">Week</th>`;
             tbody.innerHTML = '';
+
+            const cols = window.LMSCore.getWeeklyColumns();
+            cols.forEach(col => {
+                const th = document.createElement('th');
+                th.className = "px-4 py-3";
+                th.textContent = col.label;
+                theadRow.appendChild(th);
+            });
 
             let monthData = (currentStudent.monthly_progress && currentStudent.monthly_progress[monthName]) ? currentStudent.monthly_progress[monthName] : [];
             monthData = monthData.filter(r => r && String(r.week).toLowerCase() !== 'weeks');
             while (monthData.length < 4) {
-                monthData.push({
-                    week: `${monthData.length + 1} week`,
-                    master_guide_1: "(Still not attended)",
-                    master_guide_2: "(Still not attended)",
-                    past_paper: "(Still not attended)",
-                    practical: "(Still not attended)",
-                    unit_test: null
+                const blankRow = { week: `${monthData.length + 1} week` };
+                cols.forEach(c => {
+                    blankRow[c.key] = (c.type === 'number') ? null : "(Still not attended)";
                 });
+                monthData.push(blankRow);
             }
 
             const getBadgeClass = (val) => {
@@ -658,19 +676,24 @@
                 const tr = document.createElement('tr');
                 tr.className = idx % 2 === 0 ? 'bg-slate-900/50' : 'bg-slate-950/40';
 
-                let utDisplay = `<span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-800/80 text-slate-400 border border-slate-700">(Still not attended)</span>`;
-                if (row.unit_test !== null && row.unit_test !== undefined && !isNaN(row.unit_test)) {
-                    utDisplay = `<span class="font-bold text-emerald-400">${row.unit_test}</span> <span class="text-xs text-slate-400">/ 100</span>`;
-                }
+                let cellsHtml = `<td class="px-4 py-3.5 font-bold text-cyan-400">${row.week || `${idx + 1} week`}</td>`;
 
-                tr.innerHTML = `
-                    <td class="px-4 py-3.5 font-bold text-cyan-400">${row.week || `${idx + 1} week`}</td>
-                    <td class="px-4 py-3.5"><span class="px-2.5 py-1 rounded-full text-xs font-semibold ${getBadgeClass(row.master_guide_1)}">${formatVal(row.master_guide_1)}</span></td>
-                    <td class="px-4 py-3.5"><span class="px-2.5 py-1 rounded-full text-xs font-semibold ${getBadgeClass(row.master_guide_2)}">${formatVal(row.master_guide_2)}</span></td>
-                    <td class="px-4 py-3.5"><span class="px-2.5 py-1 rounded-full text-xs font-semibold ${getBadgeClass(row.past_paper)}">${formatVal(row.past_paper)}</span></td>
-                    <td class="px-4 py-3.5"><span class="px-2.5 py-1 rounded-full text-xs font-semibold ${getBadgeClass(row.practical)}">${formatVal(row.practical)}</span></td>
-                    <td class="px-4 py-3.5">${utDisplay}</td>
-                `;
+                cols.forEach(c => {
+                    const val = row[c.key];
+                    if (c.type === 'number') {
+                        let utDisplay = `<span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-800/80 text-slate-400 border border-slate-700">(Still not attended)</span>`;
+                        if (val !== null && val !== undefined && !isNaN(val)) {
+                            utDisplay = `<span class="font-bold text-emerald-400">${val}</span> <span class="text-xs text-slate-400">/ 100</span>`;
+                        }
+                        cellsHtml += `<td class="px-4 py-3.5">${utDisplay}</td>`;
+                    } else if (c.type === 'text') {
+                        cellsHtml += `<td class="px-4 py-3.5"><span class="font-mono text-xs text-slate-300">${val || '-'}</span></td>`;
+                    } else { // dropdown
+                        cellsHtml += `<td class="px-4 py-3.5"><span class="px-2.5 py-1 rounded-full text-xs font-semibold ${getBadgeClass(val)}">${formatVal(val)}</span></td>`;
+                    }
+                });
+
+                tr.innerHTML = cellsHtml;
                 tbody.appendChild(tr);
             });
         }
@@ -759,16 +782,16 @@
                 }
             });
 
-            // 2. Term Assessment Marks Bar Chart
+            // 2. Term Assessment Marks Bar Chart (Blank/0 by default)
             const termLabels = (currentStudent.assessments || []).map(a => a.term);
-            const termScores = (currentStudent.assessments || []).map(a => a.score);
+            const termScores = (currentStudent.assessments || []).map(a => (a.score !== null && a.score !== undefined) ? a.score : 0);
 
             termChart = new Chart(document.getElementById('stTermChart').getContext('2d'), {
                 type: 'bar',
                 data: {
                     labels: termLabels,
                     datasets: [{
-                        label: 'Score',
+                        label: 'Assessment Score',
                         data: termScores,
                         backgroundColor: ['rgba(225, 29, 72, 0.85)', 'rgba(245, 158, 11, 0.85)', 'rgba(14, 165, 233, 0.85)', 'rgba(16, 185, 129, 0.85)', 'rgba(168, 85, 247, 0.85)'],
                         borderColor: ['#e11d48', '#f59e0b', '#0ea5e9', '#10b981', '#a855f7'],
@@ -780,7 +803,16 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { display: false }
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const orig = (currentStudent.assessments && currentStudent.assessments[context.dataIndex]) ? currentStudent.assessments[context.dataIndex].score : null;
+                                    if (orig === null || orig === undefined) return ' Score: Not Entered (Blank)';
+                                    return ` Score: ${orig} / 100`;
+                                }
+                            }
+                        }
                     },
                     scales: {
                         x: { ticks: { color: '#94a3b8' }, grid: { display: false } },
@@ -789,7 +821,7 @@
                 }
             });
 
-            // 3. Practical Results Pie Chart (Completed, 0.5 Done, Pending, Incomplete, Still not attended)
+            // 3. Practical Results Pie Chart
             const pieCounts = window.LMSCore.getPracticalPieData(currentStudent);
             stPracticalPieChart = new Chart(document.getElementById('stPracticalPieChart').getContext('2d'), {
                 type: 'pie',

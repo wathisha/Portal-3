@@ -6,7 +6,7 @@
     <title>Sathsarani Science Academy | Student & Educator LMS Portal</title>
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Rajdhani:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/styles.css">
     <script>
@@ -16,6 +16,7 @@
                     fontFamily: {
                         cinzel: ['Cinzel', 'serif'],
                         rajdhani: ['Rajdhani', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
                     }
                 }
             }
@@ -37,15 +38,11 @@
                 </div>
             </div>
 
-            <!-- Action Buttons -->
+            <!-- Action Buttons (Strictly Teacher Login - No directory/vault links) -->
             <div class="flex items-center space-x-3">
-                <a href="students_directory.html" class="bg-slate-900 hover:bg-slate-800 text-amber-300 border border-amber-500/40 px-3.5 py-2 rounded-xl text-xs font-bold flex items-center space-x-1.5 transition">
-                    <i class="fa-solid fa-users text-xs"></i>
-                    <span class="hidden sm:inline">Students Directory</span>
-                </a>
-                <a href="admin_login.html" class="bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 px-4 py-2 rounded-xl text-xs font-bold flex items-center space-x-2 transition shadow-md">
+                <a href="admin_login.html" class="bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 text-slate-950 px-4 py-2 rounded-xl text-xs font-extrabold flex items-center space-x-2 transition shadow-md">
                     <i class="fa-solid fa-user-gear"></i>
-                    <span>Teacher Login</span>
+                    <span>Teacher / Admin Login</span>
                 </a>
             </div>
         </div>
@@ -54,7 +51,7 @@
     <!-- Main Container: Access Hub -->
     <main class="max-w-6xl mx-auto px-4 py-10 flex-grow flex flex-col justify-center w-full space-y-10">
 
-        <!-- Hero Welcome Showcase Banner (Embedded with Attached Artwork Design) -->
+        <!-- Hero Welcome Showcase Banner (Dynamic Branding & Custom Wallpaper) -->
         <section class="glass-panel p-6 sm:p-10 border-rose-500/40 relative overflow-hidden shadow-2xl">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                 
@@ -65,7 +62,7 @@
                             GRADE 6 – 11 SCIENCE
                         </span>
                         <span class="px-3.5 py-1 bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-mono font-bold rounded-full branding-motto">
-                            SCIENCE වල අපි ශේෂ..!!
+                            UNDERSTAND TODAY, SUCCEED TOMORROW
                         </span>
                     </div>
 
@@ -75,7 +72,7 @@
 
                     <div class="space-y-1 text-sm text-slate-300">
                         <p class="font-bold text-amber-300 font-cinzel text-lg branding-teacher-name">Mrs. Sheshadi Amarasinghe</p>
-                        <p class="text-xs text-slate-400 branding-teacher-title">B.Sc. (Chemistry Special), Grad.Chem (IChem)</p>
+                        <p class="text-xs text-slate-400 branding-teacher-title">B.Sc. (Chemistry Special), Grad.Chem (IChem) | Head Science Specialist</p>
                         <p class="text-xs text-rose-400 font-mono font-bold">Hotlines: <span class="branding-hotlines">071 781 2092 | 077 161 4260</span></p>
                     </div>
 
@@ -95,7 +92,7 @@
                 <!-- Right Artwork Poster Card -->
                 <div class="lg:col-span-5 flex justify-center">
                     <div class="relative max-w-xs w-full">
-                        <img src="assets/images/teacher_banner.png" alt="Mrs. Sheshadi Amarasinghe" class="branding-teacher-photo rounded-3xl border-2 border-amber-400 shadow-2xl bg-slate-950 object-cover w-full">
+                        <img src="assets/images/teacher_banner.png" alt="Teacher Avatar" class="branding-teacher-photo rounded-3xl border-2 border-amber-400 shadow-2xl bg-slate-950 object-cover w-full">
                     </div>
                 </div>
 
@@ -177,7 +174,7 @@
                     </div>
 
                     <p class="text-xs text-slate-300 leading-relaxed">
-                        Restricted portal for <span class="text-amber-300 font-semibold branding-teacher-name">Mrs. Sheshadi Amarasinghe</span> to manage all classes, send grade-wise notifications, schedule Microsoft Teams/Google style calendar events, and customize the ERP.
+                        Restricted portal for <span class="text-amber-300 font-semibold branding-teacher-name">Mrs. Sheshadi Amarasinghe</span> to manage student records, dynamic weekly table columns, grade documents vault, and customize the ERP.
                     </p>
                 </div>
 
