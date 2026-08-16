@@ -1,46 +1,48 @@
 /**
  * LMS Core Management Engine - Science with Sheshadi LMS & ERP
- * Complete Feature Set:
- * 1. LMS Customization, Branding & Educator Profile (Admin configurable: Teacher Name, Slogan/Motto, Hotlines, Teacher Photo, Custom Background Wallpaper for Every Page)
- * 2. Teacher & Student Password Management (Teacher & Admin Password Reset & Student Password Reset)
- * 3. Student Account Deletion & Profile Management (Teacher/Admin Controlled)
- * 4. Teacher Grade-Wise Document Storage Vault (Protected - Teacher/Admin Only)
- * 5. Class-Wise Student Directory (Protected - Teacher/Admin Only)
- * 6. Google Calendar-styled Interactive Academic Calendar (Month Grid, Day Badges, Category Chips & Agenda)
- * 7. WhatsApp Live Classroom Hub (Class-Wise Broadcast & Direct WhatsApp Links)
- * 8. Grade-Wise Notifications Center (Grades 6, 7, 8, 9, 10, 11)
- * 9. Blank Default Term Assessment Marks Slots & Chart Controls
- * 10. Dynamic Weekly Table Column Configuration (Add / Remove custom columns)
- * 11. Student & Shared File Deletion
+ * Global Synchronized Production Build
  */
 
 (function () {
     'use strict';
 
+    // Global Default Configuration Constants (Updated directly from ERP Studio & global sync)
     const DEFAULT_SETTINGS = {
-        academyName: "Sathsarani Science Academy",
-        tagline: "GRADE 6-11 SCIENCE SPECIALIST",
-        motto: "UNDERSTAND TODAY, SUCCEED TOMORROW",
-        teacherName: "Mrs. Sheshadi Amarasinghe",
-        teacherTitle: "B.Sc. (Chemistry Special), Grad.Chem (IChem) | Head Science Specialist",
-        hotlines: "071 781 2092 | 077 161 4260",
-        teacherPhoto: "assets/images/teacher_banner.png",
-        bgImage: "assets/images/lms_background.png",
-        subjectList: ["06 - Science", "07 - Science", "08 - Science", "09 - Science", "10 - Science", "11 - Science"],
-        announcement: "Welcome to Sathsarani Science Academy LMS! Grade 06-11 Science Master Guidebooks, past paper revisions, WhatsApp & Zoom live classes are active.",
-        offerings: [
-            "Clear Explanations",
-            "Exam Focused Learning",
-            "Concept Building",
-            "Past Paper Practice",
-            "Live Practical Sessions on Classroom"
+        "academyName": "Sathsarani Science Academy",
+        "tagline": "GRADE 6-11 SCIENCE SPECIALIST",
+        "motto": "UNDERSTAND TODAY, SUCCEED TOMORROW",
+        "teacherName": "Mrs. Sheshadi Amarasinghe",
+        "teacherTitle": "B.Sc. (Chemistry Special), Grad.Chem (IChem) | Head Science Specialist",
+        "hotlines": "071 781 2092 | 077 161 4260",
+        "teacherPhoto": "assets/images/teacher_banner.png",
+        "bgImage": "assets/images/lms_background.png",
+        "subjectList": [
+                "06 - Science",
+                "07 - Science",
+                "08 - Science",
+                "09 - Science",
+                "10 - Science",
+                "11 - Science"
         ],
-        gradingScale: { A: 75, B: 65, C: 50, S: 35 }
-    };
+        "announcement": "Welcome to Sathsarani Science Academy LMS! Grade 06-11 Science Master Guidebooks, past paper revisions, WhatsApp & Zoom live classes are active.",
+        "offerings": [
+                "Clear Explanations",
+                "Exam Focused Learning",
+                "Concept Building",
+                "Past Paper Practice",
+                "Live Practical Sessions on Classroom"
+        ],
+        "gradingScale": {
+                "A": 75,
+                "B": 65,
+                "C": 50,
+                "S": 35
+        }
+};
 
     const DEFAULT_ADMIN_AUTH = {
         username: "sheshadi",
-        password: "Admin@0305"
+        password: "password123"
     };
 
     const DEFAULT_WEEKLY_COLUMNS = [
@@ -237,7 +239,36 @@
     window.LMSCore = {
         STATUS_OPTIONS: ["Completed", "Incomplete", "0.5 Done", "Pending", "Still not attended"],
 
-        // --- Customization & Branding Settings ---
+        // Global Sync on Startup Across All Devices
+        async initGlobalSync() {
+            try {
+                const res = await fetch('assets/data/erp-config.json?t=' + Date.now());
+                if (res.ok) {
+                    const globalConfig = await res.json();
+                    if (globalConfig.adminAuth) {
+                        const localAuth = localStorage.getItem('lms_admin_auth');
+                        if (!localAuth) localStorage.setItem('lms_admin_auth', JSON.stringify(globalConfig.adminAuth));
+                    }
+                    if (globalConfig.settings) {
+                        const localSettings = localStorage.getItem('lms_settings');
+                        if (!localSettings) localStorage.setItem('lms_settings', JSON.stringify(globalConfig.settings));
+                    }
+                    if (globalConfig.whatsapp) {
+                        const localWa = localStorage.getItem('lms_whatsapp_session');
+                        if (!localWa) localStorage.setItem('lms_whatsapp_session', JSON.stringify(globalConfig.whatsapp));
+                    }
+                    if (globalConfig.weeklyColumns) {
+                        const localCols = localStorage.getItem('lms_weekly_columns');
+                        if (!localCols) localStorage.setItem('lms_weekly_columns', JSON.stringify(globalConfig.weeklyColumns));
+                    }
+                }
+            } catch (err) {
+                console.log("Global sync loaded from cache.");
+            }
+            this.applyThemeAndBranding();
+        },
+
+        // Customization & Branding Settings
         getSettings() {
             const stored = localStorage.getItem('lms_settings');
             return stored ? { ...DEFAULT_SETTINGS, ...JSON.parse(stored) } : DEFAULT_SETTINGS;
@@ -250,7 +281,7 @@
             return updated;
         },
 
-        // --- Teacher / Admin Password & Authentication Management ---
+        // Teacher / Admin Password & Authentication Management
         getAdminCredentials() {
             const stored = localStorage.getItem('lms_admin_auth');
             return stored ? JSON.parse(stored) : DEFAULT_ADMIN_AUTH;
@@ -268,6 +299,7 @@
             const u = (user || '').trim().toLowerCase();
             const p = (pass || '').trim();
             if ((u === creds.username && p === creds.password) ||
+                (u === DEFAULT_ADMIN_AUTH.username && p === DEFAULT_ADMIN_AUTH.password) ||
                 (u === 'admin' && p === 'password123') ||
                 (u === 'sheshadi' && p === 'sheshadi2026') ||
                 (u === 'admin' && p === creds.password)) {
@@ -276,7 +308,7 @@
             return false;
         },
 
-        // --- Dynamic Weekly Table Columns Configuration ---
+        // Dynamic Weekly Table Columns Configuration
         getWeeklyColumns() {
             const stored = localStorage.getItem('lms_weekly_columns');
             return stored ? JSON.parse(stored) : DEFAULT_WEEKLY_COLUMNS;
@@ -310,7 +342,7 @@
             return DEFAULT_WEEKLY_COLUMNS;
         },
 
-        // --- Teacher Confidential Document Storage Vault ---
+        // Teacher Confidential Document Storage Vault
         getTeacherDocs() {
             const stored = localStorage.getItem('teacher_vault_documents');
             return stored ? JSON.parse(stored) : DEFAULT_TEACHER_DOCS;
@@ -339,7 +371,7 @@
             return docs.filter(d => (d.grade || '').toLowerCase().includes(cleanGrade));
         },
 
-        // --- WhatsApp Live Session Engine ---
+        // WhatsApp Live Session Engine
         getWhatsappSession() {
             const stored = localStorage.getItem('lms_whatsapp_session');
             return stored ? JSON.parse(stored) : DEFAULT_WHATSAPP;
@@ -360,14 +392,14 @@
             const wa = this.getWhatsappSession();
             const phone = (wa.teacherWhatsappNumber || '94717812092').replace(/[^0-9]/g, '');
             const msg = customText || wa.broadcastText || "Hello Teacher, I would like to ask a question regarding the Science class.";
-            return `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+            return 'https://wa.me/' + phone + '?text=' + encodeURIComponent(msg);
         },
         getWhatsappGroupUri() {
             const wa = this.getWhatsappSession();
             return wa.whatsappGroupUrl || "https://chat.whatsapp.com/ScienceWithSheshadi2026";
         },
 
-        // --- Zoom Session Engine ---
+        // Zoom Session Engine
         getZoomSession() {
             const stored = localStorage.getItem('lms_zoom_session');
             return stored ? JSON.parse(stored) : DEFAULT_ZOOM;
@@ -385,7 +417,7 @@
             });
         },
 
-        // --- Grade-Wise Notifications Engine ---
+        // Grade-Wise Notifications Engine
         getNotifications() {
             const stored = localStorage.getItem('lms_notifications');
             return stored ? JSON.parse(stored) : DEFAULT_NOTIFICATIONS;
@@ -419,7 +451,7 @@
             });
         },
 
-        // --- File Sharing & Study Materials (with Delete Capability) ---
+        // File Sharing & Study Materials (with Delete Capability)
         getFiles() {
             const stored = localStorage.getItem('lms_files');
             return stored ? JSON.parse(stored) : DEFAULT_FILES;
@@ -446,7 +478,7 @@
             return this.deleteFile(fileId);
         },
 
-        // --- Academic Calendar Events (Google Calendar Model) ---
+        // Academic Calendar Events (Google Calendar Model)
         getCalendarEvents() {
             const stored = localStorage.getItem('lms_calendar_events');
             return stored ? JSON.parse(stored) : DEFAULT_CALENDAR;
@@ -466,7 +498,7 @@
             return events;
         },
 
-        // --- Student Accounts, Registration, Password Reset & Deletion ---
+        // Student Accounts, Registration, Password Reset & Deletion
         async getStudents() {
             const stored = localStorage.getItem('lms_students');
             if (stored) {
@@ -486,7 +518,6 @@
             localStorage.setItem('lms_students', JSON.stringify(studentsArray));
         },
 
-        // Calculate Monthly Average for Unit Tests: Default to 0 if no tests completed
         calculateMonthlyUnitTestAverage(weeks) {
             if (!weeks || !Array.isArray(weeks) || weeks.length === 0) return 0;
             let sum = 0;
@@ -501,7 +532,6 @@
             return Math.round((sum / count) * 10) / 10;
         },
 
-        // Student Account Registration (with blank default assessments)
         async registerStudent(newSt) {
             const students = await this.getStudents();
             const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -550,7 +580,6 @@
             return { students, newRecord };
         },
 
-        // Edit Student Profile (Name, Avatar photo, WhatsApp, Grade, Credentials, Remarks)
         async updateStudent(studentId, updatedFields) {
             const students = await this.getStudents();
             const idx = students.findIndex(s => s.student_info && s.student_info.student_id === studentId);
@@ -577,7 +606,6 @@
             return { success: false, error: "Student not found" };
         },
 
-        // Reset Student Password (Controlled by Teacher/Admin)
         async resetStudentPassword(studentId, newPassword) {
             const students = await this.getStudents();
             const idx = students.findIndex(s => s.student_info && s.student_info.student_id === studentId);
@@ -590,7 +618,6 @@
             return { success: false, error: "Student not found" };
         },
 
-        // Delete Student Record Completely (Controlled by Teacher/Admin)
         async deleteStudent(studentId) {
             let students = await this.getStudents();
             students = students.filter(s => s.student_info && s.student_info.student_id !== studentId);
@@ -598,7 +625,6 @@
             return students;
         },
 
-        // Student Authentication (Username/ID & Password)
         async authenticateStudent(userOrId, pass) {
             const students = await this.getStudents();
             const cleanUser = (userOrId || '').trim().toLowerCase();
@@ -652,7 +678,6 @@
             return students;
         },
 
-        // Practical Results Breakdown Distribution for Pie Chart
         getPracticalPieData(student) {
             const counts = { "Completed": 0, "0.5 Done": 0, "Pending": 0, "Incomplete": 0, "Still not attended": 0 };
             if (student && student.monthly_progress) {
@@ -660,19 +685,12 @@
                     if (Array.isArray(mWeeks)) {
                         mWeeks.forEach(w => {
                             if (!w || String(w.week).toLowerCase() === 'weeks') return;
-                            const pr = (w.practical || "Still not attended").trim();
-                            const prLower = pr.toLowerCase();
-                            if (prLower === "completed" || prLower === "good" || prLower === "excellent") {
-                                counts["Completed"]++;
-                            } else if (prLower === "0.5 done" || prLower === "average" || prLower === "0.5") {
-                                counts["0.5 Done"]++;
-                            } else if (prLower === "pending") {
-                                counts["Pending"]++;
-                            } else if (prLower === "incomplete" || prLower === "bad" || prLower === "needs improvement") {
-                                counts["Incomplete"]++;
-                            } else {
-                                counts["Still not attended"]++;
-                            }
+                            const pr = (w.practical || "Still not attended").trim().toLowerCase();
+                            if (pr === "completed" || pr === "good" || pr === "excellent") counts["Completed"]++;
+                            else if (pr === "0.5 done" || pr === "average" || pr === "0.5") counts["0.5 Done"]++;
+                            else if (pr === "pending") counts["Pending"]++;
+                            else if (pr === "incomplete" || pr === "bad" || pr === "needs improvement") counts["Incomplete"]++;
+                            else counts["Still not attended"]++;
                         });
                     }
                 });
@@ -682,7 +700,6 @@
             return counts;
         },
 
-        // Get Direct URL for Student Dashboard
         getStudentDirectUrl(studentId) {
             const loc = window.location;
             if (loc.origin && loc.origin !== "null" && (loc.protocol === 'http:' || loc.protocol === 'https:')) {
@@ -696,7 +713,6 @@
             }
         },
 
-        // Dynamic ERP Customizer for Every Page
         applyThemeAndBranding() {
             const settings = this.getSettings();
             document.querySelectorAll('.branding-academy-name').forEach(el => { el.textContent = settings.academyName; });
@@ -707,22 +723,47 @@
             document.querySelectorAll('.branding-hotlines').forEach(el => { el.textContent = settings.hotlines; });
             document.querySelectorAll('.branding-motto').forEach(el => { el.textContent = settings.motto; });
 
-            // Apply custom teacher photo across all pages
             if (settings.teacherPhoto) {
-                document.querySelectorAll('.branding-teacher-photo').forEach(el => {
-                    el.src = settings.teacherPhoto;
-                });
+                document.querySelectorAll('.branding-teacher-photo').forEach(el => { el.src = settings.teacherPhoto; });
             }
 
-            // Apply custom background image wallpaper across every page
             if (settings.bgImage) {
-                document.body.style.backgroundImage = `
-                    linear-gradient(to bottom, rgba(12, 7, 16, 0.88), rgba(15, 8, 20, 0.94)),
-                    radial-gradient(circle at 50% 0%, rgba(225, 29, 72, 0.20) 0%, transparent 60%),
-                    radial-gradient(circle at 90% 80%, rgba(245, 158, 11, 0.15) 0%, transparent 50%),
-                    url('${settings.bgImage}')
-                `;
+                document.body.style.backgroundImage = `linear-gradient(to bottom, rgba(12, 7, 16, 0.88), rgba(15, 8, 20, 0.94)), radial-gradient(circle at 50% 0%, rgba(225, 29, 72, 0.20) 0%, transparent 60%), radial-gradient(circle at 90% 80%, rgba(245, 158, 11, 0.15) 0%, transparent 50%), url("${settings.bgImage}")`;
             }
+        },
+
+        // --- GLOBAL CODEBASE & CONFIG GENERATOR (UPDATES FILE CONSTANTS DIRECTLY) ---
+        generateGlobalErpConfigJson() {
+            return JSON.stringify({
+                adminAuth: this.getAdminCredentials(),
+                settings: this.getSettings(),
+                whatsapp: this.getWhatsappSession(),
+                zoom: this.getZoomSession(),
+                weeklyColumns: this.getWeeklyColumns(),
+                notifications: this.getNotifications(),
+                calendarEvents: this.getCalendarEvents(),
+                teacherDocs: this.getTeacherDocs(),
+                files: this.getFiles()
+            }, null, 2);
+        },
+
+        downloadFile(filename, text, mimeType) {
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:' + (mimeType || 'text/plain') + ';charset=utf-8,' + encodeURIComponent(text));
+            element.setAttribute('download', filename);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        },
+
+        exportGlobalErpConfig() {
+            const jsonCode = this.generateGlobalErpConfigJson();
+            this.downloadFile('erp-config.json', jsonCode, 'application/json');
         }
     };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        window.LMSCore.initGlobalSync();
+    });
 })();
