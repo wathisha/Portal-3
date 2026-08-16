@@ -7,7 +7,7 @@
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Rajdhani:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css">
     <script>
         tailwind.config = {
@@ -16,6 +16,7 @@
                     fontFamily: {
                         cinzel: ['Cinzel', 'serif'],
                         rajdhani: ['Rajdhani', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
                     }
                 }
             }
@@ -49,7 +50,7 @@
             <div class="absolute -top-12 -right-12 w-40 h-40 bg-rose-500/10 rounded-full blur-2xl pointer-events-none"></div>
 
             <div class="text-center space-y-2 relative z-10">
-                <img src="assets/images/teacher_banner.png" alt="Mrs. Sheshadi Amarasinghe" class="w-20 h-24 object-cover rounded-2xl border-2 border-amber-400 mx-auto shadow-lg bg-slate-950">
+                <img src="assets/images/teacher_banner.png" alt="Teacher Avatar" class="branding-teacher-photo w-20 h-24 object-cover rounded-2xl border-2 border-amber-400 mx-auto shadow-lg bg-slate-950">
                 <h2 class="text-2xl font-bold font-cinzel text-amber-300">Teacher & Admin Login</h2>
                 <p class="text-xs text-slate-400 branding-teacher-name">Mrs. Sheshadi Amarasinghe - Educator Hub</p>
             </div>
@@ -65,7 +66,7 @@
                     <label class="block text-xs font-semibold text-slate-400 mb-1">Username / Email</label>
                     <div class="relative">
                         <i class="fa-solid fa-user absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
-                        <input type="text" id="adminUser" required placeholder="admin or sheshadi" class="w-full bg-slate-950 border border-slate-700 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-amber-400">
+                        <input type="text" id="adminUser" required placeholder="sheshadi or admin" class="w-full bg-slate-950 border border-slate-700 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-amber-400 font-mono">
                     </div>
                 </div>
 
@@ -73,7 +74,7 @@
                     <label class="block text-xs font-semibold text-slate-400 mb-1">Passkey / Password</label>
                     <div class="relative">
                         <i class="fa-solid fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
-                        <input type="password" id="adminPass" required placeholder="••••••••" class="w-full bg-slate-950 border border-slate-700 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-amber-400">
+                        <input type="password" id="adminPass" required placeholder="••••••••" class="w-full bg-slate-950 border border-slate-700 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-amber-400 font-mono">
                     </div>
                     <p class="text-[10px] text-slate-500 mt-1.5 flex items-center justify-between">
                         <span>Default Credentials:</span>
@@ -105,14 +106,12 @@
 
         document.getElementById('adminLoginForm').addEventListener('submit', (e) => {
             e.preventDefault();
-            const user = document.getElementById('adminUser').value.trim().toLowerCase();
+            const user = document.getElementById('adminUser').value.trim();
             const pass = document.getElementById('adminPass').value.trim();
 
             const loginError = document.getElementById('loginError');
 
-            if ((user === 'admin' && pass === 'password123') || 
-                (user === 'sheshadi' && (pass === 'sheshadi2026' || pass === 'password123')) || 
-                pass === 'password123') {
+            if (window.LMSCore && window.LMSCore.authenticateAdmin(user, pass)) {
                 sessionStorage.setItem('admin_authenticated', 'true');
                 window.location.href = 'admin.html';
             } else {

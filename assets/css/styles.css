@@ -1,13 +1,13 @@
 /* -------------------------------------------------------------
  * Science with Sheshadi - Modern Student LMS Portal Styles
- * Aesthetic: Deep Crimson-Amber Glassmorphism with Molecular Artwork
+ * Dynamic Theming & Google / Microsoft Teams Calendar Grid Styling
  * ------------------------------------------------------------- */
 
 :root {
     --bg-dark: #0c0710;
-    --panel-bg: rgba(24, 14, 30, 0.78);
-    --panel-hover: rgba(35, 20, 44, 0.85);
-    --border-color: rgba(225, 29, 72, 0.25);
+    --panel-bg: rgba(24, 14, 30, 0.82);
+    --panel-hover: rgba(35, 20, 44, 0.88);
+    --border-color: rgba(225, 29, 72, 0.30);
     --gold-accent: #f59e0b;
     --crimson-glow: #e11d48;
     --amber-glow: #fbbf24;
@@ -34,8 +34,8 @@ body {
 /* Glassmorphism Panels */
 .glass-panel {
     background: var(--panel-bg);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
     border: 1px solid var(--border-color);
     box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
     border-radius: 1.25rem;
@@ -43,26 +43,26 @@ body {
 }
 
 .glass-panel:hover {
-    border-color: rgba(245, 158, 11, 0.4);
+    border-color: var(--amber-glow);
 }
 
 .glass-panel-glow {
-    border: 1px solid rgba(245, 158, 11, 0.5);
+    border: 1px solid var(--amber-glow);
     box-shadow: 0 0 30px rgba(225, 29, 72, 0.25);
 }
 
-/* Student Tab Navigation Button */
-.student-tab-btn {
+/* Student & Admin Tab Navigation Button */
+.student-tab-btn, .admin-tab-btn {
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     border-bottom: 3px solid transparent;
 }
 
-.student-tab-btn:hover {
+.student-tab-btn:hover, .admin-tab-btn:hover {
     color: var(--amber-glow);
     background: rgba(245, 158, 11, 0.08);
 }
 
-.student-tab-btn.active {
+.student-tab-btn.active, .admin-tab-btn.active {
     color: var(--amber-glow);
     border-bottom-color: var(--amber-glow);
     background: rgba(245, 158, 11, 0.15);
@@ -99,6 +99,69 @@ body {
     background: rgba(71, 85, 105, 0.35);
     color: #94a3b8;
     border: 1px solid rgba(100, 116, 139, 0.5);
+}
+
+/* Google & Teams Calendar Grid UI */
+.gcal-day-cell {
+    min-height: 110px;
+    background: rgba(15, 23, 42, 0.65);
+    border: 1px solid rgba(51, 65, 85, 0.5);
+    border-radius: 0.75rem;
+    padding: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.gcal-day-cell:hover {
+    border-color: var(--amber-glow);
+    background: rgba(30, 41, 59, 0.75);
+}
+
+.gcal-day-cell.today {
+    border: 1.5px solid var(--amber-glow);
+    background: rgba(245, 158, 11, 0.08);
+}
+
+.gcal-event-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.70rem;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    margin-top: 0.25rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.gcal-event-chip:hover {
+    transform: scale(1.02);
+    filter: brightness(1.15);
+}
+
+.gcal-time-slot-row {
+    display: grid;
+    grid-template-columns: 70px repeat(7, 1fr);
+    min-height: 60px;
+    border-bottom: 1px solid rgba(51, 65, 85, 0.4);
+}
+
+.gcal-time-col {
+    font-size: 0.70rem;
+    color: #94a3b8;
+    padding: 0.25rem;
+    text-align: right;
+    font-family: monospace;
+}
+
+.gcal-slot-cell {
+    border-left: 1px solid rgba(51, 65, 85, 0.3);
+    position: relative;
+    padding: 0.2rem;
 }
 
 /* Custom Scrollbar */
