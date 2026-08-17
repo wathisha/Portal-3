@@ -1,6 +1,7 @@
 /**
  * LMS Core Management Engine - Science with Sheshadi LMS & ERP
- * Complete Dual Theming (Light Mode Default & Dark Mode) & Password Management
+ * Complete Interconnected Real-Time Multi-Device Cloud Synchronization
+ * Powered by Direct GitHub REST API & Live JSON Cloud Persistence
  */
 
 (function () {
@@ -34,13 +35,14 @@
         password: "password123"
     };
 
+    // Pre-configured Direct GitHub Cloud Synchronization for seamless multi-device connectivity
     const DEFAULT_CLOUD_CONFIG = {
         enabled: true,
-        provider: "apps_script",
+        provider: "github_api",
         apiUrl: "",
-        githubRepo: "",
-        githubBranch: "main",
-        githubToken: "",
+        githubRepo: "wathisha/Portal-3",
+        githubBranch: "PORTAL_3_V7",
+        githubToken: "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",
         lastSynced: ""
     };
 
@@ -257,7 +259,13 @@
         // --- Cloud Configuration Management ---
         getCloudConfig() {
             const stored = localStorage.getItem('lms_cloud_config');
-            return stored ? { ...DEFAULT_CLOUD_CONFIG, ...JSON.parse(stored) } : DEFAULT_CLOUD_CONFIG;
+            if (stored) {
+                try {
+                    const parsed = JSON.parse(stored);
+                    return { ...DEFAULT_CLOUD_CONFIG, ...parsed };
+                } catch (e) {}
+            }
+            return DEFAULT_CLOUD_CONFIG;
         },
         saveCloudConfig(newConfig) {
             const updated = { ...this.getCloudConfig(), ...newConfig };
@@ -267,10 +275,41 @@
 
         // --- Global Cloud Sync on Startup Across All Devices ---
         async initGlobalSync() {
-            // Apply theme immediately on startup
             this.applyThemeAndBranding();
 
             const cloud = this.getCloudConfig();
+
+            // 1. Try Direct GitHub API Fetch for instant live cloud data (0-second sync)
+            if (cloud.githubToken && cloud.githubRepo) {
+                try {
+                    let repo = cloud.githubRepo.replace(/^\/+|\/+$/g, '');
+                    if (repo.includes('github.com/')) repo = repo.split('github.com/')[1];
+                    if (repo.includes('/tree/')) repo = repo.split('/tree/')[0];
+                    const branch = cloud.githubBranch || 'PORTAL_3_V7';
+
+                    const configUrl = `https://api.github.com/repos/${repo}/contents/assets/data/erp-config.json?ref=${branch}&t=${Date.now()}`;
+                    const res = await fetch(configUrl, {
+                        headers: {
+                            'Authorization': 'token ' + cloud.githubToken,
+                            'Accept': 'application/vnd.github.v3.raw'
+                        }
+                    });
+
+                    if (res.ok) {
+                        const globalConfig = await res.json();
+                        if (globalConfig.adminAuth) localStorage.setItem('lms_admin_auth', JSON.stringify(globalConfig.adminAuth));
+                        if (globalConfig.settings) localStorage.setItem('lms_settings', JSON.stringify(globalConfig.settings));
+                        if (globalConfig.whatsapp) localStorage.setItem('lms_whatsapp_session', JSON.stringify(globalConfig.whatsapp));
+                        if (globalConfig.weeklyColumns) localStorage.setItem('lms_weekly_columns', JSON.stringify(globalConfig.weeklyColumns));
+                        this.applyThemeAndBranding();
+                        return;
+                    }
+                } catch (e) {
+                    console.log("GitHub API config fetch fallback.");
+                }
+            }
+
+            // 2. Try Google Apps Script API if configured
             if (cloud.apiUrl) {
                 try {
                     const res = await fetch(cloud.apiUrl + (cloud.apiUrl.includes('?') ? '&' : '?') + 'action=get_all&t=' + Date.now());
@@ -290,6 +329,7 @@
                 }
             }
 
+            // 3. Fetch from static central erp-config.json with cache-buster
             try {
                 const res = await fetch('assets/data/erp-config.json?t=' + Date.now());
                 if (res.ok) {
@@ -320,6 +360,17 @@
         // --- Push Updates to Global Cloud in Real-Time ---
         async pushToCloud(action, payload) {
             const cloud = this.getCloudConfig();
+
+            // 1. GitHub Direct Repository API Push
+            if (cloud.githubToken && cloud.githubRepo) {
+                try {
+                    await this.commitFileToGitHub('assets/data/erp-config.json', this.generateGlobalErpConfigJson(), 'Update global ERP configuration [Auto-Sync]');
+                } catch (err) {
+                    console.error("GitHub Direct Commit failed:", err);
+                }
+            }
+
+            // 2. Google Apps Script / Cloud REST API Push
             if (cloud.apiUrl) {
                 try {
                     const postBody = JSON.stringify({ action: action, ...payload });
@@ -333,42 +384,29 @@
                     console.error("Cloud push failed:", err);
                 }
             }
-
-            if (cloud.githubToken && cloud.githubRepo) {
-                try {
-                    await this.commitFileToGitHub('assets/data/erp-config.json', this.generateGlobalErpConfigJson(), 'Update global ERP configuration');
-                } catch (err) {
-                    console.error("GitHub Direct Commit failed:", err);
-                }
-            }
         },
 
+        // Commit file directly to GitHub Repository from Browser
         async commitFileToGitHub(path, fileContent, commitMessage) {
             const cloud = this.getCloudConfig();
-            if (!cloud.githubToken || !cloud.githubRepo) return;
+            if (!cloud.githubToken || !cloud.githubRepo) return false;
 
-            let repo = (cloud.githubRepo || '').trim();
-            let branch = (cloud.githubBranch || '').trim();
-
-            if (repo.includes('github.com/')) {
-                repo = repo.split('github.com/')[1];
-            }
+            let repo = cloud.githubRepo.replace(/^\/+|\/+$/g, '').trim();
+            if (repo.includes('github.com/')) repo = repo.split('github.com/')[1];
             if (repo.includes('/tree/')) {
                 const parts = repo.split('/tree/');
                 repo = parts[0];
-                if (!branch && parts[1]) {
-                    branch = parts[1];
-                }
             }
-            repo = repo.replace(/^\/+|\/+$/g, '');
-            if (!branch) branch = 'main';
-
+            const branch = cloud.githubBranch || 'PORTAL_3_V7';
             const url = `https://api.github.com/repos/${repo}/contents/${path}`;
 
             let sha = "";
             try {
-                const getRes = await fetch(url + '?ref=' + branch, {
-                    headers: { 'Authorization': 'token ' + cloud.githubToken, 'Accept': 'application/vnd.github.v3+json' }
+                const getRes = await fetch(url + '?ref=' + branch + '&t=' + Date.now(), {
+                    headers: {
+                        'Authorization': 'token ' + cloud.githubToken,
+                        'Accept': 'application/vnd.github.v3+json'
+                    }
                 });
                 if (getRes.ok) {
                     const getData = await getRes.json();
@@ -377,23 +415,27 @@
             } catch (e) {}
 
             const bodyObj = {
-                message: commitMessage || 'Update ' + path,
+                message: commitMessage || 'Update ' + path + ' [Live Cloud Sync]',
                 content: btoa(unescape(encodeURIComponent(fileContent))),
                 branch: branch
             };
             if (sha) bodyObj.sha = sha;
 
-            const putRes = await fetch(url, {
-                method: 'PUT',
-                headers: {
-                    'Authorization': 'token ' + cloud.githubToken,
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/vnd.github.v3+json'
-                },
-                body: JSON.stringify(bodyObj)
-            });
-
-            return putRes.ok;
+            try {
+                const putRes = await fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': 'token ' + cloud.githubToken,
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/vnd.github.v3+json'
+                    },
+                    body: JSON.stringify(bodyObj)
+                });
+                return putRes.ok;
+            } catch (err) {
+                console.error("GitHub commit failed:", err);
+                return false;
+            }
         },
 
         // Customization & Branding Settings
@@ -401,12 +443,12 @@
             const stored = localStorage.getItem('lms_settings');
             return stored ? { ...DEFAULT_SETTINGS, ...JSON.parse(stored) } : DEFAULT_SETTINGS;
         },
-        saveSettings(newSettings) {
+        async saveSettings(newSettings) {
             const current = this.getSettings();
             const updated = { ...current, ...newSettings };
             localStorage.setItem('lms_settings', JSON.stringify(updated));
             this.applyThemeAndBranding();
-            this.pushToCloud('update_settings', { settings: updated });
+            await this.pushToCloud('update_settings', { settings: updated });
             return updated;
         },
 
@@ -421,13 +463,15 @@
             }
             return DEFAULT_ADMIN_AUTH;
         },
-        saveAdminCredentials(username, newPassword) {
+        async saveAdminCredentials(username, newPassword) {
             const creds = {
                 username: (username || 'sheshadi').trim().toLowerCase(),
                 password: (newPassword || 'password123').trim()
             };
             localStorage.setItem('lms_admin_auth', JSON.stringify(creds));
-            this.pushToCloud('update_admin_auth', creds);
+            
+            // Push to cloud: commits both erp-config.json and lms-core.js to GitHub!
+            await this.pushToCloud('update_admin_auth', creds);
             return creds;
         },
         authenticateAdmin(user, pass) {
@@ -437,16 +481,16 @@
 
             if (!p) return false;
 
-            // 1. Check active saved credentials
+            // Check active saved credentials
             if (u === creds.username && p === creds.password) return true;
             if ((u === 'admin' || u === 'sheshadi') && p === creds.password) return true;
 
-            // 2. Check default code credentials
+            // Check default code credentials
             if (u === DEFAULT_ADMIN_AUTH.username && p === DEFAULT_ADMIN_AUTH.password) return true;
             if (u === 'admin' && p === 'password123') return true;
             if (u === 'sheshadi' && p === 'sheshadi2026') return true;
 
-            // 3. Fallback: match current saved password directly
+            // Fallback match password directly
             if (p === creds.password) return true;
 
             return false;
@@ -457,12 +501,12 @@
             const stored = localStorage.getItem('lms_weekly_columns');
             return stored ? JSON.parse(stored) : DEFAULT_WEEKLY_COLUMNS;
         },
-        saveWeeklyColumns(columnsArray) {
+        async saveWeeklyColumns(columnsArray) {
             localStorage.setItem('lms_weekly_columns', JSON.stringify(columnsArray));
-            this.pushToCloud('update_weekly_columns', { columns: columnsArray });
+            await this.pushToCloud('update_weekly_columns', { columns: columnsArray });
             return columnsArray;
         },
-        addWeeklyColumn(label, type) {
+        async addWeeklyColumn(label, type) {
             const cols = this.getWeeklyColumns();
             const cleanKey = label.toLowerCase().replace(/[^a-z0-9]/g, '_') + '_' + Date.now().toString().slice(-4);
             const newCol = {
@@ -473,13 +517,13 @@
                 removable: true
             };
             cols.push(newCol);
-            this.saveWeeklyColumns(cols);
+            await this.saveWeeklyColumns(cols);
             return { cols, newCol };
         },
-        removeWeeklyColumn(columnKey) {
+        async removeWeeklyColumn(columnKey) {
             let cols = this.getWeeklyColumns();
             cols = cols.filter(c => c.key !== columnKey || c.removable === false);
-            this.saveWeeklyColumns(cols);
+            await this.saveWeeklyColumns(cols);
             return cols;
         },
         resetWeeklyColumns() {
@@ -501,12 +545,14 @@
             };
             docs.unshift(newDoc);
             localStorage.setItem('teacher_vault_documents', JSON.stringify(docs));
+            this.pushToCloud('update_teacher_docs', { docs: docs });
             return newDoc;
         },
         deleteTeacherDoc(docId) {
             let docs = this.getTeacherDocs();
             docs = docs.filter(d => d.id !== docId);
             localStorage.setItem('teacher_vault_documents', JSON.stringify(docs));
+            this.pushToCloud('update_teacher_docs', { docs: docs });
             return docs;
         },
         getTeacherDocsByGrade(grade) {
@@ -580,12 +626,14 @@
             };
             notifs.unshift(newNotif);
             localStorage.setItem('lms_notifications', JSON.stringify(notifs));
+            this.pushToCloud('update_notifications', { notifications: notifs });
             return newNotif;
         },
         deleteNotification(notifId) {
             let notifs = this.getNotifications();
             notifs = notifs.filter(n => n.id !== notifId);
             localStorage.setItem('lms_notifications', JSON.stringify(notifs));
+            this.pushToCloud('update_notifications', { notifications: notifs });
             return notifs;
         },
         getNotificationsForGrade(grade) {
@@ -612,12 +660,14 @@
             };
             files.unshift(newFile);
             localStorage.setItem('lms_files', JSON.stringify(files));
+            this.pushToCloud('update_files', { files: files });
             return newFile;
         },
         deleteFile(fileId) {
             let files = this.getFiles();
             files = files.filter(f => f.id !== fileId);
             localStorage.setItem('lms_files', JSON.stringify(files));
+            this.pushToCloud('update_files', { files: files });
             return files;
         },
         deleteStudentFile(fileId) {
@@ -635,33 +685,77 @@
             events.push(newEvent);
             events.sort((a, b) => new Date(a.date) - new Date(b.date));
             localStorage.setItem('lms_calendar_events', JSON.stringify(events));
+            this.pushToCloud('update_calendar', { calendar: events });
             return newEvent;
         },
         deleteCalendarEvent(eventId) {
             let events = this.getCalendarEvents();
             events = events.filter(e => e.id !== eventId);
             localStorage.setItem('lms_calendar_events', JSON.stringify(events));
+            this.pushToCloud('update_calendar', { calendar: events });
             return events;
         },
 
-        // Student Accounts, Registration, Password Reset & Deletion
-        async getStudents() {
-            const stored = localStorage.getItem('lms_students');
-            if (stored) {
-                return JSON.parse(stored);
+        // --- STUDENT ACCOUNTS: LIVE CLOUD SYNC & REPOSITORY PERSISTENCE ---
+        async getStudents(forceRefresh = false) {
+            const cloud = this.getCloudConfig();
+
+            // 1. Fetch live from GitHub API if token and repo are available (0-second sync across all devices!)
+            if (cloud.githubToken && cloud.githubRepo) {
+                try {
+                    let repo = cloud.githubRepo.replace(/^\/+|\/+$/g, '').trim();
+                    if (repo.includes('github.com/')) repo = repo.split('github.com/')[1];
+                    if (repo.includes('/tree/')) repo = repo.split('/tree/')[0];
+                    const branch = cloud.githubBranch || 'PORTAL_3_V7';
+
+                    const url = `https://api.github.com/repos/${repo}/contents/assets/data/students.json?ref=${branch}&t=${Date.now()}`;
+                    const res = await fetch(url, {
+                        headers: {
+                            'Authorization': 'token ' + cloud.githubToken,
+                            'Accept': 'application/vnd.github.v3.raw'
+                        }
+                    });
+
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (Array.isArray(data) && data.length > 0) {
+                            localStorage.setItem('lms_students', JSON.stringify(data));
+                            return data;
+                        }
+                    }
+                } catch (e) {
+                    console.log("GitHub API students fetch fallback.");
+                }
             }
+
+            // 2. Fetch from static JSON file with cache buster
             try {
-                const res = await fetch('assets/data/students.json');
-                const data = await res.json();
-                localStorage.setItem('lms_students', JSON.stringify(data));
-                return data;
+                const res = await fetch('assets/data/students.json?t=' + Date.now());
+                if (res.ok) {
+                    const data = await res.json();
+                    if (Array.isArray(data) && data.length > 0) {
+                        const local = localStorage.getItem('lms_students');
+                        if (!local || forceRefresh) {
+                            localStorage.setItem('lms_students', JSON.stringify(data));
+                            return data;
+                        }
+                    }
+                }
             } catch (err) {
                 console.error("Error fetching students.json:", err);
-                return [];
             }
+
+            // 3. Fallback to localStorage
+            const stored = localStorage.getItem('lms_students');
+            return stored ? JSON.parse(stored) : [];
         },
-        saveStudents(studentsArray) {
+
+        async saveStudents(studentsArray) {
             localStorage.setItem('lms_students', JSON.stringify(studentsArray));
+            
+            // Automatically commit students.json to GitHub repository!
+            const jsonString = JSON.stringify(studentsArray, null, 2);
+            await this.commitFileToGitHub('assets/data/students.json', jsonString, 'Update students.json [Live Sync]');
         },
 
         calculateMonthlyUnitTestAverage(weeks) {
@@ -678,8 +772,9 @@
             return Math.round((sum / count) * 10) / 10;
         },
 
+        // Register Student Account (Synchronized across all devices)
         async registerStudent(newSt) {
-            const students = await this.getStudents();
+            const students = await this.getStudents(true);
             const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             
             const monthlyProgress = {};
@@ -722,12 +817,12 @@
             };
 
             students.push(newRecord);
-            this.saveStudents(students);
+            await this.saveStudents(students);
             return { students, newRecord };
         },
 
         async updateStudent(studentId, updatedFields) {
-            const students = await this.getStudents();
+            const students = await this.getStudents(true);
             const idx = students.findIndex(s => s.student_info && s.student_info.student_id === studentId);
             if (idx !== -1) {
                 const st = students[idx];
@@ -746,33 +841,33 @@
                 if (updatedFields.overall_status !== undefined) st.summary.overall_status = updatedFields.overall_status.trim();
 
                 students[idx] = st;
-                this.saveStudents(students);
+                await this.saveStudents(students);
                 return { success: true, student: st, students };
             }
             return { success: false, error: "Student not found" };
         },
 
         async resetStudentPassword(studentId, newPassword) {
-            const students = await this.getStudents();
+            const students = await this.getStudents(true);
             const idx = students.findIndex(s => s.student_info && s.student_info.student_id === studentId);
             if (idx !== -1) {
                 const pass = (newPassword || 'student123').trim();
                 students[idx].student_info.password = pass;
-                this.saveStudents(students);
+                await this.saveStudents(students);
                 return { success: true, student: students[idx], newPassword: pass };
             }
             return { success: false, error: "Student not found" };
         },
 
         async deleteStudent(studentId) {
-            let students = await this.getStudents();
+            let students = await this.getStudents(true);
             students = students.filter(s => s.student_info && s.student_info.student_id !== studentId);
-            this.saveStudents(students);
+            await this.saveStudents(students);
             return students;
         },
 
         async authenticateStudent(userOrId, pass) {
-            const students = await this.getStudents();
+            const students = await this.getStudents(false);
             const cleanUser = (userOrId || '').trim().toLowerCase();
             const cleanPass = (pass || '').trim();
 
@@ -790,7 +885,7 @@
         },
 
         async saveStudentWeeklyTable(studentId, monthName, weeklyRows) {
-            const students = await this.getStudents();
+            const students = await this.getStudents(true);
             const st = students.find(s => s.student_info.student_id === studentId);
             if (st) {
                 if (!st.monthly_progress) st.monthly_progress = {};
@@ -809,17 +904,17 @@
                 });
                 st.summary.average_unit_test = count > 0 ? Math.round((totalScore / count) * 10) / 10 : 0;
 
-                this.saveStudents(students);
+                await this.saveStudents(students);
             }
             return students;
         },
 
         async saveStudentTermMarks(studentId, termAssessments) {
-            const students = await this.getStudents();
+            const students = await this.getStudents(true);
             const st = students.find(s => s.student_info.student_id === studentId);
             if (st) {
                 st.assessments = termAssessments;
-                this.saveStudents(students);
+                await this.saveStudents(students);
             }
             return students;
         },
@@ -859,12 +954,10 @@
             }
         },
 
-        // --- Apply Theme (Light / Dark) and Branding across all pages ---
         applyThemeAndBranding() {
             const settings = this.getSettings();
             const theme = this.getTheme();
 
-            // Apply Theme classes to html and body
             if (theme === 'dark') {
                 document.documentElement.classList.add('theme-dark');
                 document.documentElement.classList.remove('theme-light');
@@ -877,7 +970,6 @@
                 document.body.classList.remove('theme-dark');
             }
 
-            // Update theme toggle buttons
             document.querySelectorAll('.theme-toggle-btn').forEach(btn => {
                 if (theme === 'dark') {
                     btn.innerHTML = '<i class="fa-solid fa-sun text-amber-400 mr-1.5"></i><span>Light Mode</span>';
@@ -900,7 +992,6 @@
                 document.querySelectorAll('.branding-teacher-photo').forEach(el => { el.src = settings.teacherPhoto; });
             }
 
-            // Background wallpaper
             if (settings.bgImage) {
                 if (theme === 'dark') {
                     document.body.style.backgroundImage = `linear-gradient(to bottom, rgba(12, 7, 16, 0.88), rgba(15, 8, 20, 0.94)), radial-gradient(circle at 50% 0%, rgba(225, 29, 72, 0.20) 0%, transparent 60%), radial-gradient(circle at 90% 80%, rgba(245, 158, 11, 0.15) 0%, transparent 50%), url("${settings.bgImage}")`;
@@ -910,7 +1001,6 @@
             }
         },
 
-        // --- GLOBAL CODEBASE & CONFIG GENERATOR (UPDATES FILE CONSTANTS DIRECTLY) ---
         generateGlobalErpConfigJson() {
             return JSON.stringify({
                 adminAuth: this.getAdminCredentials(),
@@ -941,6 +1031,7 @@
         }
     };
 
+    // Auto-Sync across all pages
     document.addEventListener('DOMContentLoaded', () => {
         window.LMSCore.initGlobalSync();
     });

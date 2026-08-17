@@ -46,6 +46,10 @@
 
             <!-- Action Controls -->
             <div class="flex items-center space-x-3">
+                <button type="button" onclick="refreshDirFromCloud()" class="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-700 dark:text-emerald-300 border border-emerald-500/40 px-3 py-2 rounded-xl text-xs font-bold flex items-center space-x-1.5 transition shadow-sm" title="Sync live updates from phone / cloud">
+                    <i class="fa-solid fa-rotate text-xs"></i>
+                    <span class="hidden sm:inline">Sync Cloud</span>
+                </button>
                 <button type="button" onclick="window.LMSCore.toggleTheme()" class="theme-toggle-btn shadow-sm" title="Toggle Light/Dark Theme">
                     <i class="fa-solid fa-moon text-indigo-600 mr-1.5"></i>
                     <span>Dark Mode</span>
@@ -272,6 +276,27 @@
         let dirEditPhotoBase64 = null;
         let editingStudentId = null;
         let resettingStId = null;
+
+        
+        // --- REAL-TIME MULTI-DEVICE AUTO-REFRESH & FOCUS LISTENER ---
+        async function refreshDirFromCloud() {
+            if (window.LMSCore) {
+                await window.LMSCore.initGlobalSync();
+                allStudents = await window.LMSCore.getStudents(true);
+                document.getElementById('totalStudentsCount').textContent = allStudents.length;
+                renderStudentsGrid();
+                alert("Directory synchronized with cloud!");
+            }
+        }
+
+        window.addEventListener('focus', async () => {
+            if (window.LMSCore) {
+                await window.LMSCore.initGlobalSync();
+                allStudents = await window.LMSCore.getStudents(true);
+                document.getElementById('totalStudentsCount').textContent = allStudents.length;
+                renderStudentsGrid();
+            }
+        });
 
         function logoutAdmin() {
             sessionStorage.removeItem('admin_authenticated');
