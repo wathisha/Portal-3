@@ -289,6 +289,21 @@
             }
         }
 
+        
+        // Auto-poll every 6 seconds for instantaneous updates from phone
+        setInterval(async () => {
+            if (document.visibilityState === 'visible' && window.LMSCore) {
+                const fresh = await window.LMSCore.getStudents(true);
+                if (fresh && Array.isArray(fresh) && fresh.length > 0) {
+                    if (JSON.stringify(fresh) !== JSON.stringify(allStudents)) {
+                        allStudents = fresh;
+                        document.getElementById('totalStudentsCount').textContent = allStudents.length;
+                        renderStudentsGrid();
+                    }
+                }
+            }
+        }, 6000);
+
         window.addEventListener('focus', async () => {
             if (window.LMSCore) {
                 await window.LMSCore.initGlobalSync();

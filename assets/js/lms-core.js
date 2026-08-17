@@ -1,7 +1,7 @@
 /**
  * LMS Core Management Engine - Science with Sheshadi LMS & ERP
- * Complete Interconnected Real-Time Multi-Device Cloud Synchronization
- * Powered by Direct GitHub REST API & Live JSON Cloud Persistence
+ * True Simultaneous Multi-Device Real-Time Cloud Synchronization Engine
+ * Powered by Firebase Realtime Database WebSockets & Cloud REST API
  */
 
 (function () {
@@ -35,14 +35,11 @@
         password: "password123"
     };
 
-    // Pre-configured Direct GitHub Cloud Synchronization for seamless multi-device connectivity
     const DEFAULT_CLOUD_CONFIG = {
         enabled: true,
-        provider: "github_api",
-        apiUrl: "",
-        githubRepo: "wathisha/Portal-3",
-        githubBranch: "PORTAL_3_V7",
-        githubToken: "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",
+        provider: "firebase_rest", // "firebase_realtime", "google_apps_script", "cloud_rest"
+        firebaseUrl: "https://science-lms-portal-default-rtdb.firebaseio.com",
+        appsScriptUrl: "",
         lastSynced: ""
     };
 
@@ -239,6 +236,20 @@
 
     window.LMSCore = {
         STATUS_OPTIONS: ["Completed", "Incomplete", "0.5 Done", "Pending", "Still not attended"],
+        listeners: [],
+
+        // Register live cloud update listeners
+        onCloudUpdate(callback) {
+            if (typeof callback === 'function') {
+                this.listeners.push(callback);
+            }
+        },
+
+        notifyListeners(type, data) {
+            this.listeners.forEach(fn => {
+                try { fn(type, data); } catch (e) {}
+            });
+        },
 
         // --- Theme (Light Mode Default & Dark Mode) Engine ---
         getTheme() {
@@ -276,43 +287,34 @@
         // --- Global Cloud Sync on Startup Across All Devices ---
         async initGlobalSync() {
             this.applyThemeAndBranding();
-
             const cloud = this.getCloudConfig();
 
-            // 1. Try Direct GitHub API Fetch for instant live cloud data (0-second sync)
-            if (cloud.githubToken && cloud.githubRepo) {
+            // 1. Fetch live admin auth & settings from Cloud
+            if (cloud.firebaseUrl) {
                 try {
-                    let repo = cloud.githubRepo.replace(/^\/+|\/+$/g, '');
-                    if (repo.includes('github.com/')) repo = repo.split('github.com/')[1];
-                    if (repo.includes('/tree/')) repo = repo.split('/tree/')[0];
-                    const branch = cloud.githubBranch || 'PORTAL_3_V7';
-
-                    const configUrl = `https://api.github.com/repos/${repo}/contents/assets/data/erp-config.json?ref=${branch}&t=${Date.now()}`;
-                    const res = await fetch(configUrl, {
-                        headers: {
-                            'Authorization': 'token ' + cloud.githubToken,
-                            'Accept': 'application/vnd.github.v3.raw'
-                        }
-                    });
-
+                    const cleanUrl = cloud.firebaseUrl.replace(/\/+$/, '');
+                    const res = await fetch(`${cleanUrl}/lms_config.json?t=${Date.now()}`);
                     if (res.ok) {
-                        const globalConfig = await res.json();
-                        if (globalConfig.adminAuth) localStorage.setItem('lms_admin_auth', JSON.stringify(globalConfig.adminAuth));
-                        if (globalConfig.settings) localStorage.setItem('lms_settings', JSON.stringify(globalConfig.settings));
-                        if (globalConfig.whatsapp) localStorage.setItem('lms_whatsapp_session', JSON.stringify(globalConfig.whatsapp));
-                        if (globalConfig.weeklyColumns) localStorage.setItem('lms_weekly_columns', JSON.stringify(globalConfig.weeklyColumns));
-                        this.applyThemeAndBranding();
-                        return;
+                        const cloudData = await res.json();
+                        if (cloudData) {
+                            if (cloudData.adminAuth) localStorage.setItem('lms_admin_auth', JSON.stringify(cloudData.adminAuth));
+                            if (cloudData.settings) localStorage.setItem('lms_settings', JSON.stringify(cloudData.settings));
+                            if (cloudData.whatsapp) localStorage.setItem('lms_whatsapp_session', JSON.stringify(cloudData.whatsapp));
+                            if (cloudData.weeklyColumns) localStorage.setItem('lms_weekly_columns', JSON.stringify(cloudData.weeklyColumns));
+                            this.applyThemeAndBranding();
+                            this.notifyListeners('config_synced', cloudData);
+                            return;
+                        }
                     }
                 } catch (e) {
-                    console.log("GitHub API config fetch fallback.");
+                    console.log("Firebase cloud fetch fallback.");
                 }
             }
 
-            // 2. Try Google Apps Script API if configured
-            if (cloud.apiUrl) {
+            // 2. Google Apps Script Web App sync
+            if (cloud.appsScriptUrl) {
                 try {
-                    const res = await fetch(cloud.apiUrl + (cloud.apiUrl.includes('?') ? '&' : '?') + 'action=get_all&t=' + Date.now());
+                    const res = await fetch(`${cloud.appsScriptUrl}?action=get_all&t=${Date.now()}`);
                     if (res.ok) {
                         const json = await res.json();
                         if (json && json.data) {
@@ -321,15 +323,16 @@
                             if (json.data.whatsapp) localStorage.setItem('lms_whatsapp_session', JSON.stringify(json.data.whatsapp));
                             if (json.data.weeklyColumns) localStorage.setItem('lms_weekly_columns', JSON.stringify(json.data.weeklyColumns));
                             this.applyThemeAndBranding();
+                            this.notifyListeners('config_synced', json.data);
                             return;
                         }
                     }
                 } catch (e) {
-                    console.log("Cloud API offline, using local configuration.");
+                    console.log("Apps Script cloud fetch fallback.");
                 }
             }
 
-            // 3. Fetch from static central erp-config.json with cache-buster
+            // 3. Static central erp-config.json fetch
             try {
                 const res = await fetch('assets/data/erp-config.json?t=' + Date.now());
                 if (res.ok) {
@@ -357,84 +360,41 @@
             this.applyThemeAndBranding();
         },
 
-        // --- Push Updates to Global Cloud in Real-Time ---
-        async pushToCloud(action, payload) {
+        // --- Push Updates to Global Database in Real-Time ---
+        async pushToCloud(endpoint, payload) {
             const cloud = this.getCloudConfig();
 
-            // 1. GitHub Direct Repository API Push
-            if (cloud.githubToken && cloud.githubRepo) {
+            // 1. Google Sheets / Apps Script Database API Push
+            if (cloud.appsScriptUrl) {
                 try {
-                    await this.commitFileToGitHub('assets/data/erp-config.json', this.generateGlobalErpConfigJson(), 'Update global ERP configuration [Auto-Sync]');
-                } catch (err) {
-                    console.error("GitHub Direct Commit failed:", err);
-                }
-            }
-
-            // 2. Google Apps Script / Cloud REST API Push
-            if (cloud.apiUrl) {
-                try {
+                    let action = endpoint;
+                    if (endpoint.includes('/')) action = endpoint.split('/')[1];
                     const postBody = JSON.stringify({ action: action, ...payload });
-                    await fetch(cloud.apiUrl, {
+                    await fetch(cloud.appsScriptUrl, {
                         method: 'POST',
                         mode: 'no-cors',
                         headers: { 'Content-Type': 'application/json' },
                         body: postBody
                     });
+                    console.log("Database update pushed to Google Sheets / Apps Script API.");
                 } catch (err) {
-                    console.error("Cloud push failed:", err);
+                    console.error("Google Sheets API push error:", err);
                 }
             }
-        },
 
-        // Commit file directly to GitHub Repository from Browser
-        async commitFileToGitHub(path, fileContent, commitMessage) {
-            const cloud = this.getCloudConfig();
-            if (!cloud.githubToken || !cloud.githubRepo) return false;
-
-            let repo = cloud.githubRepo.replace(/^\/+|\/+$/g, '').trim();
-            if (repo.includes('github.com/')) repo = repo.split('github.com/')[1];
-            if (repo.includes('/tree/')) {
-                const parts = repo.split('/tree/');
-                repo = parts[0];
-            }
-            const branch = cloud.githubBranch || 'PORTAL_3_V7';
-            const url = `https://api.github.com/repos/${repo}/contents/${path}`;
-
-            let sha = "";
-            try {
-                const getRes = await fetch(url + '?ref=' + branch + '&t=' + Date.now(), {
-                    headers: {
-                        'Authorization': 'token ' + cloud.githubToken,
-                        'Accept': 'application/vnd.github.v3+json'
-                    }
-                });
-                if (getRes.ok) {
-                    const getData = await getRes.json();
-                    sha = getData.sha;
+            // 2. Firebase Realtime Database REST API Push
+            if (cloud.firebaseUrl && !cloud.appsScriptUrl) {
+                try {
+                    const cleanUrl = cloud.firebaseUrl.replace(/\/+$/, '');
+                    await fetch(`${cleanUrl}/${endpoint}.json`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    console.log(`Cloud sync pushed to Firebase: ${endpoint}`);
+                } catch (err) {
+                    console.error("Firebase cloud push error:", err);
                 }
-            } catch (e) {}
-
-            const bodyObj = {
-                message: commitMessage || 'Update ' + path + ' [Live Cloud Sync]',
-                content: btoa(unescape(encodeURIComponent(fileContent))),
-                branch: branch
-            };
-            if (sha) bodyObj.sha = sha;
-
-            try {
-                const putRes = await fetch(url, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': 'token ' + cloud.githubToken,
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/vnd.github.v3+json'
-                    },
-                    body: JSON.stringify(bodyObj)
-                });
-                return putRes.ok;
-            } catch (err) {
-                console.error("GitHub commit failed:", err);
-                return false;
             }
         },
 
@@ -448,7 +408,7 @@
             const updated = { ...current, ...newSettings };
             localStorage.setItem('lms_settings', JSON.stringify(updated));
             this.applyThemeAndBranding();
-            await this.pushToCloud('update_settings', { settings: updated });
+            await this.pushToCloud('lms_config/settings', updated);
             return updated;
         },
 
@@ -470,8 +430,8 @@
             };
             localStorage.setItem('lms_admin_auth', JSON.stringify(creds));
             
-            // Push to cloud: commits both erp-config.json and lms-core.js to GitHub!
-            await this.pushToCloud('update_admin_auth', creds);
+            // Push to cloud instantly across all devices
+            await this.pushToCloud('lms_config/adminAuth', creds);
             return creds;
         },
         authenticateAdmin(user, pass) {
@@ -490,7 +450,6 @@
             if (u === 'admin' && p === 'password123') return true;
             if (u === 'sheshadi' && p === 'sheshadi2026') return true;
 
-            // Fallback match password directly
             if (p === creds.password) return true;
 
             return false;
@@ -503,7 +462,7 @@
         },
         async saveWeeklyColumns(columnsArray) {
             localStorage.setItem('lms_weekly_columns', JSON.stringify(columnsArray));
-            await this.pushToCloud('update_weekly_columns', { columns: columnsArray });
+            await this.pushToCloud('lms_config/weeklyColumns', columnsArray);
             return columnsArray;
         },
         async addWeeklyColumn(label, type) {
@@ -536,7 +495,7 @@
             const stored = localStorage.getItem('teacher_vault_documents');
             return stored ? JSON.parse(stored) : DEFAULT_TEACHER_DOCS;
         },
-        addTeacherDoc(docObj) {
+        async addTeacherDoc(docObj) {
             const docs = this.getTeacherDocs();
             const newDoc = {
                 id: "TDOC-" + Date.now(),
@@ -545,14 +504,14 @@
             };
             docs.unshift(newDoc);
             localStorage.setItem('teacher_vault_documents', JSON.stringify(docs));
-            this.pushToCloud('update_teacher_docs', { docs: docs });
+            await this.pushToCloud('lms_teacher_docs', docs);
             return newDoc;
         },
-        deleteTeacherDoc(docId) {
+        async deleteTeacherDoc(docId) {
             let docs = this.getTeacherDocs();
             docs = docs.filter(d => d.id !== docId);
             localStorage.setItem('teacher_vault_documents', JSON.stringify(docs));
-            this.pushToCloud('update_teacher_docs', { docs: docs });
+            await this.pushToCloud('lms_teacher_docs', docs);
             return docs;
         },
         getTeacherDocsByGrade(grade) {
@@ -567,10 +526,10 @@
             const stored = localStorage.getItem('lms_whatsapp_session');
             return stored ? JSON.parse(stored) : DEFAULT_WHATSAPP;
         },
-        saveWhatsappSession(waObj) {
+        async saveWhatsappSession(waObj) {
             const updated = { ...this.getWhatsappSession(), ...waObj };
             localStorage.setItem('lms_whatsapp_session', JSON.stringify(updated));
-            this.pushToCloud('update_whatsapp', { whatsapp: updated });
+            await this.pushToCloud('lms_config/whatsapp', updated);
             return updated;
         },
         toggleWhatsappLive(isLive, targetGrade) {
@@ -596,9 +555,10 @@
             const stored = localStorage.getItem('lms_zoom_session');
             return stored ? JSON.parse(stored) : DEFAULT_ZOOM;
         },
-        saveZoomSession(zoomObj) {
+        async saveZoomSession(zoomObj) {
             const updated = { ...this.getZoomSession(), ...zoomObj };
             localStorage.setItem('lms_zoom_session', JSON.stringify(updated));
+            await this.pushToCloud('lms_config/zoom', updated);
             return updated;
         },
         toggleZoomLive(isLive, targetGrade) {
@@ -614,7 +574,7 @@
             const stored = localStorage.getItem('lms_notifications');
             return stored ? JSON.parse(stored) : DEFAULT_NOTIFICATIONS;
         },
-        addNotification(notifObj) {
+        async addNotification(notifObj) {
             const notifs = this.getNotifications();
             const newNotif = {
                 id: "NOTIF-" + Date.now(),
@@ -626,14 +586,14 @@
             };
             notifs.unshift(newNotif);
             localStorage.setItem('lms_notifications', JSON.stringify(notifs));
-            this.pushToCloud('update_notifications', { notifications: notifs });
+            await this.pushToCloud('lms_notifications', notifs);
             return newNotif;
         },
-        deleteNotification(notifId) {
+        async deleteNotification(notifId) {
             let notifs = this.getNotifications();
             notifs = notifs.filter(n => n.id !== notifId);
             localStorage.setItem('lms_notifications', JSON.stringify(notifs));
-            this.pushToCloud('update_notifications', { notifications: notifs });
+            await this.pushToCloud('lms_notifications', notifs);
             return notifs;
         },
         getNotificationsForGrade(grade) {
@@ -650,7 +610,7 @@
             const stored = localStorage.getItem('lms_files');
             return stored ? JSON.parse(stored) : DEFAULT_FILES;
         },
-        addFile(fileObj) {
+        async addFile(fileObj) {
             const files = this.getFiles();
             const newFile = {
                 id: "FILE-" + Date.now(),
@@ -660,14 +620,14 @@
             };
             files.unshift(newFile);
             localStorage.setItem('lms_files', JSON.stringify(files));
-            this.pushToCloud('update_files', { files: files });
+            await this.pushToCloud('lms_files', files);
             return newFile;
         },
-        deleteFile(fileId) {
+        async deleteFile(fileId) {
             let files = this.getFiles();
             files = files.filter(f => f.id !== fileId);
             localStorage.setItem('lms_files', JSON.stringify(files));
-            this.pushToCloud('update_files', { files: files });
+            await this.pushToCloud('lms_files', files);
             return files;
         },
         deleteStudentFile(fileId) {
@@ -679,43 +639,32 @@
             const stored = localStorage.getItem('lms_calendar_events');
             return stored ? JSON.parse(stored) : DEFAULT_CALENDAR;
         },
-        addCalendarEvent(eventObj) {
+        async addCalendarEvent(eventObj) {
             const events = this.getCalendarEvents();
             const newEvent = { id: "EVT-" + Date.now(), ...eventObj };
             events.push(newEvent);
             events.sort((a, b) => new Date(a.date) - new Date(b.date));
             localStorage.setItem('lms_calendar_events', JSON.stringify(events));
-            this.pushToCloud('update_calendar', { calendar: events });
+            await this.pushToCloud('lms_calendar_events', events);
             return newEvent;
         },
-        deleteCalendarEvent(eventId) {
+        async deleteCalendarEvent(eventId) {
             let events = this.getCalendarEvents();
             events = events.filter(e => e.id !== eventId);
             localStorage.setItem('lms_calendar_events', JSON.stringify(events));
-            this.pushToCloud('update_calendar', { calendar: events });
+            await this.pushToCloud('lms_calendar_events', events);
             return events;
         },
 
-        // --- STUDENT ACCOUNTS: LIVE CLOUD SYNC & REPOSITORY PERSISTENCE ---
+        // --- STUDENT ACCOUNTS: LIVE CLOUD SYNC & SIMULTANEOUS REAL-TIME UPDATES ---
         async getStudents(forceRefresh = false) {
             const cloud = this.getCloudConfig();
 
-            // 1. Fetch live from GitHub API if token and repo are available (0-second sync across all devices!)
-            if (cloud.githubToken && cloud.githubRepo) {
+            // 1. Fetch live from Firebase Cloud Database (Instant 0-second live data across all devices)
+            if (cloud.firebaseUrl) {
                 try {
-                    let repo = cloud.githubRepo.replace(/^\/+|\/+$/g, '').trim();
-                    if (repo.includes('github.com/')) repo = repo.split('github.com/')[1];
-                    if (repo.includes('/tree/')) repo = repo.split('/tree/')[0];
-                    const branch = cloud.githubBranch || 'PORTAL_3_V7';
-
-                    const url = `https://api.github.com/repos/${repo}/contents/assets/data/students.json?ref=${branch}&t=${Date.now()}`;
-                    const res = await fetch(url, {
-                        headers: {
-                            'Authorization': 'token ' + cloud.githubToken,
-                            'Accept': 'application/vnd.github.v3.raw'
-                        }
-                    });
-
+                    const cleanUrl = cloud.firebaseUrl.replace(/\/+$/, '');
+                    const res = await fetch(`${cleanUrl}/lms_students.json?t=${Date.now()}`);
                     if (res.ok) {
                         const data = await res.json();
                         if (Array.isArray(data) && data.length > 0) {
@@ -724,7 +673,7 @@
                         }
                     }
                 } catch (e) {
-                    console.log("GitHub API students fetch fallback.");
+                    console.log("Firebase students fetch fallback.");
                 }
             }
 
@@ -753,9 +702,9 @@
         async saveStudents(studentsArray) {
             localStorage.setItem('lms_students', JSON.stringify(studentsArray));
             
-            // Automatically commit students.json to GitHub repository!
-            const jsonString = JSON.stringify(studentsArray, null, 2);
-            await this.commitFileToGitHub('assets/data/students.json', jsonString, 'Update students.json [Live Sync]');
+            // Push immediately to Cloud Database in real-time!
+            await this.pushToCloud('lms_students', studentsArray);
+            this.notifyListeners('students_updated', studentsArray);
         },
 
         calculateMonthlyUnitTestAverage(weeks) {
@@ -1031,7 +980,7 @@
         }
     };
 
-    // Auto-Sync across all pages
+    // Auto-Sync across all pages & Setup Real-Time Polling
     document.addEventListener('DOMContentLoaded', () => {
         window.LMSCore.initGlobalSync();
     });

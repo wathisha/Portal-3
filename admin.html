@@ -755,88 +755,72 @@
 
             
             
-            <!-- Section 2: Real-time Global Cloud Synchronization Hub (Multi-Device Auto-Sync) -->
-            <div class="glass-panel p-6 space-y-6 border-emerald-500/40 mt-8">
-                <div class="pb-4 border-b border-slate-700 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                                    <!-- Section 2: Central Database Connection Center (Multi-Device Synchronized Database) -->
+            <div class="glass-panel p-6 sm:p-8 space-y-6 border-emerald-500/40 mt-8 shadow-2xl">
+                <div class="pb-4 border-b border-slate-700/60 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                     <div>
-                        <h3 class="text-xl font-bold font-cinzel text-emerald-300"><i class="fa-solid fa-cloud-bolt mr-2"></i>Real-Time Global Cloud Sync Manager</h3>
-                        <p class="text-xs text-slate-400">Sync password changes, ERP customizations, and student marks across all phones, tablets, and computers worldwide in real-time.</p>
+                        <h3 class="text-xl font-bold font-cinzel text-emerald-600 dark:text-emerald-300"><i class="fa-solid fa-database mr-2 text-emerald-500"></i>Central Database Connection Center</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Establish a live, centralized cloud database (like Microsoft Access tables on the web) so every phone and laptop updates in real-time.</p>
                     </div>
-                    <span id="cloudStatusBadge" class="px-3 py-1 bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 rounded-full text-xs font-bold font-mono flex items-center gap-1.5">
-                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Cloud Ready
+                    <span id="cloudStatusBadge" class="px-3.5 py-1.5 bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/40 rounded-full text-xs font-bold font-mono flex items-center gap-2 shadow-sm">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                        <span>Live Database Active</span>
                     </span>
                 </div>
 
-                <div class="space-y-4">
-                    <form id="cloudConfigForm" class="space-y-4 max-w-3xl">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">
-                                Google Apps Script / Cloud Web App API URL:
-                            </label>
-                            <div class="flex gap-2">
-                                <input type="url" id="cloudApiUrlInput" placeholder="https://script.google.com/macros/s/AKfycb.../exec" class="flex-grow bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-emerald-300 font-mono focus:border-emerald-400">
-                                <button type="button" onclick="testCloudConnection()" class="bg-slate-900 hover:bg-slate-800 text-emerald-300 border border-emerald-500/40 px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5">
-                                    <i class="fa-solid fa-bolt"></i>
-                                    <span>Test Sync</span>
-                                </button>
-                            </div>
-                            <p class="text-[11px] text-slate-400 mt-1">
-                                Connecting your free Google Apps Script Web App syncs admin passwords and settings across any device in real-time.
-                            </p>
-                        </div>
-
-                        <!-- GitHub Direct Repository Auto-Commit (Auto-Sync Across All Devices) -->
-                        <div class="pt-3 border-t border-slate-800 space-y-3">
+                <div class="space-y-6">
+                    <form id="cloudConfigForm" class="space-y-5 max-w-3xl">
+                        
+                        <!-- Option 1: Google Sheets Live Cloud Database (Recommended) -->
+                        <div class="bg-slate-50 dark:bg-slate-950 p-5 rounded-2xl border border-emerald-500/30 space-y-3">
                             <div class="flex items-center justify-between">
-                                <label class="block text-xs font-bold text-cyan-400 uppercase tracking-wider">
-                                    <i class="fa-brands fa-github mr-1 text-sm"></i> GitHub Direct Repository Sync (Auto-commit on Save):
+                                <label class="block text-xs font-bold text-emerald-700 dark:text-emerald-300 uppercase tracking-wider">
+                                    <i class="fa-solid fa-table mr-1 text-emerald-500"></i> 1. Google Sheets Live Database Web App URL (Recommended):
                                 </label>
-                                <button type="button" onclick="testGitHubConnection()" class="text-[11px] text-cyan-400 hover:underline font-bold flex items-center gap-1">
-                                    <i class="fa-solid fa-vial-circle-check"></i> Test GitHub Connection
+                                <button type="button" onclick="testDatabaseConnection()" class="text-xs text-emerald-600 dark:text-emerald-400 hover:underline font-bold flex items-center gap-1">
+                                    <i class="fa-solid fa-bolt"></i> Test Connection
                                 </button>
                             </div>
-
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                                <div>
-                                    <label class="block text-[11px] text-slate-400 mb-1">Repository (owner/repo):</label>
-                                    <input type="text" id="githubRepoInput" placeholder="wathisha/Portal-3" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 font-mono focus:border-cyan-400">
-                                </div>
-                                <div>
-                                    <label class="block text-[11px] text-slate-400 mb-1">Branch Name:</label>
-                                    <input type="text" id="githubBranchInput" placeholder="PORTAL_3_V7 or main" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 font-mono focus:border-cyan-400">
-                                </div>
-                                <div>
-                                    <label class="block text-[11px] text-slate-400 mb-1">Personal Access Token (PAT):</label>
-                                    <input type="password" id="githubTokenInput" placeholder="ghp_..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 font-mono focus:border-cyan-400">
-                                </div>
+                            <div class="flex gap-2">
+                                <input type="url" id="cloudApiUrlInput" placeholder="https://script.google.com/macros/s/AKfycb.../exec" class="flex-grow bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-2.5 text-xs text-emerald-700 dark:text-emerald-300 font-mono focus:border-emerald-500">
+                                <button type="submit" class="bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 text-slate-950 font-extrabold px-5 py-2.5 rounded-xl text-xs uppercase tracking-wider shadow-md flex items-center gap-1.5 transition">
+                                    <i class="fa-solid fa-floppy-disk"></i>
+                                    <span>Connect Database</span>
+                                </button>
                             </div>
-                            <p class="text-[10px] text-slate-400">
-                                Format: Repository = <code class="text-amber-300 font-mono">wathisha/Portal-3</code> | Branch = <code class="text-cyan-300 font-mono">PORTAL_3_V7</code> | Token = <code class="text-emerald-300 font-mono">ghp_...</code>
+                            <p class="text-[11px] text-slate-500 dark:text-slate-400">
+                                Stores students, marks, and passwords in your private Google Sheet tables in real-time. Accessible from any mobile phone or computer.
                             </p>
                         </div>
 
-                        <div class="flex justify-end gap-3 pt-2">
-                            <button type="submit" class="bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 text-slate-950 font-extrabold px-6 py-2.5 rounded-xl text-xs uppercase tracking-wider shadow-md flex items-center space-x-2">
-                                <i class="fa-solid fa-floppy-disk"></i>
-                                <span>Save Cloud Sync Settings</span>
-                            </button>
+                        <!-- 2-Minute Google Sheets Database Setup Instructions -->
+                        <div class="bg-slate-100 dark:bg-slate-900/60 p-4 rounded-2xl border border-slate-300 dark:border-slate-800 space-y-2 text-xs">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-amber-600 dark:text-amber-300"><i class="fa-solid fa-circle-question mr-1"></i> How to set up your Google Sheets Database (Takes 2 minutes):</span>
+                                <button type="button" onclick="copySheetsDatabaseCode()" class="text-cyan-600 dark:text-cyan-400 hover:underline font-mono text-[11px] font-bold"><i class="fa-solid fa-copy mr-1"></i>Copy Ready-Made Script</button>
+                            </div>
+                            <ol class="list-decimal list-inside space-y-1 text-slate-600 dark:text-slate-400 text-[11px]">
+                                <li>Create a new blank Google Sheet at <a href="https://sheets.google.com" target="_blank" class="text-cyan-500 underline font-bold">sheets.google.com</a> (Name it: <em>Science LMS Database</em>).</li>
+                                <li>In the top menu, click <strong>Extensions &rarr; Apps Script</strong>.</li>
+                                <li>Paste the script code (from <code>scripts/google_sheets_lms_database.js</code>) and click Save.</li>
+                                <li>Click <strong>Deploy &rarr; New deployment &rarr; Web app</strong> (Execute as: <em>Me</em>, Access: <em>Anyone</em>) &rarr; Click <strong>Deploy</strong>.</li>
+                                <li>Copy the generated Web app URL, paste it into the box above, and click <strong>Connect Database</strong>!</li>
+                            </ol>
                         </div>
-                    </form>
 
-                    <!-- Google Apps Script Turnkey Code Preview -->
-                    <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-2">
-                        <div class="flex justify-between items-center">
-                            <span class="text-xs font-bold text-amber-300"><i class="fa-solid fa-code mr-1"></i>Free Google Apps Script Backend Code:</span>
-                            <button type="button" onclick="copyAppsScriptCode()" class="text-[11px] text-cyan-400 hover:underline font-mono"><i class="fa-solid fa-copy mr-1"></i>Copy Script Code</button>
+                        <!-- Option 2: Firebase / Cloud REST Database (Optional) -->
+                        <div class="pt-3 border-t border-slate-200 dark:border-slate-800 space-y-2">
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1">
+                                <i class="fa-brands fa-google mr-1 text-amber-500"></i> 2. Alternative: Firebase Realtime Database URL:
+                            </label>
+                            <input type="url" id="firebaseUrlInput" placeholder="https://your-project-default-rtdb.firebaseio.com" class="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-slate-100 font-mono focus:border-amber-500">
                         </div>
-                        <p class="text-[11px] text-slate-400">
-                            1. Open <a href="https://script.google.com" target="_blank" class="text-cyan-400 underline">script.google.com</a> &rarr; 2. Paste the script &rarr; 3. Click <strong>Deploy &rarr; New Deployment &rarr; Web App</strong> (Execute as: <em>Me</em>, Access: <em>Anyone</em>) &rarr; 4. Copy URL and paste above!
-                        </p>
-                    </div>
+
+                    </form>
                 </div>
             </div>
 
-            <!-- Section 3: Global System Sync & Codebase Export (GitHub Pages / Multi-Device Persistence) -->
+<!-- Section 3: Global System Sync & Codebase Export (GitHub Pages / Multi-Device Persistence) -->
             <div class="glass-panel p-6 space-y-6 border-cyan-500/40 mt-8">
                 <div class="pb-4 border-b border-slate-700 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                     <div>

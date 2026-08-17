@@ -360,6 +360,30 @@
         let stCalYear = 2026;
         let stCalMonth = 7; // August
 
+        
+        // Live auto-refresh when window is focused or every 10 seconds
+        window.addEventListener('focus', async () => {
+            if (window.LMSCore && currentStudent) {
+                const students = await window.LMSCore.getStudents(true);
+                const updated = students.find(s => s.student_info && s.student_info.student_id === currentStudent.student_info.student_id);
+                if (updated) {
+                    currentStudent = updated;
+                    renderStudentPage();
+                }
+            }
+        });
+
+        setInterval(async () => {
+            if (document.visibilityState === 'visible' && window.LMSCore && currentStudent) {
+                const students = await window.LMSCore.getStudents(true);
+                const updated = students.find(s => s.student_info && s.student_info.student_id === currentStudent.student_info.student_id);
+                if (updated && JSON.stringify(updated) !== JSON.stringify(currentStudent)) {
+                    currentStudent = updated;
+                    renderStudentPage();
+                }
+            }
+        }, 8000);
+
         document.addEventListener('DOMContentLoaded', async () => {
             if (window.LMSCore) {
                 window.LMSCore.applyThemeAndBranding();
