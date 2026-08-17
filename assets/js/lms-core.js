@@ -346,8 +346,24 @@
         async commitFileToGitHub(path, fileContent, commitMessage) {
             const cloud = this.getCloudConfig();
             if (!cloud.githubToken || !cloud.githubRepo) return;
-            const branch = cloud.githubBranch || 'main';
-            const url = `https://api.github.com/repos/${cloud.githubRepo}/contents/${path}`;
+
+            let repo = (cloud.githubRepo || '').trim();
+            let branch = (cloud.githubBranch || '').trim();
+
+            if (repo.includes('github.com/')) {
+                repo = repo.split('github.com/')[1];
+            }
+            if (repo.includes('/tree/')) {
+                const parts = repo.split('/tree/');
+                repo = parts[0];
+                if (!branch && parts[1]) {
+                    branch = parts[1];
+                }
+            }
+            repo = repo.replace(/^\/+|\/+$/g, '');
+            if (!branch) branch = 'main';
+
+            const url = `https://api.github.com/repos/${repo}/contents/${path}`;
 
             let sha = "";
             try {
