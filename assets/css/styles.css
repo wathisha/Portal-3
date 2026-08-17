@@ -1,25 +1,69 @@
 /* -------------------------------------------------------------
  * Science with Sheshadi - Modern Student LMS Portal Styles
- * Dynamic Theming & Google / Microsoft Teams Calendar Grid Styling
+ * Complete Light Mode (Default) & Dark Mode Dual Theming System
  * ------------------------------------------------------------- */
 
-:root {
-    --bg-dark: #0c0710;
-    --panel-bg: rgba(24, 14, 30, 0.82);
-    --panel-hover: rgba(35, 20, 44, 0.88);
+/* Light Theme (Default) */
+:root,
+body.theme-light,
+html.theme-light {
+    --bg-main: #f8fafc;
+    --panel-bg: rgba(255, 255, 255, 0.94);
+    --panel-card-bg: #ffffff;
+    --panel-inner-bg: #f1f5f9;
+    --border-color: rgba(203, 213, 225, 0.85);
+    --border-hover: #d97706;
+    --gold-accent: #d97706;
+    --crimson-accent: #be123c;
+    --amber-glow: #f59e0b;
+    --cyan-accent: #0284c7;
+    --emerald-accent: #059669;
+    --text-main: #0f172a;
+    --text-muted: #475569;
+    --text-subtle: #64748b;
+    --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.07), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+}
+
+/* Dark Theme */
+body.theme-dark,
+html.theme-dark {
+    --bg-main: #0c0710;
+    --panel-bg: rgba(24, 14, 30, 0.85);
+    --panel-card-bg: #0f172a;
+    --panel-inner-bg: #030712;
     --border-color: rgba(225, 29, 72, 0.30);
+    --border-hover: #fbbf24;
     --gold-accent: #f59e0b;
-    --crimson-glow: #e11d48;
+    --crimson-accent: #e11d48;
     --amber-glow: #fbbf24;
     --cyan-accent: #06b6d4;
+    --emerald-accent: #10b981;
     --text-main: #f8fafc;
-    --text-muted: #94a3b8;
+    --text-muted: #cbd5e1;
+    --text-subtle: #94a3b8;
+    --card-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
 }
 
 body {
-    font-family: 'Rajdhani', 'Plus Jakarta Sans', sans-serif;
-    background-color: var(--bg-dark);
+    font-family: 'Plus Jakarta Sans', 'Rajdhani', sans-serif;
+    background-color: var(--bg-main);
     color: var(--text-main);
+    min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.theme-light {
+    background-image: 
+        linear-gradient(135deg, rgba(248, 250, 252, 0.96) 0%, rgba(241, 245, 249, 0.94) 50%, rgba(254, 243, 199, 0.40) 100%),
+        radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.08) 0%, transparent 60%),
+        radial-gradient(circle at 90% 80%, rgba(225, 29, 72, 0.05) 0%, transparent 50%),
+        url('../images/lms_background.png');
+    background-size: cover;
+    background-position: center top;
+    background-attachment: fixed;
+}
+
+body.theme-dark {
     background-image: 
         linear-gradient(to bottom, rgba(12, 7, 16, 0.88), rgba(15, 8, 20, 0.94)),
         radial-gradient(circle at 50% 0%, rgba(225, 29, 72, 0.20) 0%, transparent 60%),
@@ -28,178 +72,182 @@ body {
     background-size: cover;
     background-position: center top;
     background-attachment: fixed;
-    min-height: 100vh;
 }
 
-/* Glassmorphism Panels */
 .glass-panel {
     background: var(--panel-bg);
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--border-color);
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+    box-shadow: var(--card-shadow);
     border-radius: 1.25rem;
-    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    transition: all 0.25s ease;
 }
 
 .glass-panel:hover {
-    border-color: var(--amber-glow);
+    border-color: var(--border-hover);
 }
 
-.glass-panel-glow {
-    border: 1px solid var(--amber-glow);
-    box-shadow: 0 0 30px rgba(225, 29, 72, 0.25);
+body.theme-light .glass-panel {
+    color: #0f172a;
 }
 
-/* Student & Admin Tab Navigation Button */
+body.theme-light .text-slate-100,
+body.theme-light .text-slate-200 {
+    color: #0f172a !important;
+}
+
+body.theme-light .text-slate-300 {
+    color: #1e293b !important;
+}
+
+body.theme-light .text-slate-400 {
+    color: #475569 !important;
+}
+
+body.theme-light .text-slate-500 {
+    color: #64748b !important;
+}
+
+body.theme-light .bg-slate-950,
+body.theme-light .bg-slate-950\/90,
+body.theme-light .bg-slate-950\/80,
+body.theme-light .bg-slate-950\/50,
+body.theme-light .bg-slate-900,
+body.theme-light .bg-slate-900\/80,
+body.theme-light .bg-slate-900\/60,
+body.theme-light .bg-slate-900\/50 {
+    background-color: #f8fafc !important;
+    border-color: #cbd5e1 !important;
+    color: #0f172a !important;
+}
+
+body.theme-light .border-slate-800,
+body.theme-light .border-slate-700,
+body.theme-light .border-slate-700\/70,
+body.theme-light .border-slate-700\/80 {
+    border-color: #e2e8f0 !important;
+}
+
+body.theme-light header {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    border-bottom-color: #e2e8f0 !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+body.theme-light footer {
+    background-color: #f8fafc !important;
+    border-top-color: #e2e8f0 !important;
+    color: #64748b !important;
+}
+
+body.theme-light input[type="text"],
+body.theme-light input[type="password"],
+body.theme-light input[type="number"],
+body.theme-light input[type="url"],
+body.theme-light input[type="date"],
+body.theme-light select,
+body.theme-light textarea {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    border-color: #cbd5e1 !important;
+}
+
+body.theme-light input:focus,
+body.theme-light select:focus,
+body.theme-light textarea:focus {
+    border-color: #f59e0b !important;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15) !important;
+}
+
 .student-tab-btn, .admin-tab-btn {
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     border-bottom: 3px solid transparent;
 }
 
-.student-tab-btn:hover, .admin-tab-btn:hover {
-    color: var(--amber-glow);
-    background: rgba(245, 158, 11, 0.08);
+body.theme-light .student-tab-btn:hover,
+body.theme-light .admin-tab-btn:hover {
+    color: #b45309;
+    background: rgba(245, 158, 11, 0.12);
 }
 
-.student-tab-btn.active, .admin-tab-btn.active {
-    color: var(--amber-glow);
-    border-bottom-color: var(--amber-glow);
-    background: rgba(245, 158, 11, 0.15);
+body.theme-light .student-tab-btn.active,
+body.theme-light .admin-tab-btn.active {
+    color: #b45309;
+    border-bottom-color: #f59e0b;
+    background: rgba(245, 158, 11, 0.18);
     font-weight: 700;
-    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.2);
 }
 
-/* Status Badges */
-.badge-completed {
-    background: rgba(16, 185, 129, 0.2);
-    color: #34d399;
-    border: 1px solid rgba(16, 185, 129, 0.4);
+body.theme-light .bg-slate-800,
+body.theme-light .bg-slate-800\/80 {
+    background-color: #e2e8f0 !important;
+    color: #1e293b !important;
 }
 
-.badge-half {
-    background: rgba(245, 158, 11, 0.2);
-    color: #fbbf24;
-    border: 1px solid rgba(245, 158, 11, 0.4);
-}
-
-.badge-pending {
-    background: rgba(6, 182, 212, 0.2);
-    color: #38bdf8;
-    border: 1px solid rgba(6, 182, 212, 0.4);
-}
-
-.badge-incomplete {
-    background: rgba(239, 68, 68, 0.2);
-    color: #f87171;
-    border: 1px solid rgba(239, 68, 68, 0.4);
-}
-
-.badge-not-attended {
-    background: rgba(71, 85, 105, 0.35);
-    color: #94a3b8;
-    border: 1px solid rgba(100, 116, 139, 0.5);
-}
-
-/* Google & Teams Calendar Grid UI */
-.gcal-day-cell {
-    min-height: 110px;
-    background: rgba(15, 23, 42, 0.65);
-    border: 1px solid rgba(51, 65, 85, 0.5);
-    border-radius: 0.75rem;
-    padding: 0.5rem;
-    transition: all 0.2s ease;
-}
-
-.gcal-day-cell:hover {
-    border-color: var(--amber-glow);
-    background: rgba(30, 41, 59, 0.75);
-}
-
-.gcal-day-cell.today {
-    border: 1.5px solid var(--amber-glow);
-    background: rgba(245, 158, 11, 0.08);
-}
-
-.gcal-event-chip {
-    display: flex;
+/* Theme Toggle Button Style */
+.theme-toggle-btn {
+    display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
-    font-size: 0.70rem;
-    font-family: 'Rajdhani', sans-serif;
+    justify-content: center;
+    padding: 0.5rem 0.85rem;
+    border-radius: 0.75rem;
+    font-size: 0.75rem;
     font-weight: 700;
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.375rem;
-    margin-top: 0.25rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    transition: all 0.2s ease;
     cursor: pointer;
-    transition: transform 0.15s ease, filter 0.15s ease;
-}
-
-.gcal-event-chip:hover {
-    transform: scale(1.02);
-    filter: brightness(1.15);
-}
-
-.gcal-time-slot-row {
-    display: grid;
-    grid-template-columns: 70px repeat(7, 1fr);
-    min-height: 60px;
-    border-bottom: 1px solid rgba(51, 65, 85, 0.4);
-}
-
-.gcal-time-col {
-    font-size: 0.70rem;
-    color: #94a3b8;
-    padding: 0.25rem;
-    text-align: right;
-    font-family: monospace;
-}
-
-.gcal-slot-cell {
-    border-left: 1px solid rgba(51, 65, 85, 0.3);
-    position: relative;
-    padding: 0.2rem;
-}
-
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: #0d0714;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #2b1328;
-    border-radius: 4px;
     border: 1px solid var(--border-color);
 }
 
-::-webkit-scrollbar-thumb:hover {
-    background: var(--amber-glow);
+body.theme-light .theme-toggle-btn {
+    background: #ffffff;
+    color: #0f172a;
+    border-color: #cbd5e1;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
-/* Print Stylesheet for Official Academic Scorecard */
+body.theme-light .theme-toggle-btn:hover {
+    background: #f1f5f9;
+    border-color: #f59e0b;
+}
+
+body.theme-dark .theme-toggle-btn {
+    background: #0f172a;
+    color: #f8fafc;
+    border-color: #334155;
+}
+
+body.theme-dark .theme-toggle-btn:hover {
+    background: #1e293b;
+    border-color: #fbbf24;
+}
+
+body.theme-light #calendarGridCells,
+body.theme-light #stCalendarGridCells {
+    background-color: #cbd5e1 !important;
+}
+
+body.theme-light #calendarGridCells > div,
+body.theme-light #stCalendarGridCells > div {
+    background-color: #ffffff !important;
+    border-color: #e2e8f0 !important;
+    color: #0f172a !important;
+}
+
+body.theme-light #calendarGridCells > div:hover,
+body.theme-light #stCalendarGridCells > div:hover {
+    background-color: #f8fafc !important;
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+body.theme-light ::-webkit-scrollbar-track { background: #f1f5f9; }
+body.theme-light ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+body.theme-dark ::-webkit-scrollbar-track { background: #0d0714; }
+body.theme-dark ::-webkit-scrollbar-thumb { background: #2b1328; border-radius: 4px; border: 1px solid var(--border-color); }
+
 @media print {
-    body {
-        background: white !important;
-        color: black !important;
-    }
-    .no-print {
-        display: none !important;
-    }
-    .glass-panel {
-        background: white !important;
-        color: black !important;
-        border: 1px solid #ccc !important;
-        box-shadow: none !important;
-    }
-    .text-slate-100, .text-slate-200, .text-slate-300, .text-slate-400 {
-        color: #111 !important;
-    }
+    body { background: white !important; color: black !important; }
+    .no-print { display: none !important; }
+    .glass-panel { background: white !important; color: black !important; border: 1px solid #ccc !important; box-shadow: none !important; }
+    .text-slate-100, .text-slate-200, .text-slate-300, .text-slate-400 { color: #111 !important; }
 }
