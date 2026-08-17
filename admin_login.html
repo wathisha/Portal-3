@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="theme-light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,23 +23,32 @@
         }
     </script>
 </head>
-<body class="antialiased text-slate-100 min-h-screen flex flex-col justify-between">
+<body class="theme-light antialiased min-h-screen flex flex-col justify-between">
 
-    <!-- Header -->
-    <header class="bg-slate-950/90 border-b border-rose-900/40 py-4">
+    <!-- Header Navigation -->
+    <header class="bg-white/95 dark:bg-slate-950/90 border-b border-slate-200 dark:border-rose-900/40 py-4 sticky top-0 z-50 backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
             <div class="flex items-center space-x-3">
                 <img src="assets/images/logo.png" alt="Logo" class="h-10 w-10 object-contain rounded-xl border border-amber-500/30 p-1 bg-slate-950">
                 <div>
-                    <h1 class="text-lg font-bold font-cinzel text-amber-300 branding-academy-name">SCIENCE with SHESHADI</h1>
-                    <p class="text-[11px] text-rose-400 font-rajdhani uppercase tracking-wider branding-tagline">Teacher Management Hub</p>
+                    <h1 class="text-lg font-bold font-cinzel text-amber-600 dark:text-amber-300 branding-academy-name">SCIENCE with SHESHADI</h1>
+                    <p class="text-[11px] text-rose-600 dark:text-rose-400 font-rajdhani uppercase tracking-wider branding-tagline">Teacher Management Hub</p>
                 </div>
             </div>
 
-            <a href="index.html" class="text-xs text-slate-300 hover:text-amber-400 flex items-center space-x-1.5 bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-700 transition">
-                <i class="fa-solid fa-house"></i>
-                <span>Back to Access Hub</span>
-            </a>
+            <!-- Action Controls -->
+            <div class="flex items-center space-x-2.5">
+                <!-- Theme Toggle Button (Light/Dark) -->
+                <button type="button" onclick="window.LMSCore.toggleTheme()" class="theme-toggle-btn shadow-sm" title="Toggle Light/Dark Theme">
+                    <i class="fa-solid fa-moon text-indigo-600 mr-1.5"></i>
+                    <span>Dark Mode</span>
+                </button>
+                
+                <a href="index.html" class="text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-amber-500 flex items-center space-x-1.5 bg-slate-100 dark:bg-slate-900/80 px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 transition shadow-sm">
+                    <i class="fa-solid fa-house"></i>
+                    <span class="hidden sm:inline">Back to Hub</span>
+                </a>
+            </div>
         </div>
     </header>
 
@@ -47,40 +56,36 @@
     <main class="max-w-md mx-auto px-4 py-12 flex-grow flex flex-col justify-center w-full">
 
         <div class="glass-panel p-8 space-y-6 border-rose-500/40 shadow-2xl relative overflow-hidden">
-            <div class="absolute -top-12 -right-12 w-40 h-40 bg-rose-500/10 rounded-full blur-2xl pointer-events-none"></div>
-
             <div class="text-center space-y-2 relative z-10">
                 <img src="assets/images/teacher_banner.png" alt="Teacher Avatar" class="branding-teacher-photo w-20 h-24 object-cover rounded-2xl border-2 border-amber-400 mx-auto shadow-lg bg-slate-950">
-                <h2 class="text-2xl font-bold font-cinzel text-amber-300">Teacher & Admin Login</h2>
-                <p class="text-xs text-slate-400 branding-teacher-name">Mrs. Sheshadi Amarasinghe - Educator Hub</p>
+                <h2 class="text-2xl font-bold font-cinzel text-amber-600 dark:text-amber-300">Teacher & Admin Login</h2>
+                <p class="text-xs text-slate-500 dark:text-slate-400 branding-teacher-name">Mrs. Sheshadi Amarasinghe - Educator Hub</p>
             </div>
 
             <!-- Login Error Message -->
-            <div id="loginError" class="hidden p-3 bg-red-500/10 border border-red-500/40 rounded-xl text-red-400 text-xs text-center font-semibold">
+            <div id="loginError" class="hidden p-3 bg-red-500/10 border border-red-500/40 rounded-xl text-red-500 dark:text-red-400 text-xs text-center font-semibold">
                 Invalid username or password. Please try again.
             </div>
 
             <!-- Form -->
             <form id="adminLoginForm" class="space-y-4 relative z-10">
                 <div>
-                    <label class="block text-xs font-semibold text-slate-400 mb-1">Username / Email</label>
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1">Username / Login ID:</label>
                     <div class="relative">
-                        <i class="fa-solid fa-user absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
-                        <input type="text" id="adminUser" required placeholder="sheshadi or admin" class="w-full bg-slate-950 border border-slate-700 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-amber-400 font-mono">
+                        <i class="fa-solid fa-user absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                        <input type="text" id="adminUser" required placeholder="sheshadi or admin" class="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:border-amber-500 font-mono">
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-semibold text-slate-400 mb-1">Passkey / Password</label>
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1">Password:</label>
                     <div class="relative">
-                        <i class="fa-solid fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
-                        <input type="password" id="adminPass" required placeholder="••••••••" class="w-full bg-slate-950 border border-slate-700 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-amber-400 font-mono">
+                        <i class="fa-solid fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                        <input type="password" id="adminPass" required placeholder="••••••••" class="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:border-amber-500 font-mono">
                     </div>
                     <p class="text-[10px] text-slate-500 mt-1.5 flex items-center justify-between">
-                        <span></span>
-                        <span class="text-amber-400 font-mono bg-slate-950 px-2 py-0.5 rounded border border-slate-800"></span>
                         <span>Default Credentials:</span>
-                        <span class="text-amber-400 font-mono bg-slate-950 px-2 py-0.5 rounded border border-slate-800">sheshadi / password123</span>
+                        <span class="text-amber-600 dark:text-amber-400 font-mono bg-slate-100 dark:bg-slate-950 px-2 py-0.5 rounded border border-slate-300 dark:border-slate-800">sheshadi / password123</span>
                     </p>
                 </div>
 
@@ -94,7 +99,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-slate-950 border-t border-slate-800 py-6 text-center text-xs text-slate-500">
+    <footer class="bg-slate-100 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 py-6 text-center text-xs text-slate-500">
         <p>&copy; 2026 Sathsarani Science Academy. LMS Teacher Administrative Portal.</p>
     </footer>
 

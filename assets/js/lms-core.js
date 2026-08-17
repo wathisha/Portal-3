@@ -1,48 +1,47 @@
 /**
  * LMS Core Management Engine - Science with Sheshadi LMS & ERP
- * Global Synchronized Production Build
+ * Complete Dual Theming (Light Mode Default & Dark Mode) & Password Management
  */
 
 (function () {
     'use strict';
 
-    // Global Default Configuration Constants (Updated directly from ERP Studio & global sync)
+    // Global Default Configuration Constants
     const DEFAULT_SETTINGS = {
-        "academyName": "Sathsarani Science Academy",
-        "tagline": "GRADE 6-11 SCIENCE SPECIALIST",
-        "motto": "UNDERSTAND TODAY, SUCCEED TOMORROW",
-        "teacherName": "Mrs. Sheshadi Amarasinghe",
-        "teacherTitle": "B.Sc. (Chemistry Special), Grad.Chem (IChem) | Head Science Specialist",
-        "hotlines": "071 781 2092 | 077 161 4260",
-        "teacherPhoto": "assets/images/teacher_banner.png",
-        "bgImage": "assets/images/lms_background.png",
-        "subjectList": [
-                "06 - Science",
-                "07 - Science",
-                "08 - Science",
-                "09 - Science",
-                "10 - Science",
-                "11 - Science"
+        academyName: "Sathsarani Science Academy",
+        tagline: "GRADE 6-11 SCIENCE SPECIALIST",
+        motto: "UNDERSTAND TODAY, SUCCEED TOMORROW",
+        teacherName: "Mrs. Sheshadi Amarasinghe",
+        teacherTitle: "B.Sc. (Chemistry Special), Grad.Chem (IChem) | Head Science Specialist",
+        hotlines: "071 781 2092 | 077 161 4260",
+        teacherPhoto: "assets/images/teacher_banner.png",
+        bgImage: "assets/images/lms_background.png",
+        theme: "light",
+        subjectList: ["06 - Science", "07 - Science", "08 - Science", "09 - Science", "10 - Science", "11 - Science"],
+        announcement: "Welcome to Sathsarani Science Academy LMS! Grade 06-11 Science Master Guidebooks, past paper revisions, WhatsApp & Zoom live classes are active.",
+        offerings: [
+            "Clear Explanations",
+            "Exam Focused Learning",
+            "Concept Building",
+            "Past Paper Practice",
+            "Live Practical Sessions on Classroom"
         ],
-        "announcement": "Welcome to Sathsarani Science Academy LMS! Grade 06-11 Science Master Guidebooks, past paper revisions, WhatsApp & Zoom live classes are active.",
-        "offerings": [
-                "Clear Explanations",
-                "Exam Focused Learning",
-                "Concept Building",
-                "Past Paper Practice",
-                "Live Practical Sessions on Classroom"
-        ],
-        "gradingScale": {
-                "A": 75,
-                "B": 65,
-                "C": 50,
-                "S": 35
-        }
-};
+        gradingScale: { A: 75, B: 65, C: 50, S: 35 }
+    };
 
     const DEFAULT_ADMIN_AUTH = {
         username: "sheshadi",
-        password: "Dog@0305"
+        password: "password123"
+    };
+
+    const DEFAULT_CLOUD_CONFIG = {
+        enabled: true,
+        provider: "apps_script",
+        apiUrl: "",
+        githubRepo: "",
+        githubBranch: "main",
+        githubToken: "",
+        lastSynced: ""
     };
 
     const DEFAULT_WEEKLY_COLUMNS = [
@@ -239,8 +238,58 @@
     window.LMSCore = {
         STATUS_OPTIONS: ["Completed", "Incomplete", "0.5 Done", "Pending", "Still not attended"],
 
-        // Global Sync on Startup Across All Devices
+        // --- Theme (Light Mode Default & Dark Mode) Engine ---
+        getTheme() {
+            return localStorage.getItem('erp_theme_mode') || 'light';
+        },
+        setTheme(mode) {
+            const theme = (mode === 'dark') ? 'dark' : 'light';
+            localStorage.setItem('erp_theme_mode', theme);
+            this.applyThemeAndBranding();
+            return theme;
+        },
+        toggleTheme() {
+            const current = this.getTheme();
+            const newTheme = (current === 'dark') ? 'light' : 'dark';
+            return this.setTheme(newTheme);
+        },
+
+        // --- Cloud Configuration Management ---
+        getCloudConfig() {
+            const stored = localStorage.getItem('lms_cloud_config');
+            return stored ? { ...DEFAULT_CLOUD_CONFIG, ...JSON.parse(stored) } : DEFAULT_CLOUD_CONFIG;
+        },
+        saveCloudConfig(newConfig) {
+            const updated = { ...this.getCloudConfig(), ...newConfig };
+            localStorage.setItem('lms_cloud_config', JSON.stringify(updated));
+            return updated;
+        },
+
+        // --- Global Cloud Sync on Startup Across All Devices ---
         async initGlobalSync() {
+            // Apply theme immediately on startup
+            this.applyThemeAndBranding();
+
+            const cloud = this.getCloudConfig();
+            if (cloud.apiUrl) {
+                try {
+                    const res = await fetch(cloud.apiUrl + (cloud.apiUrl.includes('?') ? '&' : '?') + 'action=get_all&t=' + Date.now());
+                    if (res.ok) {
+                        const json = await res.json();
+                        if (json && json.data) {
+                            if (json.data.adminAuth) localStorage.setItem('lms_admin_auth', JSON.stringify(json.data.adminAuth));
+                            if (json.data.settings) localStorage.setItem('lms_settings', JSON.stringify(json.data.settings));
+                            if (json.data.whatsapp) localStorage.setItem('lms_whatsapp_session', JSON.stringify(json.data.whatsapp));
+                            if (json.data.weeklyColumns) localStorage.setItem('lms_weekly_columns', JSON.stringify(json.data.weeklyColumns));
+                            this.applyThemeAndBranding();
+                            return;
+                        }
+                    }
+                } catch (e) {
+                    console.log("Cloud API offline, using local configuration.");
+                }
+            }
+
             try {
                 const res = await fetch('assets/data/erp-config.json?t=' + Date.now());
                 if (res.ok) {
@@ -268,6 +317,85 @@
             this.applyThemeAndBranding();
         },
 
+        // --- Push Updates to Global Cloud in Real-Time ---
+        async pushToCloud(action, payload) {
+            const cloud = this.getCloudConfig();
+            if (cloud.apiUrl) {
+                try {
+                    const postBody = JSON.stringify({ action: action, ...payload });
+                    await fetch(cloud.apiUrl, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: postBody
+                    });
+                } catch (err) {
+                    console.error("Cloud push failed:", err);
+                }
+            }
+
+            if (cloud.githubToken && cloud.githubRepo) {
+                try {
+                    await this.commitFileToGitHub('assets/data/erp-config.json', this.generateGlobalErpConfigJson(), 'Update global ERP configuration');
+                } catch (err) {
+                    console.error("GitHub Direct Commit failed:", err);
+                }
+            }
+        },
+
+        async commitFileToGitHub(path, fileContent, commitMessage) {
+            const cloud = this.getCloudConfig();
+            if (!cloud.githubToken || !cloud.githubRepo) return;
+
+            let repo = (cloud.githubRepo || '').trim();
+            let branch = (cloud.githubBranch || '').trim();
+
+            if (repo.includes('github.com/')) {
+                repo = repo.split('github.com/')[1];
+            }
+            if (repo.includes('/tree/')) {
+                const parts = repo.split('/tree/');
+                repo = parts[0];
+                if (!branch && parts[1]) {
+                    branch = parts[1];
+                }
+            }
+            repo = repo.replace(/^\/+|\/+$/g, '');
+            if (!branch) branch = 'main';
+
+            const url = `https://api.github.com/repos/${repo}/contents/${path}`;
+
+            let sha = "";
+            try {
+                const getRes = await fetch(url + '?ref=' + branch, {
+                    headers: { 'Authorization': 'token ' + cloud.githubToken, 'Accept': 'application/vnd.github.v3+json' }
+                });
+                if (getRes.ok) {
+                    const getData = await getRes.json();
+                    sha = getData.sha;
+                }
+            } catch (e) {}
+
+            const bodyObj = {
+                message: commitMessage || 'Update ' + path,
+                content: btoa(unescape(encodeURIComponent(fileContent))),
+                branch: branch
+            };
+            if (sha) bodyObj.sha = sha;
+
+            const putRes = await fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': 'token ' + cloud.githubToken,
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/vnd.github.v3+json'
+                },
+                body: JSON.stringify(bodyObj)
+            });
+
+            return putRes.ok;
+        },
+
         // Customization & Branding Settings
         getSettings() {
             const stored = localStorage.getItem('lms_settings');
@@ -278,13 +406,20 @@
             const updated = { ...current, ...newSettings };
             localStorage.setItem('lms_settings', JSON.stringify(updated));
             this.applyThemeAndBranding();
+            this.pushToCloud('update_settings', { settings: updated });
             return updated;
         },
 
-        // Teacher / Admin Password & Authentication Management
+        // --- Teacher & Admin Password & Authentication Management ---
         getAdminCredentials() {
             const stored = localStorage.getItem('lms_admin_auth');
-            return stored ? JSON.parse(stored) : DEFAULT_ADMIN_AUTH;
+            if (stored) {
+                try {
+                    const parsed = JSON.parse(stored);
+                    if (parsed && parsed.username && parsed.password) return parsed;
+                } catch (e) {}
+            }
+            return DEFAULT_ADMIN_AUTH;
         },
         saveAdminCredentials(username, newPassword) {
             const creds = {
@@ -292,19 +427,28 @@
                 password: (newPassword || 'password123').trim()
             };
             localStorage.setItem('lms_admin_auth', JSON.stringify(creds));
+            this.pushToCloud('update_admin_auth', creds);
             return creds;
         },
         authenticateAdmin(user, pass) {
             const creds = this.getAdminCredentials();
             const u = (user || '').trim().toLowerCase();
             const p = (pass || '').trim();
-            if ((u === creds.username && p === creds.password) ||
-                (u === DEFAULT_ADMIN_AUTH.username && p === DEFAULT_ADMIN_AUTH.password) ||
-                (u === 'admin' && p === 'password123') ||
-                (u === 'sheshadi' && p === 'sheshadi2026') ||
-                (u === 'admin' && p === creds.password)) {
-                return true;
-            }
+
+            if (!p) return false;
+
+            // 1. Check active saved credentials
+            if (u === creds.username && p === creds.password) return true;
+            if ((u === 'admin' || u === 'sheshadi') && p === creds.password) return true;
+
+            // 2. Check default code credentials
+            if (u === DEFAULT_ADMIN_AUTH.username && p === DEFAULT_ADMIN_AUTH.password) return true;
+            if (u === 'admin' && p === 'password123') return true;
+            if (u === 'sheshadi' && p === 'sheshadi2026') return true;
+
+            // 3. Fallback: match current saved password directly
+            if (p === creds.password) return true;
+
             return false;
         },
 
@@ -315,6 +459,7 @@
         },
         saveWeeklyColumns(columnsArray) {
             localStorage.setItem('lms_weekly_columns', JSON.stringify(columnsArray));
+            this.pushToCloud('update_weekly_columns', { columns: columnsArray });
             return columnsArray;
         },
         addWeeklyColumn(label, type) {
@@ -379,6 +524,7 @@
         saveWhatsappSession(waObj) {
             const updated = { ...this.getWhatsappSession(), ...waObj };
             localStorage.setItem('lms_whatsapp_session', JSON.stringify(updated));
+            this.pushToCloud('update_whatsapp', { whatsapp: updated });
             return updated;
         },
         toggleWhatsappLive(isLive, targetGrade) {
@@ -713,8 +859,35 @@
             }
         },
 
+        // --- Apply Theme (Light / Dark) and Branding across all pages ---
         applyThemeAndBranding() {
             const settings = this.getSettings();
+            const theme = this.getTheme();
+
+            // Apply Theme classes to html and body
+            if (theme === 'dark') {
+                document.documentElement.classList.add('theme-dark');
+                document.documentElement.classList.remove('theme-light');
+                document.body.classList.add('theme-dark');
+                document.body.classList.remove('theme-light');
+            } else {
+                document.documentElement.classList.add('theme-light');
+                document.documentElement.classList.remove('theme-dark');
+                document.body.classList.add('theme-light');
+                document.body.classList.remove('theme-dark');
+            }
+
+            // Update theme toggle buttons
+            document.querySelectorAll('.theme-toggle-btn').forEach(btn => {
+                if (theme === 'dark') {
+                    btn.innerHTML = '<i class="fa-solid fa-sun text-amber-400 mr-1.5"></i><span>Light Mode</span>';
+                    btn.title = "Switch to Light Mode";
+                } else {
+                    btn.innerHTML = '<i class="fa-solid fa-moon text-indigo-600 mr-1.5"></i><span>Dark Mode</span>';
+                    btn.title = "Switch to Dark Mode";
+                }
+            });
+
             document.querySelectorAll('.branding-academy-name').forEach(el => { el.textContent = settings.academyName; });
             document.querySelectorAll('.branding-tagline').forEach(el => { el.textContent = settings.tagline; });
             document.querySelectorAll('.branding-teacher-name').forEach(el => { el.textContent = settings.teacherName; });
@@ -727,8 +900,13 @@
                 document.querySelectorAll('.branding-teacher-photo').forEach(el => { el.src = settings.teacherPhoto; });
             }
 
+            // Background wallpaper
             if (settings.bgImage) {
-                document.body.style.backgroundImage = `linear-gradient(to bottom, rgba(12, 7, 16, 0.88), rgba(15, 8, 20, 0.94)), radial-gradient(circle at 50% 0%, rgba(225, 29, 72, 0.20) 0%, transparent 60%), radial-gradient(circle at 90% 80%, rgba(245, 158, 11, 0.15) 0%, transparent 50%), url("${settings.bgImage}")`;
+                if (theme === 'dark') {
+                    document.body.style.backgroundImage = `linear-gradient(to bottom, rgba(12, 7, 16, 0.88), rgba(15, 8, 20, 0.94)), radial-gradient(circle at 50% 0%, rgba(225, 29, 72, 0.20) 0%, transparent 60%), radial-gradient(circle at 90% 80%, rgba(245, 158, 11, 0.15) 0%, transparent 50%), url("${settings.bgImage}")`;
+                } else {
+                    document.body.style.backgroundImage = `linear-gradient(135deg, rgba(248, 250, 252, 0.96) 0%, rgba(241, 245, 249, 0.94) 50%, rgba(254, 243, 199, 0.40) 100%), radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.08) 0%, transparent 60%), radial-gradient(circle at 90% 80%, rgba(225, 29, 72, 0.05) 0%, transparent 50%), url("${settings.bgImage}")`;
+                }
             }
         },
 
