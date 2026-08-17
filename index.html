@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sheshadi Science Academy | Student & Educator LMS Portal</title>
+    <title>Sathsarani Science Academy | Student & Educator LMS Portal</title>
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Rajdhani:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -40,6 +40,10 @@
 
             <!-- Action Buttons (Strictly Teacher Login - No directory/vault links) -->
             <div class="flex items-center space-x-3">
+                <button type="button" onclick="window.LMSCore.toggleTheme()" class="theme-toggle-btn shadow-sm" title="Toggle Light/Dark Theme">
+                    <i class="fa-solid fa-moon text-indigo-600 mr-1.5"></i>
+                    <span>Dark Mode</span>
+                </button>
                 <a href="admin_login.html" class="bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 text-slate-950 px-4 py-2 rounded-xl text-xs font-extrabold flex items-center space-x-2 transition shadow-md">
                     <i class="fa-solid fa-user-gear"></i>
                     <span>Teacher / Admin Login</span>
