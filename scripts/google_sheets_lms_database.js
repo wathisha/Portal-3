@@ -2,32 +2,61 @@
  * ============================================================================
  * Sathsarani Science Academy LMS - Google Sheets Live Cloud Database Backend
  * ============================================================================
- * This script transforms your Google Sheet into a full real-time database
- * (similar to Microsoft Access tables) accessible from any mobile phone or PC.
- *
- * HOW TO SETUP (Takes 2 minutes):
- * 1. Open Google Sheets (sheets.google.com) and create a new blank sheet.
- * 2. Rename the spreadsheet to: "Science LMS Database"
- * 3. In the top menu, click: Extensions -> Apps Script
- * 4. Delete any code in the editor, paste this entire file, and click Save (Floppy icon).
- * 5. Click "Deploy" (top right) -> "New deployment"
- * 6. Click the Gear icon ⚙️ -> select "Web app"
- *    - Description: "LMS Database API"
- *    - Execute as: "Me" (your email)
- *    - Who has access: "Anyone" (Required so your phone & laptop can connect)
- * 7. Click "Deploy", authorize permissions, and COPY the Web App URL.
- * 8. Paste the URL into the Teacher Dashboard (admin.html -> Database Setup Wizard).
- * ============================================================================
+ * Universal Cloud Database for Google Sheets (Supports both Standalone & Container-Bound)
  */
+
+// OPTIONAL: If using a Standalone Script (at script.google.com), paste your Google Sheet ID or URL here.
+// Example: var SPREADSHEET_ID = "1X8TSZcUAJjKj49q6BrL8M2IELx8SVK3L";
+// If you opened Apps Script from inside Google Sheets (Extensions -> Apps Script), leave it empty ("").
+var SPREADSHEET_ID = "";
+
+function getTargetSpreadsheet() {
+  if (SPREADSHEET_ID && SPREADSHEET_ID.trim() !== "") {
+    var cleanId = SPREADSHEET_ID.trim();
+    if (cleanId.includes("/d/")) {
+      cleanId = cleanId.split("/d/")[1].split("/")[0];
+    }
+    return SpreadsheetApp.openById(cleanId);
+  }
+  
+  // If opened directly from inside Google Sheet
+  try {
+    var active = SpreadsheetApp.getActiveSpreadsheet();
+    if (active) return active;
+  } catch (e) {}
+
+  // If standalone, check stored property
+  var propId = PropertiesService.getScriptProperties().getProperty("LMS_SHEET_ID");
+  if (propId) {
+    try {
+      return SpreadsheetApp.openById(propId);
+    } catch (e) {}
+  }
+
+  // Auto-create a new Google Sheet if none is linked yet
+  var newSheet = SpreadsheetApp.create("Science LMS Database");
+  PropertiesService.getScriptProperties().setProperty("LMS_SHEET_ID", newSheet.getId());
+  return newSheet;
+}
 
 function doGet(e) {
   var action = e && e.parameter ? e.parameter.action : "get_all";
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = getTargetSpreadsheet();
   ensureTablesExist(ss);
+
+  // Allow handling write actions via GET as well for maximum cross-device compatibility
+  if (e && e.parameter && e.parameter.payload) {
+    try {
+      var payload = JSON.parse(decodeURIComponent(e.parameter.payload));
+      return handleDatabaseAction(ss, payload);
+    } catch (err) {
+      return jsonResponse({ status: "error", message: err.toString() });
+    }
+  }
 
   if (action === "get_students") {
     var students = getStudentsFromSheet(ss);
-    return jsonResponse({ status: "success", count: students.length, data: students });
+    return jsonResponse({ status: "success", count: students.length, data: students, spreadsheetUrl: ss.getUrl() });
   }
 
   if (action === "get_admin_auth") {
@@ -39,46 +68,51 @@ function doGet(e) {
   var allData = {
     students: getStudentsFromSheet(ss),
     adminAuth: getAdminAuthFromSheet(ss),
-    settings: getSettingsFromSheet(ss)
+    settings: getSettingsFromSheet(ss),
+    spreadsheetUrl: ss.getUrl()
   };
-  return jsonResponse({ status: "success", data: allData });
+  return jsonResponse({ status: "success", data: allData, spreadsheetUrl: ss.getUrl() });
 }
 
 function doPost(e) {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = getTargetSpreadsheet();
   ensureTablesExist(ss);
   
   try {
     var contents = e.postData.contents;
     var payload = JSON.parse(contents);
-    var action = payload.action;
-
-    if (action === "save_students" || action === "update_student" || action === "register_student") {
-      saveStudentsToSheet(ss, payload.students);
-      return jsonResponse({ status: "success", message: "Students database updated globally!" });
-    }
-
-    if (action === "update_admin_auth") {
-      saveAdminAuthToSheet(ss, payload.username, payload.password);
-      return jsonResponse({ status: "success", message: "Admin credentials updated globally!" });
-    }
-
-    if (action === "save_settings") {
-      saveSettingsToSheet(ss, payload.settings);
-      return jsonResponse({ status: "success", message: "ERP settings updated globally!" });
-    }
-
-    if (action === "sync_all") {
-      if (payload.data.students) saveStudentsToSheet(ss, payload.data.students);
-      if (payload.data.adminAuth) saveAdminAuthToSheet(ss, payload.data.adminAuth.username, payload.data.adminAuth.password);
-      if (payload.data.settings) saveSettingsToSheet(ss, payload.data.settings);
-      return jsonResponse({ status: "success", message: "Full database synced globally!" });
-    }
-
-    return jsonResponse({ status: "error", message: "Unknown action" });
+    return handleDatabaseAction(ss, payload);
   } catch (err) {
     return jsonResponse({ status: "error", message: err.toString() });
   }
+}
+
+function handleDatabaseAction(ss, payload) {
+  var action = payload.action;
+
+  if (action === "save_students" || action === "update_student" || action === "register_student") {
+    saveStudentsToSheet(ss, payload.students || payload.data);
+    return jsonResponse({ status: "success", message: "Students table updated in Google Sheet!", spreadsheetUrl: ss.getUrl() });
+  }
+
+  if (action === "update_admin_auth") {
+    saveAdminAuthToSheet(ss, payload.username, payload.password);
+    return jsonResponse({ status: "success", message: "Admin credentials updated in Google Sheet!", spreadsheetUrl: ss.getUrl() });
+  }
+
+  if (action === "save_settings") {
+    saveSettingsToSheet(ss, payload.settings || payload.data);
+    return jsonResponse({ status: "success", message: "ERP settings updated in Google Sheet!", spreadsheetUrl: ss.getUrl() });
+  }
+
+  if (action === "sync_all") {
+    if (payload.data.students) saveStudentsToSheet(ss, payload.data.students);
+    if (payload.data.adminAuth) saveAdminAuthToSheet(ss, payload.data.adminAuth.username, payload.data.adminAuth.password);
+    if (payload.data.settings) saveSettingsToSheet(ss, payload.data.settings);
+    return jsonResponse({ status: "success", message: "Full database synced to Google Sheet!", spreadsheetUrl: ss.getUrl() });
+  }
+
+  return jsonResponse({ status: "error", message: "Unknown action: " + action });
 }
 
 // Ensure Database Tables (Sheets) Exist
@@ -105,6 +139,7 @@ function ensureTablesExist(ss) {
 
 function getStudentsFromSheet(ss) {
   var sheet = ss.getSheetByName("DB_Students");
+  if (!sheet) return [];
   var rows = sheet.getDataRange().getValues();
   if (rows.length <= 1) return [];
 
@@ -127,6 +162,9 @@ function getStudentsFromSheet(ss) {
 
 function saveStudentsToSheet(ss, studentsArray) {
   var sheet = ss.getSheetByName("DB_Students");
+  if (!sheet) {
+    sheet = ss.insertSheet("DB_Students");
+  }
   sheet.clearContents();
   sheet.appendRow(["StudentID", "Name", "Username", "Password", "Grade", "ParentWhatsApp", "Attendance", "AnnualUnitAvg", "JSONData"]);
 
@@ -152,6 +190,7 @@ function saveStudentsToSheet(ss, studentsArray) {
 
 function getAdminAuthFromSheet(ss) {
   var sheet = ss.getSheetByName("DB_AdminAuth");
+  if (!sheet) return { username: "sheshadi", password: "password123" };
   var rows = sheet.getDataRange().getValues();
   if (rows.length > 1) {
     return { username: rows[1][0], password: rows[1][1] };
@@ -161,6 +200,7 @@ function getAdminAuthFromSheet(ss) {
 
 function saveAdminAuthToSheet(ss, username, password) {
   var sheet = ss.getSheetByName("DB_AdminAuth");
+  if (!sheet) sheet = ss.insertSheet("DB_AdminAuth");
   sheet.clearContents();
   sheet.appendRow(["Username", "Password", "LastUpdated"]);
   sheet.appendRow([username.toLowerCase(), password, new Date().toISOString()]);
@@ -168,6 +208,7 @@ function saveAdminAuthToSheet(ss, username, password) {
 
 function getSettingsFromSheet(ss) {
   var sheet = ss.getSheetByName("DB_Settings");
+  if (!sheet) return {};
   var rows = sheet.getDataRange().getValues();
   var settings = {};
   for (var i = 1; i < rows.length; i++) {
@@ -178,6 +219,7 @@ function getSettingsFromSheet(ss) {
 
 function saveSettingsToSheet(ss, settingsObj) {
   var sheet = ss.getSheetByName("DB_Settings");
+  if (!sheet) sheet = ss.insertSheet("DB_Settings");
   sheet.clearContents();
   sheet.appendRow(["Key", "Value"]);
   for (var k in settingsObj) {

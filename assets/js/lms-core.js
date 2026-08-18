@@ -37,8 +37,9 @@
 
     const DEFAULT_CLOUD_CONFIG = {
         enabled: true,
-        provider: "firebase_rest", // "firebase_realtime", "google_apps_script", "cloud_rest"
-        firebaseUrl: "https://science-lms-portal-default-rtdb.firebaseio.com",
+        provider: "google_apps_script",
+        appsScriptUrl: "",
+        firebaseUrl: "",
         appsScriptUrl: "",
         lastSynced: ""
     };
@@ -289,8 +290,29 @@
             this.applyThemeAndBranding();
             const cloud = this.getCloudConfig();
 
-            // 1. Fetch live admin auth & settings from Cloud
-            if (cloud.firebaseUrl) {
+            // 1. Google Sheets Live Database Web App sync (Primary Cloud Database)
+            if (cloud.appsScriptUrl && cloud.appsScriptUrl.trim() !== '') {
+                try {
+                    const res = await fetch(`${cloud.appsScriptUrl}?action=get_all&t=${Date.now()}`);
+                    if (res.ok) {
+                        const json = await res.json();
+                        if (json && json.data) {
+                            if (json.data.adminAuth) localStorage.setItem('lms_admin_auth', JSON.stringify(json.data.adminAuth));
+                            if (json.data.settings) localStorage.setItem('lms_settings', JSON.stringify(json.data.settings));
+                            if (json.data.whatsapp) localStorage.setItem('lms_whatsapp_session', JSON.stringify(json.data.whatsapp));
+                            if (json.data.weeklyColumns) localStorage.setItem('lms_weekly_columns', JSON.stringify(json.data.weeklyColumns));
+                            this.applyThemeAndBranding();
+                            this.notifyListeners('config_synced', json.data);
+                            return;
+                        }
+                    }
+                } catch (e) {
+                    console.log("Google Sheets Database sync fallback.");
+                }
+            }
+
+            // 2. Custom Firebase Cloud Database (Only if explicitly configured)
+            if (cloud.firebaseUrl && cloud.firebaseUrl.trim() !== '' && !cloud.firebaseUrl.includes('science-lms-portal-default-rtdb')) {
                 try {
                     const cleanUrl = cloud.firebaseUrl.replace(/\/+$/, '');
                     const res = await fetch(`${cleanUrl}/lms_config.json?t=${Date.now()}`);
@@ -308,27 +330,6 @@
                     }
                 } catch (e) {
                     console.log("Firebase cloud fetch fallback.");
-                }
-            }
-
-            // 2. Google Apps Script Web App sync
-            if (cloud.appsScriptUrl) {
-                try {
-                    const res = await fetch(`${cloud.appsScriptUrl}?action=get_all&t=${Date.now()}`);
-                    if (res.ok) {
-                        const json = await res.json();
-                        if (json && json.data) {
-                            if (json.data.adminAuth) localStorage.setItem('lms_admin_auth', JSON.stringify(json.data.adminAuth));
-                            if (json.data.settings) localStorage.setItem('lms_settings', JSON.stringify(json.data.settings));
-                            if (json.data.whatsapp) localStorage.setItem('lms_whatsapp_session', JSON.stringify(json.data.whatsapp));
-                            if (json.data.weeklyColumns) localStorage.setItem('lms_weekly_columns', JSON.stringify(json.data.weeklyColumns));
-                            this.applyThemeAndBranding();
-                            this.notifyListeners('config_synced', json.data);
-                            return;
-                        }
-                    }
-                } catch (e) {
-                    console.log("Apps Script cloud fetch fallback.");
                 }
             }
 
@@ -364,21 +365,27 @@
         async pushToCloud(endpoint, payload) {
             const cloud = this.getCloudConfig();
 
-            // 1. Google Sheets / Apps Script Database API Push
+            // 1. Google Sheets Live Database Web App Push
             if (cloud.appsScriptUrl) {
                 try {
                     let action = endpoint;
                     if (endpoint.includes('/')) action = endpoint.split('/')[1];
-                    const postBody = JSON.stringify({ action: action, ...payload });
+                    const dataObj = { action: action, ...payload };
+
+                    // Dual Delivery: POST with text/plain (bypasses CORS preflight) and GET fallback
                     await fetch(cloud.appsScriptUrl, {
                         method: 'POST',
                         mode: 'no-cors',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: postBody
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                        body: JSON.stringify(dataObj)
                     });
-                    console.log("Database update pushed to Google Sheets / Apps Script API.");
+
+                    const getFallbackUrl = cloud.appsScriptUrl + (cloud.appsScriptUrl.includes('?') ? '&' : '?') + 'payload=' + encodeURIComponent(JSON.stringify(dataObj)) + '&t=' + Date.now();
+                    fetch(getFallbackUrl, { mode: 'no-cors' }).catch(() => {});
+
+                    console.log("Database update successfully sent to Google Sheets Database!");
                 } catch (err) {
-                    console.error("Google Sheets API push error:", err);
+                    console.error("Google Sheets Database API push error:", err);
                 }
             }
 
@@ -391,7 +398,6 @@
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     });
-                    console.log(`Cloud sync pushed to Firebase: ${endpoint}`);
                 } catch (err) {
                     console.error("Firebase cloud push error:", err);
                 }
@@ -660,8 +666,24 @@
         async getStudents(forceRefresh = false) {
             const cloud = this.getCloudConfig();
 
-            // 1. Fetch live from Firebase Cloud Database (Instant 0-second live data across all devices)
-            if (cloud.firebaseUrl) {
+            // 1. Fetch live from Google Sheets Database Web App (Primary live database)
+            if (cloud.appsScriptUrl && cloud.appsScriptUrl.trim() !== '') {
+                try {
+                    const res = await fetch(`${cloud.appsScriptUrl}?action=get_students&t=${Date.now()}`);
+                    if (res.ok) {
+                        const json = await res.json();
+                        if (json && json.data && Array.isArray(json.data) && json.data.length > 0) {
+                            localStorage.setItem('lms_students', JSON.stringify(json.data));
+                            return json.data;
+                        }
+                    }
+                } catch (e) {
+                    console.log("Google Sheets Database student fetch fallback.");
+                }
+            }
+
+            // 2. Custom Firebase Cloud Database (Only if explicitly configured)
+            if (cloud.firebaseUrl && cloud.firebaseUrl.trim() !== '' && !cloud.firebaseUrl.includes('science-lms-portal-default-rtdb')) {
                 try {
                     const cleanUrl = cloud.firebaseUrl.replace(/\/+$/, '');
                     const res = await fetch(`${cleanUrl}/lms_students.json?t=${Date.now()}`);
