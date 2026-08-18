@@ -1,13 +1,13 @@
 /**
  * LMS Core Management Engine - Science with Sheshadi LMS & ERP
- * True Simultaneous Multi-Device Real-Time Cloud Synchronization Engine
- * Powered by Firebase Realtime Database WebSockets & Cloud REST API
+ * 100% Pure JSON Database Engine (No Spreadsheets / No Excel)
+ * Multi-Device Universal Real-Time Synchronization via Pure JSON REST API & Cloud JSON Storage
  */
 
 (function () {
     'use strict';
 
-    // Global Default Configuration Constants
+    // Global Default Configuration Constants (Stored as Pure JSON)
     const DEFAULT_SETTINGS = {
         academyName: "Sathsarani Science Academy",
         tagline: "GRADE 6-11 SCIENCE SPECIALIST",
@@ -37,9 +37,10 @@
 
     const DEFAULT_CLOUD_CONFIG = {
         enabled: true,
-        provider: "firebase_rest", // "firebase_realtime", "google_apps_script", "cloud_rest"
-        firebaseUrl: "https://science-lms-portal-default-rtdb.firebaseio.com",
-        appsScriptUrl: "",
+        provider: "cloud_json", // "cloud_json", "node_server", "local_json"
+        cloudJsonStudentsUrl: "https://api.npoint.io/182e3982fc6e4d9dcd58",
+        cloudJsonConfigUrl: "",
+        nodeServerUrl: "", // Node.js server URL (e.g. http://localhost:3000 or Render/Railway URL)
         lastSynced: ""
     };
 
@@ -236,22 +237,8 @@
 
     window.LMSCore = {
         STATUS_OPTIONS: ["Completed", "Incomplete", "0.5 Done", "Pending", "Still not attended"],
-        listeners: [],
 
-        // Register live cloud update listeners
-        onCloudUpdate(callback) {
-            if (typeof callback === 'function') {
-                this.listeners.push(callback);
-            }
-        },
-
-        notifyListeners(type, data) {
-            this.listeners.forEach(fn => {
-                try { fn(type, data); } catch (e) {}
-            });
-        },
-
-        // --- Theme (Light Mode Default & Dark Mode) Engine ---
+        // --- Theme Engine (Light Default & Dark Mode) ---
         getTheme() {
             return localStorage.getItem('erp_theme_mode') || 'light';
         },
@@ -267,7 +254,7 @@
             return this.setTheme(newTheme);
         },
 
-        // --- Cloud Configuration Management ---
+        // --- Cloud JSON Configuration Management ---
         getCloudConfig() {
             const stored = localStorage.getItem('lms_cloud_config');
             if (stored) {
@@ -284,51 +271,48 @@
             return updated;
         },
 
-        // --- Global Cloud Sync on Startup Across All Devices ---
+        // --- Global JSON Sync on Startup Across All Devices ---
         async initGlobalSync() {
             this.applyThemeAndBranding();
             const cloud = this.getCloudConfig();
 
-            // 1. Fetch live admin auth & settings from Cloud
-            if (cloud.firebaseUrl) {
+            // 1. Fetch live config JSON from Cloud JSON Endpoint
+            if (cloud.cloudJsonConfigUrl && cloud.cloudJsonConfigUrl.trim() !== '') {
                 try {
-                    const cleanUrl = cloud.firebaseUrl.replace(/\/+$/, '');
-                    const res = await fetch(`${cleanUrl}/lms_config.json?t=${Date.now()}`);
+                    const res = await fetch(cloud.cloudJsonConfigUrl + (cloud.cloudJsonConfigUrl.includes('?') ? '&' : '?') + 't=' + Date.now());
                     if (res.ok) {
                         const cloudData = await res.json();
                         if (cloudData) {
-                            if (cloudData.adminAuth) localStorage.setItem('lms_admin_auth', JSON.stringify(cloudData.adminAuth));
-                            if (cloudData.settings) localStorage.setItem('lms_settings', JSON.stringify(cloudData.settings));
-                            if (cloudData.whatsapp) localStorage.setItem('lms_whatsapp_session', JSON.stringify(cloudData.whatsapp));
-                            if (cloudData.weeklyColumns) localStorage.setItem('lms_weekly_columns', JSON.stringify(cloudData.weeklyColumns));
+                            const config = cloudData.record || cloudData.data || cloudData;
+                            if (config.adminAuth) localStorage.setItem('lms_admin_auth', JSON.stringify(config.adminAuth));
+                            if (config.settings) localStorage.setItem('lms_settings', JSON.stringify(config.settings));
+                            if (config.whatsapp) localStorage.setItem('lms_whatsapp_session', JSON.stringify(config.whatsapp));
+                            if (config.weeklyColumns) localStorage.setItem('lms_weekly_columns', JSON.stringify(config.weeklyColumns));
                             this.applyThemeAndBranding();
-                            this.notifyListeners('config_synced', cloudData);
                             return;
                         }
                     }
                 } catch (e) {
-                    console.log("Firebase cloud fetch fallback.");
+                    console.log("Cloud JSON config fetch fallback.");
                 }
             }
 
-            // 2. Google Apps Script Web App sync
-            if (cloud.appsScriptUrl) {
+            // 2. Fetch live config JSON from Node.js Server
+            if (cloud.nodeServerUrl && cloud.nodeServerUrl.trim() !== '') {
                 try {
-                    const res = await fetch(`${cloud.appsScriptUrl}?action=get_all&t=${Date.now()}`);
+                    const cleanUrl = cloud.nodeServerUrl.replace(/\/+$/, '');
+                    const res = await fetch(`${cleanUrl}/api/config?t=${Date.now()}`);
                     if (res.ok) {
-                        const json = await res.json();
-                        if (json && json.data) {
-                            if (json.data.adminAuth) localStorage.setItem('lms_admin_auth', JSON.stringify(json.data.adminAuth));
-                            if (json.data.settings) localStorage.setItem('lms_settings', JSON.stringify(json.data.settings));
-                            if (json.data.whatsapp) localStorage.setItem('lms_whatsapp_session', JSON.stringify(json.data.whatsapp));
-                            if (json.data.weeklyColumns) localStorage.setItem('lms_weekly_columns', JSON.stringify(json.data.weeklyColumns));
-                            this.applyThemeAndBranding();
-                            this.notifyListeners('config_synced', json.data);
-                            return;
-                        }
+                        const config = await res.json();
+                        if (config.adminAuth) localStorage.setItem('lms_admin_auth', JSON.stringify(config.adminAuth));
+                        if (config.settings) localStorage.setItem('lms_settings', JSON.stringify(config.settings));
+                        if (config.whatsapp) localStorage.setItem('lms_whatsapp_session', JSON.stringify(config.whatsapp));
+                        if (config.weeklyColumns) localStorage.setItem('lms_weekly_columns', JSON.stringify(config.weeklyColumns));
+                        this.applyThemeAndBranding();
+                        return;
                     }
                 } catch (e) {
-                    console.log("Apps Script cloud fetch fallback.");
+                    console.log("Node server config fetch fallback.");
                 }
             }
 
@@ -360,40 +344,55 @@
             this.applyThemeAndBranding();
         },
 
-        // --- Push Updates to Global Database in Real-Time ---
-        async pushToCloud(endpoint, payload) {
+        // --- Push JSON Updates to Global Cloud Database in Real-Time ---
+        async pushToCloud(type, payload) {
             const cloud = this.getCloudConfig();
 
-            // 1. Google Sheets / Apps Script Database API Push
-            if (cloud.appsScriptUrl) {
+            // 1. Cloud JSON REST Endpoint (Supports npoint.io POST and REST PUT)
+            const targetUrl = (type === 'students') ? (cloud.cloudJsonStudentsUrl || "https://api.npoint.io/182e3982fc6e4d9dcd58") : cloud.cloudJsonConfigUrl;
+            if (targetUrl && targetUrl.trim() !== '') {
                 try {
-                    let action = endpoint;
-                    if (endpoint.includes('/')) action = endpoint.split('/')[1];
-                    const postBody = JSON.stringify({ action: action, ...payload });
-                    await fetch(cloud.appsScriptUrl, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: postBody
+                    // npoint.io expects POST to update the entire document, other REST APIs use PUT
+                    const method = targetUrl.includes('npoint.io') ? 'POST' : 'PUT';
+                    const res = await fetch(targetUrl, {
+                        method: method,
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify(payload)
                     });
-                    console.log("Database update pushed to Google Sheets / Apps Script API.");
+
+                    if (!res.ok && method === 'PUT') {
+                        // Fallback to POST if PUT returned non-200
+                        await fetch(targetUrl, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
+                            body: JSON.stringify(payload)
+                        });
+                    }
+                    console.log(`Successfully pushed JSON update to Cloud JSON Endpoint (${type}) using ${method}`);
                 } catch (err) {
-                    console.error("Google Sheets API push error:", err);
+                    console.error("Cloud JSON update error:", err);
                 }
             }
 
-            // 2. Firebase Realtime Database REST API Push
-            if (cloud.firebaseUrl && !cloud.appsScriptUrl) {
+            // 2. Node.js Server REST API Push (POST JSON)
+            if (cloud.nodeServerUrl && cloud.nodeServerUrl.trim() !== '') {
                 try {
-                    const cleanUrl = cloud.firebaseUrl.replace(/\/+$/, '');
-                    await fetch(`${cleanUrl}/${endpoint}.json`, {
-                        method: 'PUT',
+                    const cleanUrl = cloud.nodeServerUrl.replace(/\/+$/, '');
+                    const endpoint = (type === 'students') ? '/api/students' : '/api/config';
+                    await fetch(`${cleanUrl}${endpoint}`, {
+                        method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     });
-                    console.log(`Cloud sync pushed to Firebase: ${endpoint}`);
+                    console.log(`Pushed JSON update to Node.js server (${endpoint})`);
                 } catch (err) {
-                    console.error("Firebase cloud push error:", err);
+                    console.error("Node server push error:", err);
                 }
             }
         },
@@ -408,7 +407,7 @@
             const updated = { ...current, ...newSettings };
             localStorage.setItem('lms_settings', JSON.stringify(updated));
             this.applyThemeAndBranding();
-            await this.pushToCloud('lms_config/settings', updated);
+            await this.pushToCloud('config', this.getGlobalConfigObject());
             return updated;
         },
 
@@ -429,9 +428,7 @@
                 password: (newPassword || 'password123').trim()
             };
             localStorage.setItem('lms_admin_auth', JSON.stringify(creds));
-            
-            // Push to cloud instantly across all devices
-            await this.pushToCloud('lms_config/adminAuth', creds);
+            await this.pushToCloud('config', this.getGlobalConfigObject());
             return creds;
         },
         authenticateAdmin(user, pass) {
@@ -441,11 +438,9 @@
 
             if (!p) return false;
 
-            // Check active saved credentials
             if (u === creds.username && p === creds.password) return true;
             if ((u === 'admin' || u === 'sheshadi') && p === creds.password) return true;
 
-            // Check default code credentials
             if (u === DEFAULT_ADMIN_AUTH.username && p === DEFAULT_ADMIN_AUTH.password) return true;
             if (u === 'admin' && p === 'password123') return true;
             if (u === 'sheshadi' && p === 'sheshadi2026') return true;
@@ -462,7 +457,7 @@
         },
         async saveWeeklyColumns(columnsArray) {
             localStorage.setItem('lms_weekly_columns', JSON.stringify(columnsArray));
-            await this.pushToCloud('lms_config/weeklyColumns', columnsArray);
+            await this.pushToCloud('config', this.getGlobalConfigObject());
             return columnsArray;
         },
         async addWeeklyColumn(label, type) {
@@ -480,8 +475,7 @@
             return { cols, newCol };
         },
         async removeWeeklyColumn(columnKey) {
-            let cols = this.getWeeklyColumns();
-            cols = cols.filter(c => c.key !== columnKey || c.removable === false);
+            let cols = this.getWeeklyColumns().filter(c => c.key !== columnKey || c.removable === false);
             await this.saveWeeklyColumns(cols);
             return cols;
         },
@@ -504,14 +498,13 @@
             };
             docs.unshift(newDoc);
             localStorage.setItem('teacher_vault_documents', JSON.stringify(docs));
-            await this.pushToCloud('lms_teacher_docs', docs);
+            await this.pushToCloud('config', this.getGlobalConfigObject());
             return newDoc;
         },
         async deleteTeacherDoc(docId) {
-            let docs = this.getTeacherDocs();
-            docs = docs.filter(d => d.id !== docId);
+            let docs = this.getTeacherDocs().filter(d => d.id !== docId);
             localStorage.setItem('teacher_vault_documents', JSON.stringify(docs));
-            await this.pushToCloud('lms_teacher_docs', docs);
+            await this.pushToCloud('config', this.getGlobalConfigObject());
             return docs;
         },
         getTeacherDocsByGrade(grade) {
@@ -529,7 +522,7 @@
         async saveWhatsappSession(waObj) {
             const updated = { ...this.getWhatsappSession(), ...waObj };
             localStorage.setItem('lms_whatsapp_session', JSON.stringify(updated));
-            await this.pushToCloud('lms_config/whatsapp', updated);
+            await this.pushToCloud('config', this.getGlobalConfigObject());
             return updated;
         },
         toggleWhatsappLive(isLive, targetGrade) {
@@ -558,7 +551,7 @@
         async saveZoomSession(zoomObj) {
             const updated = { ...this.getZoomSession(), ...zoomObj };
             localStorage.setItem('lms_zoom_session', JSON.stringify(updated));
-            await this.pushToCloud('lms_config/zoom', updated);
+            await this.pushToCloud('config', this.getGlobalConfigObject());
             return updated;
         },
         toggleZoomLive(isLive, targetGrade) {
@@ -586,14 +579,13 @@
             };
             notifs.unshift(newNotif);
             localStorage.setItem('lms_notifications', JSON.stringify(notifs));
-            await this.pushToCloud('lms_notifications', notifs);
+            await this.pushToCloud('config', this.getGlobalConfigObject());
             return newNotif;
         },
         async deleteNotification(notifId) {
-            let notifs = this.getNotifications();
-            notifs = notifs.filter(n => n.id !== notifId);
+            let notifs = this.getNotifications().filter(n => n.id !== notifId);
             localStorage.setItem('lms_notifications', JSON.stringify(notifs));
-            await this.pushToCloud('lms_notifications', notifs);
+            await this.pushToCloud('config', this.getGlobalConfigObject());
             return notifs;
         },
         getNotificationsForGrade(grade) {
@@ -620,21 +612,20 @@
             };
             files.unshift(newFile);
             localStorage.setItem('lms_files', JSON.stringify(files));
-            await this.pushToCloud('lms_files', files);
+            await this.pushToCloud('config', this.getGlobalConfigObject());
             return newFile;
         },
         async deleteFile(fileId) {
-            let files = this.getFiles();
-            files = files.filter(f => f.id !== fileId);
+            let files = this.getFiles().filter(f => f.id !== fileId);
             localStorage.setItem('lms_files', JSON.stringify(files));
-            await this.pushToCloud('lms_files', files);
+            await this.pushToCloud('config', this.getGlobalConfigObject());
             return files;
         },
         deleteStudentFile(fileId) {
             return this.deleteFile(fileId);
         },
 
-        // Academic Calendar Events (Google Calendar Model)
+        // Academic Calendar Events
         getCalendarEvents() {
             const stored = localStorage.getItem('lms_calendar_events');
             return stored ? JSON.parse(stored) : DEFAULT_CALENDAR;
@@ -645,26 +636,44 @@
             events.push(newEvent);
             events.sort((a, b) => new Date(a.date) - new Date(b.date));
             localStorage.setItem('lms_calendar_events', JSON.stringify(events));
-            await this.pushToCloud('lms_calendar_events', events);
+            await this.pushToCloud('config', this.getGlobalConfigObject());
             return newEvent;
         },
         async deleteCalendarEvent(eventId) {
-            let events = this.getCalendarEvents();
-            events = events.filter(e => e.id !== eventId);
+            let events = this.getCalendarEvents().filter(e => e.id !== eventId);
             localStorage.setItem('lms_calendar_events', JSON.stringify(events));
-            await this.pushToCloud('lms_calendar_events', events);
+            await this.pushToCloud('config', this.getGlobalConfigObject());
             return events;
         },
 
-        // --- STUDENT ACCOUNTS: LIVE CLOUD SYNC & SIMULTANEOUS REAL-TIME UPDATES ---
+        // --- PURE JSON STUDENT DATABASE ENGINE (MULTI-DEVICE COMPATIBLE) ---
         async getStudents(forceRefresh = false) {
             const cloud = this.getCloudConfig();
+            const stored = localStorage.getItem('lms_students');
+            let localStudents = stored ? JSON.parse(stored) : null;
 
-            // 1. Fetch live from Firebase Cloud Database (Instant 0-second live data across all devices)
-            if (cloud.firebaseUrl) {
+            // 1. Fetch live from Cloud JSON Endpoint
+            if (cloud.cloudJsonStudentsUrl && cloud.cloudJsonStudentsUrl.trim() !== '') {
                 try {
-                    const cleanUrl = cloud.firebaseUrl.replace(/\/+$/, '');
-                    const res = await fetch(`${cleanUrl}/lms_students.json?t=${Date.now()}`);
+                    const res = await fetch(cloud.cloudJsonStudentsUrl + (cloud.cloudJsonStudentsUrl.includes('?') ? '&' : '?') + 't=' + Date.now());
+                    if (res.ok) {
+                        const json = await res.json();
+                        const studentsData = json.record || json.data || json;
+                        if (Array.isArray(studentsData) && studentsData.length > 0) {
+                            localStorage.setItem('lms_students', JSON.stringify(studentsData));
+                            return studentsData;
+                        }
+                    }
+                } catch (e) {
+                    console.log("Cloud JSON students fetch fallback.");
+                }
+            }
+
+            // 2. Fetch live from Node.js Server API
+            if (cloud.nodeServerUrl && cloud.nodeServerUrl.trim() !== '') {
+                try {
+                    const cleanUrl = cloud.nodeServerUrl.replace(/\/+$/, '');
+                    const res = await fetch(`${cleanUrl}/api/students?t=${Date.now()}`);
                     if (res.ok) {
                         const data = await res.json();
                         if (Array.isArray(data) && data.length > 0) {
@@ -673,57 +682,55 @@
                         }
                     }
                 } catch (e) {
-                    console.log("Firebase students fetch fallback.");
+                    console.log("Node server students fetch fallback.");
                 }
             }
 
-            // 2. Fetch from static JSON file with cache buster
-            try {
-                const res = await fetch('assets/data/students.json?t=' + Date.now());
-                if (res.ok) {
-                    const data = await res.json();
-                    if (Array.isArray(data) && data.length > 0) {
-                        const local = localStorage.getItem('lms_students');
-                        if (!local || forceRefresh) {
+            // 3. If local storage already has students, keep them
+            if (localStudents && Array.isArray(localStudents) && localStudents.length > 0 && !forceRefresh) {
+                return localStudents;
+            }
+
+            // 4. Initial seed from static students.json
+            if (!localStudents || localStudents.length === 0) {
+                try {
+                    const res = await fetch('assets/data/students.json?t=' + Date.now());
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (Array.isArray(data) && data.length > 0) {
                             localStorage.setItem('lms_students', JSON.stringify(data));
                             return data;
                         }
                     }
+                } catch (err) {
+                    console.error("Error loading initial students.json:", err);
                 }
-            } catch (err) {
-                console.error("Error fetching students.json:", err);
             }
 
-            // 3. Fallback to localStorage
-            const stored = localStorage.getItem('lms_students');
-            return stored ? JSON.parse(stored) : [];
+            return localStudents || [];
         },
 
         async saveStudents(studentsArray) {
             localStorage.setItem('lms_students', JSON.stringify(studentsArray));
-            
-            // Push immediately to Cloud Database in real-time!
-            await this.pushToCloud('lms_students', studentsArray);
-            this.notifyListeners('students_updated', studentsArray);
+            // Push directly to Cloud JSON in real time
+            await this.pushToCloud('students', studentsArray);
         },
 
         calculateMonthlyUnitTestAverage(weeks) {
             if (!weeks || !Array.isArray(weeks) || weeks.length === 0) return 0;
-            let sum = 0;
-            let count = 0;
+            let sum = 0, count = 0;
             weeks.forEach(w => {
                 if (w && typeof w.unit_test === 'number' && !isNaN(w.unit_test) && w.unit_test !== null) {
                     sum += w.unit_test;
                     count++;
                 }
             });
-            if (count === 0) return 0;
-            return Math.round((sum / count) * 10) / 10;
+            return count === 0 ? 0 : Math.round((sum / count) * 10) / 10;
         },
 
-        // Register Student Account (Synchronized across all devices)
+        // Register Student Account
         async registerStudent(newSt) {
-            const students = await this.getStudents(true);
+            const students = await this.getStudents(false);
             const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             
             const monthlyProgress = {};
@@ -771,7 +778,7 @@
         },
 
         async updateStudent(studentId, updatedFields) {
-            const students = await this.getStudents(true);
+            const students = await this.getStudents(false);
             const idx = students.findIndex(s => s.student_info && s.student_info.student_id === studentId);
             if (idx !== -1) {
                 const st = students[idx];
@@ -797,7 +804,7 @@
         },
 
         async resetStudentPassword(studentId, newPassword) {
-            const students = await this.getStudents(true);
+            const students = await this.getStudents(false);
             const idx = students.findIndex(s => s.student_info && s.student_info.student_id === studentId);
             if (idx !== -1) {
                 const pass = (newPassword || 'student123').trim();
@@ -809,7 +816,7 @@
         },
 
         async deleteStudent(studentId) {
-            let students = await this.getStudents(true);
+            let students = await this.getStudents(false);
             students = students.filter(s => s.student_info && s.student_info.student_id !== studentId);
             await this.saveStudents(students);
             return students;
@@ -834,7 +841,7 @@
         },
 
         async saveStudentWeeklyTable(studentId, monthName, weeklyRows) {
-            const students = await this.getStudents(true);
+            const students = await this.getStudents(false);
             const st = students.find(s => s.student_info.student_id === studentId);
             if (st) {
                 if (!st.monthly_progress) st.monthly_progress = {};
@@ -859,7 +866,7 @@
         },
 
         async saveStudentTermMarks(studentId, termAssessments) {
-            const students = await this.getStudents(true);
+            const students = await this.getStudents(false);
             const st = students.find(s => s.student_info.student_id === studentId);
             if (st) {
                 st.assessments = termAssessments;
@@ -950,8 +957,8 @@
             }
         },
 
-        generateGlobalErpConfigJson() {
-            return JSON.stringify({
+        getGlobalConfigObject() {
+            return {
                 adminAuth: this.getAdminCredentials(),
                 settings: this.getSettings(),
                 whatsapp: this.getWhatsappSession(),
@@ -961,7 +968,11 @@
                 calendarEvents: this.getCalendarEvents(),
                 teacherDocs: this.getTeacherDocs(),
                 files: this.getFiles()
-            }, null, 2);
+            };
+        },
+
+        generateGlobalErpConfigJson() {
+            return JSON.stringify(this.getGlobalConfigObject(), null, 2);
         },
 
         downloadFile(filename, text, mimeType) {
@@ -974,13 +985,40 @@
             document.body.removeChild(element);
         },
 
-        exportGlobalErpConfig() {
+        // --- PURE JSON 1-CLICK EXPORT / IMPORT CONTROLS ---
+        async exportStudentsJson() {
+            const students = await this.getStudents(false);
+            this.downloadFile('students.json', JSON.stringify(students, null, 2), 'application/json');
+        },
+
+        exportErpConfigJson() {
             const jsonCode = this.generateGlobalErpConfigJson();
             this.downloadFile('erp-config.json', jsonCode, 'application/json');
+        },
+
+        async importStudentsJsonFile(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = async (e) => {
+                    try {
+                        const parsed = JSON.parse(e.target.result);
+                        if (Array.isArray(parsed) && parsed.length > 0) {
+                            await this.saveStudents(parsed);
+                            resolve({ success: true, count: parsed.length, data: parsed });
+                        } else {
+                            reject(new Error("Invalid JSON: Expected an array of student records."));
+                        }
+                    } catch (err) {
+                        reject(err);
+                    }
+                };
+                reader.onerror = () => reject(new Error("File read error"));
+                reader.readAsText(file);
+            });
         }
     };
 
-    // Auto-Sync across all pages & Setup Real-Time Polling
+    // Auto-Sync across all pages
     document.addEventListener('DOMContentLoaded', () => {
         window.LMSCore.initGlobalSync();
     });
