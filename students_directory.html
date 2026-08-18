@@ -290,19 +290,22 @@
         }
 
         
-        // Auto-poll every 6 seconds for instantaneous updates from phone
+        // Auto-poll every 10 seconds: only refreshes if Google Sheets Cloud Database is connected
         setInterval(async () => {
             if (document.visibilityState === 'visible' && window.LMSCore) {
-                const fresh = await window.LMSCore.getStudents(true);
-                if (fresh && Array.isArray(fresh) && fresh.length > 0) {
-                    if (JSON.stringify(fresh) !== JSON.stringify(allStudents)) {
-                        allStudents = fresh;
-                        document.getElementById('totalStudentsCount').textContent = allStudents.length;
-                        renderStudentsGrid();
+                const cloud = window.LMSCore.getCloudConfig();
+                if (cloud.appsScriptUrl && cloud.appsScriptUrl.trim() !== '') {
+                    const fresh = await window.LMSCore.getStudents(false);
+                    if (fresh && Array.isArray(fresh) && fresh.length > 0) {
+                        if (JSON.stringify(fresh) !== JSON.stringify(allStudents)) {
+                            allStudents = fresh;
+                            document.getElementById('totalStudentsCount').textContent = allStudents.length;
+                            renderStudentsGrid();
+                        }
                     }
                 }
             }
-        }, 6000);
+        }, 10000);
 
         window.addEventListener('focus', async () => {
             if (window.LMSCore) {
