@@ -1,0 +1,95 @@
+[
+  {
+    "id": "LOG-1787339164869",
+    "timestamp": "2026-08-21 19:06:04",
+    "username": "nipuna",
+    "userFullName": "Nipuna Perera",
+    "role": "Senior Science Educator",
+    "action": "USER_LOGIN",
+    "deviceType": "Mobile Phone (Android)",
+    "ip": "127.0.0.1",
+    "details": "Successful login to LMS Admin Portal from Mobile Phone (Android)"
+  },
+  {
+    "id": "LOG-1787339164842",
+    "timestamp": "2026-08-21 19:06:04",
+    "username": "wathisha",
+    "userFullName": "Wathisha Amarasinghe",
+    "role": "Super Admin (Tech Lead)",
+    "action": "USER_LOGIN",
+    "deviceType": "Tablet / iPad (iPadOS)",
+    "ip": "127.0.0.1",
+    "details": "Successful login to LMS Admin Portal from Tablet / iPad (iPadOS)"
+  },
+  {
+    "id": "LOG-1787339164813",
+    "timestamp": "2026-08-21 19:06:04",
+    "username": "sheshadi",
+    "userFullName": "Mrs. Sheshadi Amarasinghe",
+    "role": "Super Admin (Head Specialist)",
+    "action": "USER_LOGIN",
+    "deviceType": "PC / Desktop (Windows)",
+    "ip": "127.0.0.1",
+    "details": "Successful login to LMS Admin Portal from PC / Desktop (Windows)"
+  },
+  {
+    "id": "LOG-1001",
+    "timestamp": "2026-08-21 23:45:10",
+    "username": "sheshadi",
+    "userFullName": "Mrs. Sheshadi Amarasinghe",
+    "role": "Super Admin",
+    "action": "USER_LOGIN",
+    "deviceType": "PC / Desktop",
+    "deviceDetail": "Windows 11 · Chrome 128",
+    "ip": "192.168.1.10",
+    "details": "Logged into Teacher & Admin Management Dashboard"
+  },
+  {
+    "id": "LOG-1002",
+    "timestamp": "2026-08-21 22:15:30",
+    "username": "wathisha",
+    "userFullName": "Wathisha Amarasinghe",
+    "role": "Super Admin",
+    "action": "CONFIG_UPDATE",
+    "deviceType": "PC / Desktop",
+    "deviceDetail": "macOS Sequoia · Chrome 128",
+    "ip": "192.168.1.15",
+    "details": "Updated JSON Database sync endpoints and multi-user privilege matrix"
+  },
+  {
+    "id": "LOG-1003",
+    "timestamp": "2026-08-21 18:30:22",
+    "username": "nipuna",
+    "userFullName": "Nipuna Perera",
+    "role": "Senior Teacher",
+    "action": "GRADE_UPDATE",
+    "deviceType": "Mobile Phone",
+    "deviceDetail": "Android 14 · Chrome Mobile",
+    "ip": "192.168.1.72",
+    "details": "Graded August Week 3 Unit Test marks for Grade 06 Science"
+  },
+  {
+    "id": "LOG-1004",
+    "timestamp": "2026-08-21 14:10:45",
+    "username": "kavindi",
+    "userFullName": "Kavindi Wijesinghe",
+    "role": "Assistant Teacher",
+    "action": "GRADE_UPDATE",
+    "deviceType": "Tablet / iPad",
+    "deviceDetail": "Android Tab 13 · Chrome",
+    "ip": "192.168.1.61",
+    "details": "Updated practical ratings for 8 students from laboratory session"
+  },
+  {
+    "id": "LOG-1005",
+    "timestamp": "2026-08-21 09:20:15",
+    "username": "kamal",
+    "userFullName": "Kamal Silva",
+    "role": "Staff / Registrar",
+    "action": "STUDENT_REGISTER",
+    "deviceType": "Mobile Phone",
+    "deviceDetail": "iPhone 15 · Safari Mobile",
+    "ip": "192.168.1.88",
+    "details": "Registered new student Dinuka Wickramasinghe (STU-014)"
+  }
+]
