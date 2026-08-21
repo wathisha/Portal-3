@@ -1,7 +1,7 @@
 /**
  * ============================================================================
  * LMS Core Management Engine - Science with Sheshadi LMS & ERP
- * 100% Pure JSON Database Engine (No Spreadsheets / No Excel)
+ * 100% Pure JSON Database Engine (No Spreadsheets / No External Cloud APIs)
  * Multi-User Administration with Role-Based Privileges (RBAC)
  * Multi-Device Universal Real-Time Synchronization (PC, Tablet, Mobile Phone)
  * ============================================================================
@@ -98,7 +98,7 @@
             role: "teacher",
             roleName: "Senior Science Educator",
             title: "Senior Science Educator (Grade 9-11)",
-            avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Nipuna&hair=shortHairShortFlat",
+            avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Nipuna&hair=shortHairFlat",
             permissions: ["grade_students", "manage_content", "view_teacher_vault"],
             status: "active",
             createdDate: "2026-02-15",
@@ -162,12 +162,9 @@
         }
     ];
 
-    const DEFAULT_CLOUD_CONFIG = {
-        enabled: true,
-        provider: "node_server", // "node_server", "cloud_json", "local_json"
-        cloudJsonStudentsUrl: "https://api.npoint.io/182e3982fc6e4d9dcd58",
-        cloudJsonConfigUrl: "",
-        nodeServerUrl: "", // Defaults to current host if served via server.js
+    const DEFAULT_DB_CONFIG = {
+        nodeServerUrl: "", // Defaults to window.location.origin
+        autoSyncIntervalMs: 8000,
         lastSynced: ""
     };
 
@@ -450,10 +447,64 @@
         },
 
         // =========================================================================
-        // 3. MULTI-USER ROSTER, PRIVILEGES & RBAC ENGINE (JSON DB)
+        // 3. SERVER & DATABASE CONFIGURATION (PURE JSON ENGINE)
+        // =========================================================================
+        getServerBaseUrl() {
+            const dbConfig = this.getDbConfig();
+            if (dbConfig.nodeServerUrl && dbConfig.nodeServerUrl.trim() !== '') {
+                return dbConfig.nodeServerUrl.replace(/\/+$/, '');
+            }
+            if (window.location && window.location.origin && window.location.origin !== "null" && (window.location.protocol === 'http:' || window.location.protocol === 'https:')) {
+                return window.location.origin;
+            }
+            return "";
+        },
+
+        getDbConfig() {
+            const stored = localStorage.getItem('lms_db_config');
+            if (stored) {
+                try {
+                    return { ...DEFAULT_DB_CONFIG, ...JSON.parse(stored) };
+                } catch (e) {}
+            }
+            return DEFAULT_DB_CONFIG;
+        },
+        saveDbConfig(newConfig) {
+            const updated = { ...this.getDbConfig(), ...newConfig };
+            localStorage.setItem('lms_db_config', JSON.stringify(updated));
+            return updated;
+        },
+
+        async pingDatabaseServer() {
+            const serverBase = this.getServerBaseUrl();
+            if (!serverBase) {
+                return { online: false, message: "No active server base URL detected." };
+            }
+            const startTime = performance.now();
+            try {
+                const res = await fetch(`${serverBase}/api/status?t=${Date.now()}`);
+                const latency = Math.round(performance.now() - startTime);
+                if (res.ok) {
+                    const data = await res.json();
+                    return {
+                        online: true,
+                        latencyMs: latency,
+                        serverTime: data.serverTime,
+                        databaseStats: data.databaseStats,
+                        networkIPs: data.networkIPs,
+                        version: data.version
+                    };
+                }
+                return { online: false, status: res.status, message: `Server error HTTP ${res.status}` };
+            } catch (err) {
+                return { online: false, error: err.message };
+            }
+        },
+
+        // =========================================================================
+        // 4. MULTI-USER ROSTER & RBAC ENGINE (JSON DB)
         // =========================================================================
         async getUsers(forceRefresh = false) {
-            const cloud = this.getCloudConfig();
             const stored = localStorage.getItem('lms_users');
             let localUsers = stored ? JSON.parse(stored) : null;
 
@@ -469,12 +520,10 @@
                             return usersData;
                         }
                     }
-                } catch (e) {
-                    console.log("Live Node Server /api/users fallback.");
-                }
+                } catch (e) {}
             }
 
-            // 2. If already cached and not force refreshing, return
+            // 2. If cached and not force refreshing, return
             if (localUsers && Array.isArray(localUsers) && localUsers.length > 0 && !forceRefresh) {
                 return localUsers;
             }
@@ -489,9 +538,7 @@
                         return data;
                     }
                 }
-            } catch (err) {
-                console.log("Default users fallback.");
-            }
+            } catch (err) {}
 
             localStorage.setItem('lms_users', JSON.stringify(DEFAULT_USERS));
             return DEFAULT_USERS;
@@ -499,22 +546,7 @@
 
         async saveUsers(usersArray) {
             localStorage.setItem('lms_users', JSON.stringify(usersArray));
-            const serverBase = this.getServerBaseUrl();
-            if (serverBase) {
-                try {
-                    await fetch(`${serverBase}/api/users`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'x-admin-user': this.getCurrentUser().username || 'admin'
-                        },
-                        body: JSON.stringify(usersArray)
-                    });
-                } catch (e) {
-                    console.error("Failed to push users to server:", e);
-                }
-            }
-            await this.pushToCloud('config', this.getGlobalConfigObject());
+            await this.pushToDatabase('users', usersArray);
             return usersArray;
         },
 
@@ -522,7 +554,7 @@
             const users = await this.getUsers(false);
             const cleanUser = userObj.username.trim().toLowerCase();
             if (users.some(u => (u.username || '').toLowerCase() === cleanUser)) {
-                throw new Error(`Username '${cleanUser}' already exists.`);
+                throw new Error(`Username '${cleanUser}' already exists in the JSON database.`);
             }
 
             const newUser = {
@@ -566,7 +598,7 @@
             const users = await this.getUsers(false);
             const idx = users.findIndex(u => u.id === targetIdOrUser || (u.username || '').toLowerCase() === targetIdOrUser.toLowerCase());
             if (idx === -1) {
-                return { success: false, error: 'User not found' };
+                return { success: false, error: 'User not found in JSON database' };
             }
 
             const existing = users[idx];
@@ -584,7 +616,6 @@
             users[idx] = existing;
             await this.saveUsers(users);
 
-            // If current user updated their own profile, sync session
             const current = this.getCurrentUser();
             if (current && (current.id === existing.id || current.username === existing.username)) {
                 this.setCurrentUser(existing);
@@ -607,7 +638,6 @@
             users = users.filter(u => u.id !== userToDelete.id && u.username !== userToDelete.username);
             await this.saveUsers(users);
 
-            // Server DELETE
             const serverBase = this.getServerBaseUrl();
             if (serverBase) {
                 try {
@@ -619,7 +649,7 @@
         },
 
         // =========================================================================
-        // 4. AUTHENTICATION & MULTI-DEVICE SESSION MANAGEMENT
+        // 5. AUTHENTICATION & MULTI-DEVICE SESSION MANAGEMENT
         // =========================================================================
         getCurrentUser() {
             const stored = sessionStorage.getItem('lms_current_user') || localStorage.getItem('lms_current_user');
@@ -667,7 +697,7 @@
 
             if (!u || !p) return null;
 
-            // 1. Try Server API Login (records device & activity logs on server)
+            // 1. Try Server API Login
             const serverBase = this.getServerBaseUrl();
             if (serverBase) {
                 try {
@@ -693,9 +723,7 @@
                             return json.user;
                         }
                     }
-                } catch (e) {
-                    console.log("Server API login fallback to local user DB.");
-                }
+                } catch (e) {}
             }
 
             // 2. Client-side User DB Authentication against users.json
@@ -722,7 +750,6 @@
                 await this.saveUsers(users);
                 this.setCurrentUser(matched);
 
-                // Add local activity log
                 this.addActivityLog({
                     username: matched.username,
                     userFullName: matched.name,
@@ -735,7 +762,7 @@
                 return matched;
             }
 
-            // 3. Fallback Legacy Multi-Admin Compatibility Checks
+            // 3. Fallback Multi-Admin Credentials
             if ((u === 'sheshadi' || u === 'admin') && (p === 'password123' || p === 'sheshadi2026')) {
                 const fallbackUser = DEFAULT_USERS[0];
                 this.setCurrentUser(fallbackUser);
@@ -750,7 +777,7 @@
             return null;
         },
 
-        // Legacy wrapper for backwards compatibility
+        // Legacy compatibility
         authenticateAdmin(user, pass) {
             const u = (user || '').trim().toLowerCase();
             const p = (pass || '').trim();
@@ -775,7 +802,7 @@
         },
 
         // =========================================================================
-        // 5. ROLE-BASED ACCESS CONTROL (RBAC) PERMISSION CHECKS
+        // 6. ROLE-BASED ACCESS CONTROL (RBAC) PERMISSIONS
         // =========================================================================
         hasPermission(permissionName) {
             const user = this.getCurrentUser();
@@ -802,38 +829,7 @@
         },
 
         // =========================================================================
-        // 6. SERVER BASE URL & CLOUD CONFIGURATION
-        // =========================================================================
-        getServerBaseUrl() {
-            const cloud = this.getCloudConfig();
-            if (cloud.nodeServerUrl && cloud.nodeServerUrl.trim() !== '') {
-                return cloud.nodeServerUrl.replace(/\/+$/, '');
-            }
-            // Auto-detect if served by Node.js server
-            if (window.location && window.location.origin && window.location.origin !== "null" && (window.location.protocol === 'http:' || window.location.protocol === 'https:')) {
-                return window.location.origin;
-            }
-            return "";
-        },
-
-        getCloudConfig() {
-            const stored = localStorage.getItem('lms_cloud_config');
-            if (stored) {
-                try {
-                    const parsed = JSON.parse(stored);
-                    return { ...DEFAULT_CLOUD_CONFIG, ...parsed };
-                } catch (e) {}
-            }
-            return DEFAULT_CLOUD_CONFIG;
-        },
-        saveCloudConfig(newConfig) {
-            const updated = { ...this.getCloudConfig(), ...newConfig };
-            localStorage.setItem('lms_cloud_config', JSON.stringify(updated));
-            return updated;
-        },
-
-        // =========================================================================
-        // 7. GLOBAL INITIALIZATION & REAL-TIME MULTI-DEVICE SYNC
+        // 7. GLOBAL INITIALIZATION & REAL-TIME MULTI-DEVICE SYNC (PURE JSON)
         // =========================================================================
         async initGlobalSync() {
             this.applyThemeAndBranding();
@@ -856,9 +852,7 @@
                             localStorage.setItem('lms_users', JSON.stringify(users));
                         }
                     }
-                } catch (e) {
-                    console.log("Local node server sync fallback to static JSON.");
-                }
+                } catch (e) {}
             }
 
             // 2. Fetch static erp-config.json
@@ -878,14 +872,13 @@
                 }
             } catch (err) {}
 
-            // Pre-fetch users and students
             await this.getUsers(false);
             await this.getStudents(false);
             this.applyThemeAndBranding();
         },
 
         // Background Auto-Sync across all connected devices (PCs, Tablets, Phones)
-        startRealtimeSync(intervalMs = 10000, onUpdateCallback = null) {
+        startRealtimeSync(intervalMs = 8000, onUpdateCallback = null) {
             if (window._lmsSyncInterval) clearInterval(window._lmsSyncInterval);
             window._lmsSyncInterval = setInterval(async () => {
                 const serverBase = this.getServerBaseUrl();
@@ -907,14 +900,12 @@
             }, intervalMs);
         },
 
-        // Push updates to Node server and Cloud JSON in real-time
-        async pushToCloud(type, payload) {
-            const cloud = this.getCloudConfig();
+        // Push updates to Node Server REST API
+        async pushToDatabase(type, payload) {
             const serverBase = this.getServerBaseUrl();
             const currentUser = this.getCurrentUser();
             const devInfo = this.getDeviceInfo();
 
-            // 1. Node Server REST API
             if (serverBase) {
                 try {
                     let endpoint = '/api/students';
@@ -933,20 +924,14 @@
                         body: JSON.stringify(payload)
                     });
                 } catch (err) {
-                    console.error("Node server push error:", err);
+                    console.error("Database server push error:", err);
                 }
             }
+        },
 
-            // 2. Cloud JSON endpoint fallback (npoint.io)
-            if (cloud.cloudJsonStudentsUrl && type === 'students') {
-                try {
-                    await fetch(cloud.cloudJsonStudentsUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                } catch (e) {}
-            }
+        // Alias for pushToCloud
+        pushToCloud(type, payload) {
+            return this.pushToDatabase(type, payload);
         },
 
         // =========================================================================
@@ -961,7 +946,7 @@
             const updated = { ...current, ...newSettings };
             localStorage.setItem('lms_settings', JSON.stringify(updated));
             this.applyThemeAndBranding();
-            await this.pushToCloud('config', this.getGlobalConfigObject());
+            await this.pushToDatabase('config', this.getGlobalConfigObject());
             return updated;
         },
 
@@ -974,7 +959,7 @@
         },
         async saveWeeklyColumns(columnsArray) {
             localStorage.setItem('lms_weekly_columns', JSON.stringify(columnsArray));
-            await this.pushToCloud('config', this.getGlobalConfigObject());
+            await this.pushToDatabase('config', this.getGlobalConfigObject());
             return columnsArray;
         },
         async addWeeklyColumn(label, type) {
@@ -1043,14 +1028,14 @@
             };
             docs.unshift(newDoc);
             localStorage.setItem('teacher_vault_documents', JSON.stringify(docs));
-            await this.pushToCloud('documents', docs);
+            await this.pushToDatabase('documents', docs);
             return newDoc;
         },
         async deleteTeacherDoc(docId) {
             let docs = await this.getTeacherDocs();
             docs = docs.filter(d => d.id !== docId);
             localStorage.setItem('teacher_vault_documents', JSON.stringify(docs));
-            await this.pushToCloud('documents', docs);
+            await this.pushToDatabase('documents', docs);
             return docs;
         },
 
@@ -1098,7 +1083,7 @@
             logs.unshift(newLog);
             if (logs.length > 300) logs.length = 300;
             localStorage.setItem('lms_activity_logs', JSON.stringify(logs));
-            await this.pushToCloud('logs', newLog);
+            await this.pushToDatabase('logs', newLog);
             return newLog;
         },
 
@@ -1112,7 +1097,7 @@
         async saveWhatsappSession(waObj) {
             const updated = { ...this.getWhatsappSession(), ...waObj };
             localStorage.setItem('lms_whatsapp_session', JSON.stringify(updated));
-            await this.pushToCloud('config', this.getGlobalConfigObject());
+            await this.pushToDatabase('config', this.getGlobalConfigObject());
             return updated;
         },
         toggleWhatsappLive(isLive, targetGrade) {
@@ -1140,7 +1125,7 @@
         async saveZoomSession(zoomObj) {
             const updated = { ...this.getZoomSession(), ...zoomObj };
             localStorage.setItem('lms_zoom_session', JSON.stringify(updated));
-            await this.pushToCloud('config', this.getGlobalConfigObject());
+            await this.pushToDatabase('config', this.getGlobalConfigObject());
             return updated;
         },
         toggleZoomLive(isLive, targetGrade) {
@@ -1170,13 +1155,13 @@
             };
             notifs.unshift(newNotif);
             localStorage.setItem('lms_notifications', JSON.stringify(notifs));
-            await this.pushToCloud('config', this.getGlobalConfigObject());
+            await this.pushToDatabase('config', this.getGlobalConfigObject());
             return newNotif;
         },
         async deleteNotification(notifId) {
             let notifs = this.getNotifications().filter(n => n.id !== notifId);
             localStorage.setItem('lms_notifications', JSON.stringify(notifs));
-            await this.pushToCloud('config', this.getGlobalConfigObject());
+            await this.pushToDatabase('config', this.getGlobalConfigObject());
             return notifs;
         },
         getNotificationsForGrade(grade) {
@@ -1202,13 +1187,13 @@
             };
             files.unshift(newFile);
             localStorage.setItem('lms_files', JSON.stringify(files));
-            await this.pushToCloud('config', this.getGlobalConfigObject());
+            await this.pushToDatabase('config', this.getGlobalConfigObject());
             return newFile;
         },
         async deleteFile(fileId) {
             let files = this.getFiles().filter(f => f.id !== fileId);
             localStorage.setItem('lms_files', JSON.stringify(files));
-            await this.pushToCloud('config', this.getGlobalConfigObject());
+            await this.pushToDatabase('config', this.getGlobalConfigObject());
             return files;
         },
         deleteStudentFile(fileId) {
@@ -1225,13 +1210,13 @@
             events.push(newEvent);
             events.sort((a, b) => new Date(a.date) - new Date(b.date));
             localStorage.setItem('lms_calendar_events', JSON.stringify(events));
-            await this.pushToCloud('config', this.getGlobalConfigObject());
+            await this.pushToDatabase('config', this.getGlobalConfigObject());
             return newEvent;
         },
         async deleteCalendarEvent(eventId) {
             let events = this.getCalendarEvents().filter(e => e.id !== eventId);
             localStorage.setItem('lms_calendar_events', JSON.stringify(events));
-            await this.pushToCloud('config', this.getGlobalConfigObject());
+            await this.pushToDatabase('config', this.getGlobalConfigObject());
             return events;
         },
 
@@ -1239,7 +1224,6 @@
         // 14. PURE JSON STUDENT DATABASE ENGINE (MULTI-DEVICE ACCESS)
         // =========================================================================
         async getStudents(forceRefresh = false) {
-            const cloud = this.getCloudConfig();
             const serverBase = this.getServerBaseUrl();
             const stored = localStorage.getItem('lms_students');
             let localStudents = stored ? JSON.parse(stored) : null;
@@ -1255,32 +1239,15 @@
                             return data;
                         }
                     }
-                } catch (e) {
-                    console.log("Live Node Server /api/students fallback.");
-                }
-            }
-
-            // 2. Cloud JSON Endpoint (npoint.io)
-            if (cloud.cloudJsonStudentsUrl && cloud.cloudJsonStudentsUrl.trim() !== '') {
-                try {
-                    const res = await fetch(cloud.cloudJsonStudentsUrl + (cloud.cloudJsonStudentsUrl.includes('?') ? '&' : '?') + 't=' + Date.now());
-                    if (res.ok) {
-                        const json = await res.json();
-                        const studentsData = json.record || json.data || json;
-                        if (Array.isArray(studentsData) && studentsData.length > 0) {
-                            localStorage.setItem('lms_students', JSON.stringify(studentsData));
-                            return studentsData;
-                        }
-                    }
                 } catch (e) {}
             }
 
-            // 3. Cached in LocalStorage
+            // 2. Cached in LocalStorage
             if (localStudents && Array.isArray(localStudents) && localStudents.length > 0 && !forceRefresh) {
                 return localStudents;
             }
 
-            // 4. Seed from static assets/data/students.json
+            // 3. Seed from static assets/data/students.json
             try {
                 const res = await fetch('assets/data/students.json?t=' + Date.now());
                 if (res.ok) {
@@ -1297,7 +1264,7 @@
 
         async saveStudents(studentsArray) {
             localStorage.setItem('lms_students', JSON.stringify(studentsArray));
-            await this.pushToCloud('students', studentsArray);
+            await this.pushToDatabase('students', studentsArray);
         },
 
         calculateMonthlyUnitTestAverage(weeks) {
@@ -1576,7 +1543,7 @@
         },
 
         // =========================================================================
-        // 16. PURE JSON 1-CLICK EXPORT / IMPORT CONTROLS
+        // 16. PURE JSON 1-CLICK EXPORT / IMPORT / EDITOR CONTROLS
         // =========================================================================
         async exportStudentsJson() {
             const students = await this.getStudents(false);
@@ -1593,6 +1560,16 @@
             this.downloadFile('users.json', JSON.stringify(users, null, 2), 'application/json');
         },
 
+        async exportTeacherDocsJson() {
+            const docs = await this.getTeacherDocs();
+            this.downloadFile('teacher-docs.json', JSON.stringify(docs, null, 2), 'application/json');
+        },
+
+        async exportActivityLogsJson() {
+            const logs = await this.getActivityLogs();
+            this.downloadFile('activity-logs.json', JSON.stringify(logs, null, 2), 'application/json');
+        },
+
         async exportFullDatabaseBundle() {
             const bundle = {
                 exportTimestamp: new Date().toISOString(),
@@ -1606,25 +1583,52 @@
             this.downloadFile('science_lms_full_database.json', JSON.stringify(bundle, null, 2), 'application/json');
         },
 
-        async importStudentsJsonFile(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = async (e) => {
-                    try {
-                        const parsed = JSON.parse(e.target.result);
-                        if (Array.isArray(parsed) && parsed.length > 0) {
-                            await this.saveStudents(parsed);
-                            resolve({ success: true, count: parsed.length, data: parsed });
-                        } else {
-                            reject(new Error("Invalid JSON: Expected an array of student records."));
-                        }
-                    } catch (err) {
-                        reject(err);
-                    }
-                };
-                reader.onerror = () => reject(new Error("File read error"));
-                reader.readAsText(file);
-            });
+        async getRawJsonForFile(fileKey) {
+            if (fileKey === 'students') {
+                const data = await this.getStudents(false);
+                return JSON.stringify(data, null, 2);
+            }
+            if (fileKey === 'users') {
+                const data = await this.getUsers(false);
+                return JSON.stringify(data, null, 2);
+            }
+            if (fileKey === 'config') {
+                return this.generateGlobalErpConfigJson();
+            }
+            if (fileKey === 'teacherDocs') {
+                const data = await this.getTeacherDocs();
+                return JSON.stringify(data, null, 2);
+            }
+            if (fileKey === 'logs') {
+                const data = await this.getActivityLogs();
+                return JSON.stringify(data, null, 2);
+            }
+            return "{}";
+        },
+
+        async saveRawJsonForFile(fileKey, jsonString) {
+            const parsed = JSON.parse(jsonString); // validate json
+            if (fileKey === 'students') {
+                if (!Array.isArray(parsed)) throw new Error("students.json must be an array of student objects.");
+                await this.saveStudents(parsed);
+            } else if (fileKey === 'users') {
+                if (!Array.isArray(parsed)) throw new Error("users.json must be an array of user objects.");
+                await this.saveUsers(parsed);
+            } else if (fileKey === 'config') {
+                if (parsed.settings) await this.saveSettings(parsed.settings);
+                if (parsed.whatsapp) await this.saveWhatsappSession(parsed.whatsapp);
+                if (parsed.zoom) await this.saveZoomSession(parsed.zoom);
+                if (parsed.weeklyColumns) await this.saveWeeklyColumns(parsed.weeklyColumns);
+            } else if (fileKey === 'teacherDocs') {
+                if (!Array.isArray(parsed)) throw new Error("teacher-docs.json must be an array.");
+                localStorage.setItem('teacher_vault_documents', JSON.stringify(parsed));
+                await this.pushToDatabase('documents', parsed);
+            } else if (fileKey === 'logs') {
+                if (!Array.isArray(parsed)) throw new Error("activity-logs.json must be an array.");
+                localStorage.setItem('lms_activity_logs', JSON.stringify(parsed));
+                await this.pushToDatabase('logs', parsed);
+            }
+            return true;
         }
     };
 

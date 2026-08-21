@@ -1,5 +1,38 @@
 [
   {
+    "id": "LOG-1787341749681",
+    "timestamp": "2026-08-21 19:49:09",
+    "username": "nipuna",
+    "userFullName": "Nipuna Perera",
+    "role": "Senior Science Educator",
+    "action": "USER_LOGIN",
+    "deviceType": "Mobile Phone (Android)",
+    "ip": "127.0.0.1",
+    "details": "Successful login to LMS Admin Portal from Mobile Phone (Android)"
+  },
+  {
+    "id": "LOG-1787341749641",
+    "timestamp": "2026-08-21 19:49:09",
+    "username": "wathisha",
+    "userFullName": "Wathisha Amarasinghe",
+    "role": "Super Admin (Tech Lead)",
+    "action": "USER_LOGIN",
+    "deviceType": "Tablet / iPad (iPadOS)",
+    "ip": "127.0.0.1",
+    "details": "Successful login to LMS Admin Portal from Tablet / iPad (iPadOS)"
+  },
+  {
+    "id": "LOG-1787341749604",
+    "timestamp": "2026-08-21 19:49:09",
+    "username": "sheshadi",
+    "userFullName": "Mrs. Sheshadi Amarasinghe",
+    "role": "Super Admin (Head Specialist)",
+    "action": "USER_LOGIN",
+    "deviceType": "PC / Desktop (Windows)",
+    "ip": "127.0.0.1",
+    "details": "Successful login to LMS Admin Portal from PC / Desktop (Windows)"
+  },
+  {
     "id": "LOG-1787339164869",
     "timestamp": "2026-08-21 19:06:04",
     "username": "nipuna",

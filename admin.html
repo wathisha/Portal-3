@@ -225,7 +225,7 @@
                 <i class="fa-solid fa-folder-open"></i> Study Files
             </button>
             <button onclick="switchAdminTab('custom')" id="nav-tab-custom" class="pb-3 text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
-                <i class="fa-solid fa-sliders"></i> ERP Customizer & Pure JSON DB
+                <i class="fa-solid fa-database text-cyan-400"></i> Central JSON Database Center
             </button>
         </nav>
 
@@ -442,7 +442,7 @@
         </div>
 
         <!-- =========================================================================
-             VIEW 2: ADMIN USERS & ROLE PRIVILEGE MANAGEMENT (RBAC) - NEW
+             VIEW 2: ADMIN USERS & ROLE PRIVILEGE MANAGEMENT (RBAC)
              ========================================================================= -->
         <div id="view-users" class="hidden space-y-8">
             
@@ -696,7 +696,7 @@
         </div>
 
         <!-- =========================================================================
-             VIEW 4: ACADEMIC CALENDAR (GOOGLE CALENDAR STYLE)
+             VIEW 4: ACADEMIC CALENDAR
              ========================================================================= -->
         <div id="view-calendar" class="hidden space-y-6">
             <div class="glass-panel p-6 sm:p-8 space-y-6">
@@ -847,58 +847,189 @@
         </div>
 
         <!-- =========================================================================
-             VIEW 6: ERP CUSTOMIZER STUDIO & PURE JSON DATABASE MANAGER
+             VIEW 6: CENTRAL PURE JSON DATABASE CONNECTION & CONTROL CENTER
              ========================================================================= -->
         <div id="view-custom" class="hidden space-y-8">
             
             <div class="glass-panel p-6 sm:p-8 space-y-6">
                 
-                <!-- Section 1: Pure JSON Cloud Database Manager -->
-                <div class="p-6 rounded-2xl bg-slate-950/90 border border-cyan-500/40 space-y-5 shadow-2xl">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-800">
+                <!-- Section 1: Pure JSON Central Database Connection Center -->
+                <div class="p-6 rounded-2xl bg-slate-950/95 border border-cyan-500/50 space-y-6 shadow-2xl">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
                         <div>
-                            <h3 class="text-xl font-bold font-cinzel text-cyan-300 flex items-center gap-2">
-                                <i class="fa-solid fa-database text-cyan-400"></i> Pure JSON Database Control Center
+                            <h3 class="text-2xl font-bold font-cinzel text-cyan-300 flex items-center gap-2">
+                                <i class="fa-solid fa-database text-cyan-400"></i> Central JSON Database Connection Center
                             </h3>
-                            <p class="text-xs text-slate-400">100% Pure JSON Database Engine (No Spreadsheets / No Excel required). Seamless multi-device real-time sync.</p>
+                            <p class="text-xs text-slate-400">100% Pure JSON Database Engine. All records, evaluations, and multi-user configurations are stored directly in structured JSON files.</p>
                         </div>
                         <div class="flex items-center gap-2">
-                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center gap-1.5">
-                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> REST API Active
-                            </span>
-                        </div>
-                    </div>
-
-                    <!-- 1-Click JSON Download / Export Bar -->
-                    <div class="space-y-2">
-                        <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider">1-Click JSON Database Backups:</label>
-                        <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 text-xs font-bold">
-                            <button onclick="window.LMSCore.exportStudentsJson()" class="p-2.5 bg-slate-900 hover:bg-slate-800 text-amber-300 border border-amber-500/40 rounded-xl flex items-center justify-center gap-1.5 transition">
-                                <i class="fa-solid fa-download"></i> students.json
-                            </button>
-                            <button onclick="window.LMSCore.exportErpConfigJson()" class="p-2.5 bg-slate-900 hover:bg-slate-800 text-indigo-300 border border-indigo-500/40 rounded-xl flex items-center justify-center gap-1.5 transition">
-                                <i class="fa-solid fa-download"></i> erp-config.json
-                            </button>
-                            <button onclick="window.LMSCore.exportUsersJson()" class="p-2.5 bg-slate-900 hover:bg-slate-800 text-rose-300 border border-rose-500/40 rounded-xl flex items-center justify-center gap-1.5 transition">
-                                <i class="fa-solid fa-download"></i> users.json
-                            </button>
-                            <button onclick="downloadTeacherDocsJson()" class="p-2.5 bg-slate-900 hover:bg-slate-800 text-emerald-300 border border-emerald-500/40 rounded-xl flex items-center justify-center gap-1.5 transition">
-                                <i class="fa-solid fa-download"></i> teacher-docs.json
-                            </button>
-                            <button onclick="window.LMSCore.exportFullDatabaseBundle()" class="col-span-2 sm:col-span-1 p-2.5 bg-gradient-to-r from-cyan-600 to-blue-600 text-white rounded-xl flex items-center justify-center gap-1.5 shadow-md hover:brightness-110 transition">
-                                <i class="fa-solid fa-box-archive"></i> Full DB Bundle
+                            <button onclick="testDatabaseServerConnection()" class="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition shadow-lg">
+                                <i class="fa-solid fa-bolt"></i>
+                                <span>Ping Database Connection</span>
                             </button>
                         </div>
                     </div>
 
-                    <!-- 1-Click JSON Restore / Import Box -->
-                    <div class="space-y-2 pt-3 border-t border-slate-800">
-                        <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider">1-Click JSON Database Import / Restore:</label>
+                    <!-- Connection Status Banner -->
+                    <div id="dbConnectionStatusBanner" class="p-4 rounded-xl bg-slate-900/90 border border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-3 h-3 rounded-full bg-emerald-400 animate-pulse"></div>
+                            <div>
+                                <p class="text-xs font-bold text-slate-100 flex items-center gap-2">
+                                    <span>Database Server Status:</span>
+                                    <span id="dbStatusBadge" class="text-emerald-400 font-mono">ONLINE & CONNECTED</span>
+                                </p>
+                                <p class="text-[11px] text-slate-400 font-mono" id="dbServerEndpointDisplay">Endpoint: Node.js REST API Server · Port 3000</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3 text-xs font-mono">
+                            <div class="bg-slate-950 px-3 py-1.5 rounded-lg border border-slate-800">
+                                <span class="text-slate-400">Latency: </span>
+                                <span id="dbLatencyDisplay" class="text-cyan-400 font-bold">4 ms</span>
+                            </div>
+                            <div class="bg-slate-950 px-3 py-1.5 rounded-lg border border-slate-800">
+                                <span class="text-slate-400">Engine: </span>
+                                <span class="text-amber-400 font-bold">Pure JSON Files</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Optional Endpoint Config -->
+                    <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800 space-y-2">
+                        <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider">Custom Central Server Endpoint URL (Optional):</label>
                         <div class="flex items-center gap-3">
-                            <input type="file" id="importJsonFileInput" accept=".json" class="text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-cyan-500/20 file:text-cyan-300 hover:file:bg-cyan-500/30 cursor-pointer">
-                            <button onclick="executeJsonDatabaseImport()" class="bg-cyan-600 hover:bg-cyan-500 text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition shadow">
-                                <i class="fa-solid fa-upload"></i> Restore JSON
+                            <input type="text" id="custNodeServerUrl" placeholder="Leave empty for auto-detect or enter e.g. http://192.168.1.10:3000" class="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 font-mono">
+                            <button type="button" onclick="saveDatabaseEndpoint()" class="bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/40 px-4 py-2 rounded-xl text-xs font-bold transition">
+                                Save Endpoint
                             </button>
+                        </div>
+                        <p class="text-[10px] text-slate-400">By default, the LMS connects directly to the hosting server port. You can enter an IP address to connect PCs, tablets, and phones across your local Wi-Fi.</p>
+                    </div>
+
+                    <!-- Database JSON File Registry Grid (5 Core Database Files) -->
+                    <div class="space-y-3">
+                        <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider">JSON Database File Registry:</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            
+                            <!-- 1. students.json -->
+                            <div class="bg-slate-900/90 p-4 rounded-2xl border border-slate-800 space-y-3 hover:border-amber-500/40 transition">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fa-solid fa-user-graduate text-amber-400"></i>
+                                        <h4 class="text-xs font-bold text-slate-100 font-mono">students.json</h4>
+                                    </div>
+                                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/20 font-mono" id="cardCountStudents">13 Records</span>
+                                </div>
+                                <p class="text-[11px] text-slate-400">Student master data, 12-month marks, assessments, and parent contacts.</p>
+                                <div class="flex items-center gap-2 pt-1 border-t border-slate-800">
+                                    <button onclick="window.LMSCore.exportStudentsJson()" class="flex-1 py-1.5 bg-slate-950 hover:bg-slate-800 text-amber-300 border border-amber-500/30 rounded-lg text-xs font-bold transition">
+                                        <i class="fa-solid fa-download"></i> Download
+                                    </button>
+                                    <button onclick="openJsonEditor('students')" class="flex-1 py-1.5 bg-slate-950 hover:bg-slate-800 text-cyan-300 border border-cyan-500/30 rounded-lg text-xs font-bold transition">
+                                        <i class="fa-solid fa-code"></i> Edit JSON
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- 2. users.json -->
+                            <div class="bg-slate-900/90 p-4 rounded-2xl border border-slate-800 space-y-3 hover:border-rose-500/40 transition">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fa-solid fa-crown text-rose-400"></i>
+                                        <h4 class="text-xs font-bold text-slate-100 font-mono">users.json</h4>
+                                    </div>
+                                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-rose-500/10 text-rose-300 border border-rose-500/20 font-mono" id="cardCountUsers">7 Accounts</span>
+                                </div>
+                                <p class="text-[11px] text-slate-400">Multi-user administrative accounts, RBAC roles, passwords, & device sessions.</p>
+                                <div class="flex items-center gap-2 pt-1 border-t border-slate-800">
+                                    <button onclick="window.LMSCore.exportUsersJson()" class="flex-1 py-1.5 bg-slate-950 hover:bg-slate-800 text-rose-300 border border-rose-500/30 rounded-lg text-xs font-bold transition">
+                                        <i class="fa-solid fa-download"></i> Download
+                                    </button>
+                                    <button onclick="openJsonEditor('users')" class="flex-1 py-1.5 bg-slate-950 hover:bg-slate-800 text-cyan-300 border border-cyan-500/30 rounded-lg text-xs font-bold transition">
+                                        <i class="fa-solid fa-code"></i> Edit JSON
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- 3. erp-config.json -->
+                            <div class="bg-slate-900/90 p-4 rounded-2xl border border-slate-800 space-y-3 hover:border-indigo-500/40 transition">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fa-solid fa-sliders text-indigo-400"></i>
+                                        <h4 class="text-xs font-bold text-slate-100 font-mono">erp-config.json</h4>
+                                    </div>
+                                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 font-mono">Config Active</span>
+                                </div>
+                                <p class="text-[11px] text-slate-400">Master branding, Zoom & WhatsApp live settings, & dynamic table columns.</p>
+                                <div class="flex items-center gap-2 pt-1 border-t border-slate-800">
+                                    <button onclick="window.LMSCore.exportErpConfigJson()" class="flex-1 py-1.5 bg-slate-950 hover:bg-slate-800 text-indigo-300 border border-indigo-500/30 rounded-lg text-xs font-bold transition">
+                                        <i class="fa-solid fa-download"></i> Download
+                                    </button>
+                                    <button onclick="openJsonEditor('config')" class="flex-1 py-1.5 bg-slate-950 hover:bg-slate-800 text-cyan-300 border border-cyan-500/30 rounded-lg text-xs font-bold transition">
+                                        <i class="fa-solid fa-code"></i> Edit JSON
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- 4. teacher-docs.json -->
+                            <div class="bg-slate-900/90 p-4 rounded-2xl border border-slate-800 space-y-3 hover:border-emerald-500/40 transition">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fa-solid fa-folder-tree text-emerald-400"></i>
+                                        <h4 class="text-xs font-bold text-slate-100 font-mono">teacher-docs.json</h4>
+                                    </div>
+                                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 font-mono" id="cardCountDocs">5 Docs</span>
+                                </div>
+                                <p class="text-[11px] text-slate-400">Confidential teacher marking schemes, exam rubrics, and lesson plans.</p>
+                                <div class="flex items-center gap-2 pt-1 border-t border-slate-800">
+                                    <button onclick="window.LMSCore.exportTeacherDocsJson()" class="flex-1 py-1.5 bg-slate-950 hover:bg-slate-800 text-emerald-300 border border-emerald-500/30 rounded-lg text-xs font-bold transition">
+                                        <i class="fa-solid fa-download"></i> Download
+                                    </button>
+                                    <button onclick="openJsonEditor('teacherDocs')" class="flex-1 py-1.5 bg-slate-950 hover:bg-slate-800 text-cyan-300 border border-cyan-500/30 rounded-lg text-xs font-bold transition">
+                                        <i class="fa-solid fa-code"></i> Edit JSON
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- 5. activity-logs.json -->
+                            <div class="bg-slate-900/90 p-4 rounded-2xl border border-slate-800 space-y-3 hover:border-cyan-500/40 transition sm:col-span-2 lg:col-span-2">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fa-solid fa-clock-rotate-left text-cyan-400"></i>
+                                        <h4 class="text-xs font-bold text-slate-100 font-mono">activity-logs.json</h4>
+                                    </div>
+                                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 font-mono">Audit Active</span>
+                                </div>
+                                <p class="text-[11px] text-slate-400">Chronological multi-device login history and administrative action trails across PC, Tablet, and Mobile Phone.</p>
+                                <div class="flex items-center gap-2 pt-1 border-t border-slate-800">
+                                    <button onclick="window.LMSCore.exportActivityLogsJson()" class="flex-1 py-1.5 bg-slate-950 hover:bg-slate-800 text-cyan-300 border border-cyan-500/30 rounded-lg text-xs font-bold transition">
+                                        <i class="fa-solid fa-download"></i> Download Logs
+                                    </button>
+                                    <button onclick="openJsonEditor('logs')" class="flex-1 py-1.5 bg-slate-950 hover:bg-slate-800 text-cyan-300 border border-cyan-500/30 rounded-lg text-xs font-bold transition">
+                                        <i class="fa-solid fa-code"></i> Edit JSON
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- 1-Click Full DB Archive & Restore -->
+                    <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 space-y-3">
+                        <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider">Database Backup Archive & Restore:</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <button onclick="window.LMSCore.exportFullDatabaseBundle()" class="w-full p-3 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-lg transition">
+                                <i class="fa-solid fa-box-archive text-sm"></i>
+                                <span>Download Full Database Archive (.json)</span>
+                            </button>
+
+                            <div class="flex items-center gap-2">
+                                <input type="file" id="importJsonFileInput" accept=".json" class="flex-1 text-xs text-slate-400 file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-cyan-500/20 file:text-cyan-300 hover:file:bg-cyan-500/30 cursor-pointer">
+                                <button onclick="executeJsonDatabaseImport()" class="bg-cyan-600 hover:bg-cyan-500 text-white px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition shadow">
+                                    <i class="fa-solid fa-upload"></i> Restore
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -945,21 +1076,6 @@
                     <div>
                         <label class="block text-xs font-bold text-slate-300 mb-1">Global Broadcast Announcement:</label>
                         <textarea id="custAnnouncement" rows="2" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs text-slate-100"></textarea>
-                    </div>
-
-                    <!-- Cloud JSON & Node Server Endpoint Configuration -->
-                    <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3">
-                        <h4 class="text-xs font-bold text-amber-400 uppercase tracking-wider">Multi-Device REST & Cloud Endpoints</h4>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-[11px] text-slate-400 mb-1">Node.js Server Base URL (Optional):</label>
-                                <input type="text" id="custNodeServerUrl" placeholder="http://localhost:3000 or http://192.168.1.10:3000" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 font-mono">
-                            </div>
-                            <div>
-                                <label class="block text-[11px] text-slate-400 mb-1">Cloud JSON Endpoint URL (e.g. npoint.io):</label>
-                                <input type="url" id="custCloudJsonUrl" placeholder="https://api.npoint.io/..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 font-mono">
-                            </div>
-                        </div>
                     </div>
 
                     <button type="submit" class="bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-extrabold px-6 py-2.5 rounded-xl text-xs uppercase tracking-wider shadow-lg hover:brightness-110 transition">
@@ -1352,6 +1468,54 @@
                     <button type="submit" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold px-4 py-2 rounded-xl text-xs shadow-md">Add Column</button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    
+    <!-- 10. In-Browser Interactive JSON Database Editor Modal -->
+    <div id="jsonEditorModal" class="hidden fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="glass-panel p-6 max-w-3xl w-full space-y-4 border-cyan-500/50 shadow-2xl relative">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-700">
+                <div class="flex items-center space-x-3">
+                    <i class="fa-solid fa-code text-cyan-400 text-lg"></i>
+                    <div>
+                        <h3 class="text-base font-bold font-cinzel text-cyan-300">In-Browser JSON Database Editor</h3>
+                        <p class="text-[10px] text-slate-400">Directly inspect and modify database records with syntax validation</p>
+                    </div>
+                </div>
+                <button onclick="closeJsonEditor()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <label class="text-xs font-bold text-slate-300">Selected JSON File:</label>
+                    <select id="jsonEditorFileSelect" onchange="loadSelectedFileIntoEditor()" class="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1 text-xs text-amber-300 font-mono">
+                        <option value="students">assets/data/students.json</option>
+                        <option value="users">assets/data/users.json</option>
+                        <option value="config">assets/data/erp-config.json</option>
+                        <option value="teacherDocs">assets/data/teacher-docs.json</option>
+                        <option value="logs">assets/data/activity-logs.json</option>
+                    </select>
+                </div>
+
+                <button onclick="formatEditorJson()" class="px-3 py-1 bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 rounded-lg text-xs font-mono">
+                    <i class="fa-solid fa-align-left mr-1 text-amber-400"></i> Prettify JSON
+                </button>
+            </div>
+
+            <div class="relative">
+                <textarea id="jsonEditorContent" rows="16" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3.5 text-xs font-mono text-cyan-300 focus:outline-none focus:border-cyan-400 leading-relaxed scrollbar-thin" spellcheck="false"></textarea>
+            </div>
+
+            <div class="flex justify-between items-center pt-2 border-t border-slate-800">
+                <span id="jsonEditorValidationMsg" class="text-xs text-slate-400">Ready</span>
+                <div class="flex gap-2">
+                    <button type="button" onclick="closeJsonEditor()" class="px-4 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-slate-300">Close</button>
+                    <button type="button" onclick="saveEditorJsonToDb()" class="px-4 py-2 bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-extrabold rounded-xl text-xs shadow-md">
+                        <i class="fa-solid fa-floppy-disk mr-1"></i> Save to Database
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 

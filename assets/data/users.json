@@ -22,9 +22,16 @@
     ],
     "status": "active",
     "createdDate": "2026-01-10",
-    "lastLogin": "2026-08-21 19:06",
+    "lastLogin": "2026-08-21 19:49",
     "lastDevice": "PC / Desktop (Windows)",
     "deviceSessions": [
+      {
+        "deviceType": "PC / Desktop",
+        "os": "Windows 11",
+        "browser": "Chrome 128",
+        "ip": "127.0.0.1",
+        "loginTime": "2026-08-21 19:49"
+      },
       {
         "deviceType": "PC / Desktop",
         "os": "Windows 11",
@@ -78,9 +85,16 @@
     ],
     "status": "active",
     "createdDate": "2026-01-10",
-    "lastLogin": "2026-08-21 19:06",
+    "lastLogin": "2026-08-21 19:49",
     "lastDevice": "Tablet / iPad (iPadOS)",
     "deviceSessions": [
+      {
+        "deviceType": "Tablet / iPad",
+        "os": "iPadOS 17",
+        "browser": "Safari Mobile",
+        "ip": "127.0.0.1",
+        "loginTime": "2026-08-21 19:49"
+      },
       {
         "deviceType": "Tablet / iPad",
         "os": "iPadOS 17",
@@ -153,9 +167,16 @@
     ],
     "status": "active",
     "createdDate": "2026-02-15",
-    "lastLogin": "2026-08-21 19:06",
+    "lastLogin": "2026-08-21 19:49",
     "lastDevice": "Mobile Phone (Android)",
     "deviceSessions": [
+      {
+        "deviceType": "Mobile Phone",
+        "os": "Android 14",
+        "browser": "Chrome Mobile",
+        "ip": "127.0.0.1",
+        "loginTime": "2026-08-21 19:49"
+      },
       {
         "deviceType": "Mobile Phone",
         "os": "Android 14",

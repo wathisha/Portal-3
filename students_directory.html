@@ -290,22 +290,19 @@
         }
 
         
-        // Live auto-poll every 6 seconds: fetches live JSON from npoint.io across all devices
+        // Real-time automatic background sync from JSON database server
         setInterval(async () => {
             if (document.visibilityState === 'visible' && window.LMSCore) {
-                const cloud = window.LMSCore.getCloudConfig();
-                if (cloud.cloudJsonStudentsUrl && cloud.cloudJsonStudentsUrl.trim() !== '') {
-                    const fresh = await window.LMSCore.getStudents(false);
-                    if (fresh && Array.isArray(fresh) && fresh.length > 0) {
-                        if (JSON.stringify(fresh) !== JSON.stringify(allStudents)) {
-                            allStudents = fresh;
-                            document.getElementById('totalStudentsCount').textContent = allStudents.length;
-                            renderStudentsGrid();
-                        }
+                const fresh = await window.LMSCore.getStudents(false);
+                if (fresh && Array.isArray(fresh) && fresh.length > 0) {
+                    if (JSON.stringify(fresh) !== JSON.stringify(allStudents)) {
+                        allStudents = fresh;
+                        document.getElementById('totalStudentsCount').textContent = allStudents.length;
+                        renderStudentsGrid();
                     }
                 }
             }
-        }, 6000);
+        }, 8000);
 
         window.addEventListener('focus', async () => {
             if (window.LMSCore) {
