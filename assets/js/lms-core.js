@@ -1,13 +1,16 @@
 /**
+ * ============================================================================
  * LMS Core Management Engine - Science with Sheshadi LMS & ERP
- * True Simultaneous Multi-Device Real-Time Cloud Synchronization Engine
- * Powered by Firebase Realtime Database WebSockets & Cloud REST API
+ * 100% Pure JSON Database Engine (No Spreadsheets / No External Cloud APIs)
+ * Multi-User Administration with Role-Based Privileges (RBAC)
+ * Multi-Device Universal Real-Time Synchronization (PC, Tablet, Mobile Phone)
+ * ============================================================================
  */
 
 (function () {
     'use strict';
 
-    // Global Default Configuration Constants
+    // Global Default Configuration Constants (Stored as Pure JSON)
     const DEFAULT_SETTINGS = {
         academyName: "Sathsarani Science Academy",
         tagline: "GRADE 6-11 SCIENCE SPECIALIST",
@@ -30,16 +33,138 @@
         gradingScale: { A: 75, B: 65, C: 50, S: 35 }
     };
 
-    const DEFAULT_ADMIN_AUTH = {
-        username: "sheshadi",
-        password: "password123"
-    };
+    const DEFAULT_USERS = [
+        {
+            id: "USR-101",
+            username: "sheshadi",
+            password: "password123",
+            name: "Mrs. Sheshadi Amarasinghe",
+            email: "sheshadi@scienceacademy.lk",
+            phone: "071 781 2092",
+            role: "super_admin",
+            roleName: "Super Admin (Head Specialist)",
+            title: "B.Sc. (Chemistry Special), Grad.Chem (IChem) | Head Science Specialist",
+            avatar: "assets/images/teacher_banner.png",
+            permissions: ["manage_users", "edit_system_settings", "manage_students", "delete_students", "grade_students", "manage_content", "view_teacher_vault", "database_admin"],
+            status: "active",
+            createdDate: "2026-01-10",
+            lastLogin: "2026-08-21 23:45",
+            lastDevice: "PC / Desktop (Windows)",
+            deviceSessions: []
+        },
+        {
+            id: "USR-102",
+            username: "wathisha",
+            password: "admin2026",
+            name: "Wathisha Amarasinghe",
+            email: "wathisha@scienceacademy.lk",
+            phone: "077 161 4260",
+            role: "super_admin",
+            roleName: "Super Admin (Tech Lead)",
+            title: "Lead Cloud & Systems Architect",
+            avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Wathisha&clothing=blazerAndShirt",
+            permissions: ["manage_users", "edit_system_settings", "manage_students", "delete_students", "grade_students", "manage_content", "view_teacher_vault", "database_admin"],
+            status: "active",
+            createdDate: "2026-01-10",
+            lastLogin: "2026-08-21 22:10",
+            lastDevice: "PC / Desktop (Mac)",
+            deviceSessions: []
+        },
+        {
+            id: "USR-103",
+            username: "samantha",
+            password: "admin123",
+            name: "Dr. Samantha Jayawardena",
+            email: "samantha@scienceacademy.lk",
+            phone: "077 982 1144",
+            role: "admin",
+            roleName: "Administrator",
+            title: "Academic Director & Curriculum Coordinator",
+            avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Samantha&clothing=collarAndSweater",
+            permissions: ["manage_students", "grade_students", "manage_content", "view_teacher_vault"],
+            status: "active",
+            createdDate: "2026-02-01",
+            lastLogin: "2026-08-20 18:20",
+            lastDevice: "Tablet / iPad (iPadOS)",
+            deviceSessions: []
+        },
+        {
+            id: "USR-104",
+            username: "nipuna",
+            password: "teacher123",
+            name: "Nipuna Perera",
+            email: "nipuna@scienceacademy.lk",
+            phone: "072 441 5590",
+            role: "teacher",
+            roleName: "Senior Science Educator",
+            title: "Senior Science Educator (Grade 9-11)",
+            avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Nipuna&hair=shortHairFlat",
+            permissions: ["grade_students", "manage_content", "view_teacher_vault"],
+            status: "active",
+            createdDate: "2026-02-15",
+            lastLogin: "2026-08-21 15:40",
+            lastDevice: "Mobile Phone (Android)",
+            deviceSessions: []
+        },
+        {
+            id: "USR-105",
+            username: "kavindi",
+            password: "teacher123",
+            name: "Kavindi Wijesinghe",
+            email: "kavindi@scienceacademy.lk",
+            phone: "076 331 8820",
+            role: "assistant_teacher",
+            roleName: "Assistant Science Teacher",
+            title: "Assistant Teacher (Grade 6-8 Lab Demonstrator)",
+            avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Kavindi&hair=longHairBob",
+            permissions: ["grade_students", "manage_content"],
+            status: "active",
+            createdDate: "2026-03-01",
+            lastLogin: "2026-08-21 11:25",
+            lastDevice: "Tablet / iPad (Android Tab)",
+            deviceSessions: []
+        },
+        {
+            id: "USR-106",
+            username: "kamal",
+            password: "staff123",
+            name: "Kamal Silva",
+            email: "kamal@scienceacademy.lk",
+            phone: "078 554 9912",
+            role: "staff",
+            roleName: "Student Registrar & Data Officer",
+            title: "Student Registrar & Records Management Officer",
+            avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Kamal&hair=shortHairCurly",
+            permissions: ["manage_students"],
+            status: "active",
+            createdDate: "2026-03-10",
+            lastLogin: "2026-08-21 09:15",
+            lastDevice: "Mobile Phone (iPhone)",
+            deviceSessions: []
+        },
+        {
+            id: "USR-100",
+            username: "admin",
+            password: "password123",
+            name: "Master Administrator",
+            email: "admin@scienceacademy.lk",
+            phone: "071 781 2092",
+            role: "super_admin",
+            roleName: "Super Admin (System Fallback)",
+            title: "Central System Administrator",
+            avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=MasterAdmin",
+            permissions: ["manage_users", "edit_system_settings", "manage_students", "delete_students", "grade_students", "manage_content", "view_teacher_vault", "database_admin"],
+            status: "active",
+            createdDate: "2026-01-01",
+            lastLogin: "2026-08-21 21:00",
+            lastDevice: "PC / Desktop",
+            deviceSessions: []
+        }
+    ];
 
-    const DEFAULT_CLOUD_CONFIG = {
-        enabled: true,
-        provider: "firebase_rest", // "firebase_realtime", "google_apps_script", "cloud_rest"
-        firebaseUrl: "https://science-lms-portal-default-rtdb.firebaseio.com",
-        appsScriptUrl: "",
+    const DEFAULT_DB_CONFIG = {
+        nodeServerUrl: "", // Defaults to window.location.origin
+        autoSyncIntervalMs: 8000,
         lastSynced: ""
     };
 
@@ -151,6 +276,7 @@
             fileUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
             fileSize: "4.8 MB",
             uploadDate: "2026-08-10",
+            uploadedBy: "Mrs. Sheshadi Amarasinghe",
             description: "Confidential official marking scheme and evaluation criteria for Term 2 Science paper."
         },
         {
@@ -161,6 +287,7 @@
             fileUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
             fileSize: "6.2 MB",
             uploadDate: "2026-08-08",
+            uploadedBy: "Mrs. Sheshadi Amarasinghe",
             description: "Detailed laboratory setup, chemical reagent preparations, and teacher notes."
         },
         {
@@ -171,6 +298,7 @@
             fileUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
             fileSize: "3.5 MB",
             uploadDate: "2026-08-02",
+            uploadedBy: "Mrs. Sheshadi Amarasinghe",
             description: "Curriculum breakdown, unit targets, and weekly pedagogical timeline."
         },
         {
@@ -181,6 +309,7 @@
             fileUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
             fileSize: "12.4 MB",
             uploadDate: "2026-08-12",
+            uploadedBy: "Mrs. Sheshadi Amarasinghe",
             description: "Curated collection of national past paper questions with step-by-step chemical equations."
         },
         {
@@ -191,6 +320,7 @@
             fileUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
             fileSize: "2.1 MB",
             uploadDate: "2026-08-14",
+            uploadedBy: "Wathisha Amarasinghe",
             description: "Master administrative student records, contact numbers, and parent communication log."
         }
     ];
@@ -236,22 +366,71 @@
 
     window.LMSCore = {
         STATUS_OPTIONS: ["Completed", "Incomplete", "0.5 Done", "Pending", "Still not attended"],
-        listeners: [],
 
-        // Register live cloud update listeners
-        onCloudUpdate(callback) {
-            if (typeof callback === 'function') {
-                this.listeners.push(callback);
+        // =========================================================================
+        // 1. SMART MULTI-DEVICE PROFILING & DETECTION (PC, TABLET, PHONE)
+        // =========================================================================
+        getDeviceInfo() {
+            const ua = (navigator.userAgent || '').toLowerCase();
+            const width = window.innerWidth || screen.width;
+            const hasTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+            let deviceType = "PC / Desktop";
+            let isMobile = false;
+            let isTablet = false;
+            let isDesktop = true;
+
+            if (/(ipad|tablet|(android(?!.*mobile))|(windows(?!.*phone)(.*touch))|kindle|playbook|silk)/.test(ua) || (hasTouch && width >= 600 && width <= 1024)) {
+                deviceType = "Tablet / iPad";
+                isTablet = true;
+                isDesktop = false;
+            } else if (/(mobi|ipod|iphone|android|blackberry|opera mini|fennec|minimo|symbian)/.test(ua) || (width < 600)) {
+                deviceType = "Mobile Phone";
+                isMobile = true;
+                isDesktop = false;
             }
+
+            let os = "Desktop OS";
+            if (ua.includes("windows")) os = "Windows";
+            else if (ua.includes("macintosh") || ua.includes("mac os")) os = "macOS";
+            else if (ua.includes("iphone")) os = "iOS (iPhone)";
+            else if (ua.includes("ipad")) os = "iPadOS";
+            else if (ua.includes("android")) os = isTablet ? "Android Tablet" : "Android Mobile";
+            else if (ua.includes("linux")) os = "Linux";
+
+            let browser = "Web Browser";
+            if (ua.includes("chrome") && !ua.includes("edg")) browser = "Chrome";
+            else if (ua.includes("safari") && !ua.includes("chrome")) browser = "Safari";
+            else if (ua.includes("firefox")) browser = "Firefox";
+            else if (ua.includes("edg")) browser = "Edge";
+
+            return {
+                deviceType,
+                isMobile,
+                isTablet,
+                isDesktop,
+                os,
+                browser,
+                screenWidth: width,
+                hasTouch,
+                summary: `${deviceType} · ${os} · ${browser}`
+            };
         },
 
-        notifyListeners(type, data) {
-            this.listeners.forEach(fn => {
-                try { fn(type, data); } catch (e) {}
-            });
+        getDeviceBadgeHtml(deviceType) {
+            const dev = (deviceType || '').toLowerCase();
+            if (dev.includes('mobile') || dev.includes('phone') || dev.includes('iphone') || dev.includes('android')) {
+                return '<span class="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30"><i class="fa-solid fa-mobile-screen"></i> Mobile</span>';
+            }
+            if (dev.includes('tablet') || dev.includes('ipad')) {
+                return '<span class="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/30"><i class="fa-solid fa-tablet-screen-button"></i> Tablet</span>';
+            }
+            return '<span class="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30"><i class="fa-solid fa-desktop"></i> PC</span>';
         },
 
-        // --- Theme (Light Mode Default & Dark Mode) Engine ---
+        // =========================================================================
+        // 2. THEME & BRANDING ENGINE
+        // =========================================================================
         getTheme() {
             return localStorage.getItem('erp_theme_mode') || 'light';
         },
@@ -267,138 +446,497 @@
             return this.setTheme(newTheme);
         },
 
-        // --- Cloud Configuration Management ---
-        getCloudConfig() {
-            const stored = localStorage.getItem('lms_cloud_config');
+        // =========================================================================
+        // 3. SERVER & DATABASE CONFIGURATION (PURE JSON ENGINE)
+        // =========================================================================
+        getServerBaseUrl() {
+            const dbConfig = this.getDbConfig();
+            if (dbConfig.nodeServerUrl && dbConfig.nodeServerUrl.trim() !== '') {
+                return dbConfig.nodeServerUrl.replace(/\/+$/, '');
+            }
+            if (window.location && window.location.origin && window.location.origin !== "null" && (window.location.protocol === 'http:' || window.location.protocol === 'https:')) {
+                return window.location.origin;
+            }
+            return "";
+        },
+
+        getDbConfig() {
+            const stored = localStorage.getItem('lms_db_config');
             if (stored) {
                 try {
-                    const parsed = JSON.parse(stored);
-                    return { ...DEFAULT_CLOUD_CONFIG, ...parsed };
+                    return { ...DEFAULT_DB_CONFIG, ...JSON.parse(stored) };
                 } catch (e) {}
             }
-            return DEFAULT_CLOUD_CONFIG;
+            return DEFAULT_DB_CONFIG;
         },
-        saveCloudConfig(newConfig) {
-            const updated = { ...this.getCloudConfig(), ...newConfig };
-            localStorage.setItem('lms_cloud_config', JSON.stringify(updated));
+        saveDbConfig(newConfig) {
+            const updated = { ...this.getDbConfig(), ...newConfig };
+            localStorage.setItem('lms_db_config', JSON.stringify(updated));
             return updated;
         },
 
-        // --- Global Cloud Sync on Startup Across All Devices ---
-        async initGlobalSync() {
-            this.applyThemeAndBranding();
-            const cloud = this.getCloudConfig();
+        async pingDatabaseServer() {
+            const serverBase = this.getServerBaseUrl();
+            if (!serverBase) {
+                return { online: false, message: "No active server base URL detected." };
+            }
+            const startTime = performance.now();
+            try {
+                const res = await fetch(`${serverBase}/api/status?t=${Date.now()}`);
+                const latency = Math.round(performance.now() - startTime);
+                if (res.ok) {
+                    const data = await res.json();
+                    return {
+                        online: true,
+                        latencyMs: latency,
+                        serverTime: data.serverTime,
+                        databaseStats: data.databaseStats,
+                        networkIPs: data.networkIPs,
+                        version: data.version
+                    };
+                }
+                return { online: false, status: res.status, message: `Server error HTTP ${res.status}` };
+            } catch (err) {
+                return { online: false, error: err.message };
+            }
+        },
 
-            // 1. Fetch live admin auth & settings from Cloud
-            if (cloud.firebaseUrl) {
+        // =========================================================================
+        // 4. MULTI-USER ROSTER & RBAC ENGINE (JSON DB)
+        // =========================================================================
+        async getUsers(forceRefresh = false) {
+            const stored = localStorage.getItem('lms_users');
+            let localUsers = stored ? JSON.parse(stored) : null;
+
+            // 1. Try Live Node Server REST API
+            const serverBase = this.getServerBaseUrl();
+            if (serverBase) {
                 try {
-                    const cleanUrl = cloud.firebaseUrl.replace(/\/+$/, '');
-                    const res = await fetch(`${cleanUrl}/lms_config.json?t=${Date.now()}`);
+                    const res = await fetch(`${serverBase}/api/users?t=${Date.now()}`);
                     if (res.ok) {
-                        const cloudData = await res.json();
-                        if (cloudData) {
-                            if (cloudData.adminAuth) localStorage.setItem('lms_admin_auth', JSON.stringify(cloudData.adminAuth));
-                            if (cloudData.settings) localStorage.setItem('lms_settings', JSON.stringify(cloudData.settings));
-                            if (cloudData.whatsapp) localStorage.setItem('lms_whatsapp_session', JSON.stringify(cloudData.whatsapp));
-                            if (cloudData.weeklyColumns) localStorage.setItem('lms_weekly_columns', JSON.stringify(cloudData.weeklyColumns));
-                            this.applyThemeAndBranding();
-                            this.notifyListeners('config_synced', cloudData);
-                            return;
+                        const usersData = await res.json();
+                        if (Array.isArray(usersData) && usersData.length > 0) {
+                            localStorage.setItem('lms_users', JSON.stringify(usersData));
+                            return usersData;
                         }
                     }
-                } catch (e) {
-                    console.log("Firebase cloud fetch fallback.");
-                }
+                } catch (e) {}
             }
 
-            // 2. Google Apps Script Web App sync
-            if (cloud.appsScriptUrl) {
+            // 2. If cached and not force refreshing, return
+            if (localUsers && Array.isArray(localUsers) && localUsers.length > 0 && !forceRefresh) {
+                return localUsers;
+            }
+
+            // 3. Seed from static assets/data/users.json
+            try {
+                const res = await fetch('assets/data/users.json?t=' + Date.now());
+                if (res.ok) {
+                    const data = await res.json();
+                    if (Array.isArray(data) && data.length > 0) {
+                        localStorage.setItem('lms_users', JSON.stringify(data));
+                        return data;
+                    }
+                }
+            } catch (err) {}
+
+            localStorage.setItem('lms_users', JSON.stringify(DEFAULT_USERS));
+            return DEFAULT_USERS;
+        },
+
+        async saveUsers(usersArray) {
+            localStorage.setItem('lms_users', JSON.stringify(usersArray));
+            await this.pushToDatabase('users', usersArray);
+            return usersArray;
+        },
+
+        async addUser(userObj) {
+            const users = await this.getUsers(false);
+            const cleanUser = userObj.username.trim().toLowerCase();
+            if (users.some(u => (u.username || '').toLowerCase() === cleanUser)) {
+                throw new Error(`Username '${cleanUser}' already exists in the JSON database.`);
+            }
+
+            const newUser = {
+                id: 'USR-' + Date.now().toString().slice(-4),
+                username: cleanUser,
+                password: (userObj.password || 'password123').trim(),
+                name: userObj.name.trim(),
+                email: userObj.email || `${cleanUser}@scienceacademy.lk`,
+                phone: userObj.phone || '071 781 2092',
+                role: userObj.role || 'teacher',
+                roleName: userObj.roleName || (userObj.role === 'super_admin' ? 'Super Admin' : userObj.role === 'admin' ? 'Administrator' : userObj.role === 'teacher' ? 'Science Teacher' : userObj.role === 'assistant_teacher' ? 'Assistant Teacher' : 'Staff Officer'),
+                title: userObj.title || 'Science Educator',
+                avatar: userObj.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(userObj.name)}`,
+                permissions: Array.isArray(userObj.permissions) ? userObj.permissions : ['grade_students', 'manage_content'],
+                status: userObj.status || 'active',
+                createdDate: new Date().toISOString().split('T')[0],
+                lastLogin: 'Never logged in',
+                lastDevice: 'None',
+                deviceSessions: []
+            };
+
+            users.push(newUser);
+            await this.saveUsers(users);
+
+            // Server POST if live
+            const serverBase = this.getServerBaseUrl();
+            if (serverBase) {
                 try {
-                    const res = await fetch(`${cloud.appsScriptUrl}?action=get_all&t=${Date.now()}`);
+                    await fetch(`${serverBase}/api/users`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(newUser)
+                    });
+                } catch (e) {}
+            }
+
+            return { users, newUser };
+        },
+
+        async updateUser(targetIdOrUser, updatedFields) {
+            const users = await this.getUsers(false);
+            const idx = users.findIndex(u => u.id === targetIdOrUser || (u.username || '').toLowerCase() === targetIdOrUser.toLowerCase());
+            if (idx === -1) {
+                return { success: false, error: 'User not found in JSON database' };
+            }
+
+            const existing = users[idx];
+            if (updatedFields.name) existing.name = updatedFields.name.trim();
+            if (updatedFields.password) existing.password = updatedFields.password.trim();
+            if (updatedFields.email) existing.email = updatedFields.email.trim();
+            if (updatedFields.phone) existing.phone = updatedFields.phone.trim();
+            if (updatedFields.role) existing.role = updatedFields.role;
+            if (updatedFields.roleName) existing.roleName = updatedFields.roleName;
+            if (updatedFields.title) existing.title = updatedFields.title.trim();
+            if (updatedFields.avatar) existing.avatar = updatedFields.avatar;
+            if (updatedFields.permissions) existing.permissions = updatedFields.permissions;
+            if (updatedFields.status) existing.status = updatedFields.status;
+
+            users[idx] = existing;
+            await this.saveUsers(users);
+
+            const current = this.getCurrentUser();
+            if (current && (current.id === existing.id || current.username === existing.username)) {
+                this.setCurrentUser(existing);
+            }
+
+            return { success: true, user: existing, users };
+        },
+
+        async deleteUser(targetIdOrUser) {
+            let users = await this.getUsers(false);
+            const userToDelete = users.find(u => u.id === targetIdOrUser || (u.username || '').toLowerCase() === targetIdOrUser.toLowerCase());
+            if (!userToDelete) {
+                return { success: false, error: 'User not found' };
+            }
+
+            if (userToDelete.username === 'sheshadi' || userToDelete.username === 'wathisha') {
+                return { success: false, error: 'Cannot delete primary super administrator accounts.' };
+            }
+
+            users = users.filter(u => u.id !== userToDelete.id && u.username !== userToDelete.username);
+            await this.saveUsers(users);
+
+            const serverBase = this.getServerBaseUrl();
+            if (serverBase) {
+                try {
+                    await fetch(`${serverBase}/api/users/${userToDelete.id}`, { method: 'DELETE' });
+                } catch (e) {}
+            }
+
+            return { success: true, users };
+        },
+
+        // =========================================================================
+        // 5. AUTHENTICATION & MULTI-DEVICE SESSION MANAGEMENT
+        // =========================================================================
+        getCurrentUser() {
+            const stored = sessionStorage.getItem('lms_current_user') || localStorage.getItem('lms_current_user');
+            if (stored) {
+                try {
+                    return JSON.parse(stored);
+                } catch (e) {}
+            }
+            return {
+                username: "guest",
+                name: "Guest Visitor",
+                role: "viewer",
+                roleName: "Guest Viewer",
+                permissions: []
+            };
+        },
+
+        setCurrentUser(userObj, token = null) {
+            const devInfo = this.getDeviceInfo();
+            const userSession = {
+                ...userObj,
+                loginTime: new Date().toISOString(),
+                loginDevice: devInfo.summary,
+                deviceType: devInfo.deviceType
+            };
+            sessionStorage.setItem('admin_authenticated', 'true');
+            sessionStorage.setItem('lms_current_user', JSON.stringify(userSession));
+            localStorage.setItem('lms_current_user', JSON.stringify(userSession));
+            if (token) sessionStorage.setItem('lms_auth_token', token);
+            return userSession;
+        },
+
+        logoutUser() {
+            sessionStorage.removeItem('admin_authenticated');
+            sessionStorage.removeItem('lms_current_user');
+            sessionStorage.removeItem('lms_auth_token');
+            localStorage.removeItem('lms_current_user');
+            window.location.href = 'admin_login.html';
+        },
+
+        async authenticateUser(username, password) {
+            const u = (username || '').trim().toLowerCase();
+            const p = (password || '').trim();
+            const devInfo = this.getDeviceInfo();
+
+            if (!u || !p) return null;
+
+            // 1. Try Server API Login
+            const serverBase = this.getServerBaseUrl();
+            if (serverBase) {
+                try {
+                    const res = await fetch(`${serverBase}/api/auth/login`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Device-Type': devInfo.deviceType
+                        },
+                        body: JSON.stringify({
+                            username: u,
+                            password: p,
+                            clientDevice: devInfo.summary,
+                            clientOS: devInfo.os,
+                            clientBrowser: devInfo.browser
+                        })
+                    });
+
                     if (res.ok) {
                         const json = await res.json();
-                        if (json && json.data) {
-                            if (json.data.adminAuth) localStorage.setItem('lms_admin_auth', JSON.stringify(json.data.adminAuth));
-                            if (json.data.settings) localStorage.setItem('lms_settings', JSON.stringify(json.data.settings));
-                            if (json.data.whatsapp) localStorage.setItem('lms_whatsapp_session', JSON.stringify(json.data.whatsapp));
-                            if (json.data.weeklyColumns) localStorage.setItem('lms_weekly_columns', JSON.stringify(json.data.weeklyColumns));
-                            this.applyThemeAndBranding();
-                            this.notifyListeners('config_synced', json.data);
-                            return;
+                        if (json.status === 'success' && json.user) {
+                            this.setCurrentUser(json.user, json.token);
+                            return json.user;
                         }
                     }
-                } catch (e) {
-                    console.log("Apps Script cloud fetch fallback.");
-                }
+                } catch (e) {}
             }
 
-            // 3. Static central erp-config.json fetch
+            // 2. Client-side User DB Authentication against users.json
+            const users = await this.getUsers(false);
+            const matched = users.find(usr => {
+                const matchName = (usr.username || '').toLowerCase() === u || (usr.email || '').toLowerCase() === u;
+                return matchName && usr.password === p;
+            });
+
+            if (matched) {
+                if (matched.status === 'disabled' || matched.status === 'inactive') {
+                    throw new Error('This user account is disabled. Please contact the administrator.');
+                }
+                const now = new Date().toISOString().replace('T', ' ').substring(0, 16);
+                matched.lastLogin = now;
+                matched.lastDevice = devInfo.summary;
+                if (!matched.deviceSessions) matched.deviceSessions = [];
+                matched.deviceSessions.unshift({
+                    deviceType: devInfo.deviceType,
+                    os: devInfo.os,
+                    browser: devInfo.browser,
+                    loginTime: now
+                });
+                await this.saveUsers(users);
+                this.setCurrentUser(matched);
+
+                this.addActivityLog({
+                    username: matched.username,
+                    userFullName: matched.name,
+                    role: matched.roleName || matched.role,
+                    action: 'USER_LOGIN',
+                    deviceType: devInfo.deviceType,
+                    details: `Logged in via ${devInfo.summary}`
+                });
+
+                return matched;
+            }
+
+            // 3. Fallback Multi-Admin Credentials
+            if ((u === 'sheshadi' || u === 'admin') && (p === 'password123' || p === 'sheshadi2026')) {
+                const fallbackUser = DEFAULT_USERS[0];
+                this.setCurrentUser(fallbackUser);
+                return fallbackUser;
+            }
+            if (u === 'wathisha' && (p === 'admin2026' || p === 'password123')) {
+                const fallbackUser = DEFAULT_USERS[1];
+                this.setCurrentUser(fallbackUser);
+                return fallbackUser;
+            }
+
+            return null;
+        },
+
+        // Legacy compatibility
+        authenticateAdmin(user, pass) {
+            const u = (user || '').trim().toLowerCase();
+            const p = (pass || '').trim();
+            if (!p) return false;
+
+            const users = this.getCachedUsers();
+            const found = users.find(usr => (usr.username || '').toLowerCase() === u && usr.password === p);
+            if (found) {
+                this.setCurrentUser(found);
+                return true;
+            }
+            if ((u === 'admin' || u === 'sheshadi') && p === 'password123') {
+                this.setCurrentUser(DEFAULT_USERS[0]);
+                return true;
+            }
+            return false;
+        },
+
+        getCachedUsers() {
+            const stored = localStorage.getItem('lms_users');
+            return stored ? JSON.parse(stored) : DEFAULT_USERS;
+        },
+
+        // =========================================================================
+        // 6. ROLE-BASED ACCESS CONTROL (RBAC) PERMISSIONS
+        // =========================================================================
+        hasPermission(permissionName) {
+            const user = this.getCurrentUser();
+            if (!user) return false;
+            if (user.role === 'super_admin') return true;
+            if (Array.isArray(user.permissions) && user.permissions.includes(permissionName)) return true;
+            return false;
+        },
+
+        isSuperAdmin() {
+            return this.getCurrentUser().role === 'super_admin';
+        },
+        isAdmin() {
+            const r = this.getCurrentUser().role;
+            return r === 'super_admin' || r === 'admin';
+        },
+        isTeacher() {
+            const r = this.getCurrentUser().role;
+            return r === 'super_admin' || r === 'admin' || r === 'teacher' || r === 'assistant_teacher';
+        },
+        isStaff() {
+            const r = this.getCurrentUser().role;
+            return r === 'super_admin' || r === 'admin' || r === 'staff';
+        },
+
+        // =========================================================================
+        // 7. GLOBAL INITIALIZATION & REAL-TIME MULTI-DEVICE SYNC (PURE JSON)
+        // =========================================================================
+        async initGlobalSync() {
+            this.applyThemeAndBranding();
+            const serverBase = this.getServerBaseUrl();
+
+            // 1. Fetch live config and users from Node server if running
+            if (serverBase) {
+                try {
+                    const resConfig = await fetch(`${serverBase}/api/config?t=${Date.now()}`);
+                    if (resConfig.ok) {
+                        const config = await resConfig.json();
+                        if (config.settings) localStorage.setItem('lms_settings', JSON.stringify(config.settings));
+                        if (config.whatsapp) localStorage.setItem('lms_whatsapp_session', JSON.stringify(config.whatsapp));
+                        if (config.weeklyColumns) localStorage.setItem('lms_weekly_columns', JSON.stringify(config.weeklyColumns));
+                    }
+                    const resUsers = await fetch(`${serverBase}/api/users?t=${Date.now()}`);
+                    if (resUsers.ok) {
+                        const users = await resUsers.json();
+                        if (Array.isArray(users) && users.length > 0) {
+                            localStorage.setItem('lms_users', JSON.stringify(users));
+                        }
+                    }
+                } catch (e) {}
+            }
+
+            // 2. Fetch static erp-config.json
             try {
                 const res = await fetch('assets/data/erp-config.json?t=' + Date.now());
                 if (res.ok) {
                     const globalConfig = await res.json();
-                    if (globalConfig.adminAuth) {
-                        const localAuth = localStorage.getItem('lms_admin_auth');
-                        if (!localAuth) localStorage.setItem('lms_admin_auth', JSON.stringify(globalConfig.adminAuth));
+                    if (globalConfig.settings && !localStorage.getItem('lms_settings')) {
+                        localStorage.setItem('lms_settings', JSON.stringify(globalConfig.settings));
                     }
-                    if (globalConfig.settings) {
-                        const localSettings = localStorage.getItem('lms_settings');
-                        if (!localSettings) localStorage.setItem('lms_settings', JSON.stringify(globalConfig.settings));
+                    if (globalConfig.whatsapp && !localStorage.getItem('lms_whatsapp_session')) {
+                        localStorage.setItem('lms_whatsapp_session', JSON.stringify(globalConfig.whatsapp));
                     }
-                    if (globalConfig.whatsapp) {
-                        const localWa = localStorage.getItem('lms_whatsapp_session');
-                        if (!localWa) localStorage.setItem('lms_whatsapp_session', JSON.stringify(globalConfig.whatsapp));
-                    }
-                    if (globalConfig.weeklyColumns) {
-                        const localCols = localStorage.getItem('lms_weekly_columns');
-                        if (!localCols) localStorage.setItem('lms_weekly_columns', JSON.stringify(globalConfig.weeklyColumns));
+                    if (globalConfig.weeklyColumns && !localStorage.getItem('lms_weekly_columns')) {
+                        localStorage.setItem('lms_weekly_columns', JSON.stringify(globalConfig.weeklyColumns));
                     }
                 }
-            } catch (err) {
-                console.log("Global sync loaded from cache.");
-            }
+            } catch (err) {}
+
+            await this.getUsers(false);
+            await this.getStudents(false);
             this.applyThemeAndBranding();
         },
 
-        // --- Push Updates to Global Database in Real-Time ---
-        async pushToCloud(endpoint, payload) {
-            const cloud = this.getCloudConfig();
-
-            // 1. Google Sheets / Apps Script Database API Push
-            if (cloud.appsScriptUrl) {
+        // Background Auto-Sync across all connected devices (PCs, Tablets, Phones)
+        startRealtimeSync(intervalMs = 8000, onUpdateCallback = null) {
+            if (window._lmsSyncInterval) clearInterval(window._lmsSyncInterval);
+            window._lmsSyncInterval = setInterval(async () => {
+                const serverBase = this.getServerBaseUrl();
+                if (!serverBase) return;
                 try {
-                    let action = endpoint;
-                    if (endpoint.includes('/')) action = endpoint.split('/')[1];
-                    const postBody = JSON.stringify({ action: action, ...payload });
-                    await fetch(cloud.appsScriptUrl, {
+                    const res = await fetch(`${serverBase}/api/students?t=${Date.now()}`);
+                    if (res.ok) {
+                        const serverStudents = await res.json();
+                        const currentLocal = localStorage.getItem('lms_students');
+                        const serverStr = JSON.stringify(serverStudents);
+                        if (currentLocal !== serverStr) {
+                            localStorage.setItem('lms_students', serverStr);
+                            if (typeof onUpdateCallback === 'function') {
+                                onUpdateCallback('students', serverStudents);
+                            }
+                        }
+                    }
+                } catch (e) {}
+            }, intervalMs);
+        },
+
+        // Push updates to Node Server REST API
+        async pushToDatabase(type, payload) {
+            const serverBase = this.getServerBaseUrl();
+            const currentUser = this.getCurrentUser();
+            const devInfo = this.getDeviceInfo();
+
+            if (serverBase) {
+                try {
+                    let endpoint = '/api/students';
+                    if (type === 'config') endpoint = '/api/config';
+                    else if (type === 'users') endpoint = '/api/users';
+                    else if (type === 'documents') endpoint = '/api/documents';
+                    else if (type === 'logs') endpoint = '/api/logs';
+
+                    await fetch(`${serverBase}${endpoint}`, {
                         method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: postBody
-                    });
-                    console.log("Database update pushed to Google Sheets / Apps Script API.");
-                } catch (err) {
-                    console.error("Google Sheets API push error:", err);
-                }
-            }
-
-            // 2. Firebase Realtime Database REST API Push
-            if (cloud.firebaseUrl && !cloud.appsScriptUrl) {
-                try {
-                    const cleanUrl = cloud.firebaseUrl.replace(/\/+$/, '');
-                    await fetch(`${cleanUrl}/${endpoint}.json`, {
-                        method: 'PUT',
-                        headers: { 'Content-Type': 'application/json' },
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'x-admin-user': currentUser.username || 'admin',
+                            'x-device-type': devInfo.deviceType
+                        },
                         body: JSON.stringify(payload)
                     });
-                    console.log(`Cloud sync pushed to Firebase: ${endpoint}`);
                 } catch (err) {
-                    console.error("Firebase cloud push error:", err);
+                    console.error("Database server push error:", err);
                 }
             }
         },
 
-        // Customization & Branding Settings
+        // Alias for pushToCloud
+        pushToCloud(type, payload) {
+            return this.pushToDatabase(type, payload);
+        },
+
+        // =========================================================================
+        // 8. SETTINGS & BRANDING
+        // =========================================================================
         getSettings() {
             const stored = localStorage.getItem('lms_settings');
             return stored ? { ...DEFAULT_SETTINGS, ...JSON.parse(stored) } : DEFAULT_SETTINGS;
@@ -408,61 +946,20 @@
             const updated = { ...current, ...newSettings };
             localStorage.setItem('lms_settings', JSON.stringify(updated));
             this.applyThemeAndBranding();
-            await this.pushToCloud('lms_config/settings', updated);
+            await this.pushToDatabase('config', this.getGlobalConfigObject());
             return updated;
         },
 
-        // --- Teacher & Admin Password & Authentication Management ---
-        getAdminCredentials() {
-            const stored = localStorage.getItem('lms_admin_auth');
-            if (stored) {
-                try {
-                    const parsed = JSON.parse(stored);
-                    if (parsed && parsed.username && parsed.password) return parsed;
-                } catch (e) {}
-            }
-            return DEFAULT_ADMIN_AUTH;
-        },
-        async saveAdminCredentials(username, newPassword) {
-            const creds = {
-                username: (username || 'sheshadi').trim().toLowerCase(),
-                password: (newPassword || 'password123').trim()
-            };
-            localStorage.setItem('lms_admin_auth', JSON.stringify(creds));
-            
-            // Push to cloud instantly across all devices
-            await this.pushToCloud('lms_config/adminAuth', creds);
-            return creds;
-        },
-        authenticateAdmin(user, pass) {
-            const creds = this.getAdminCredentials();
-            const u = (user || '').trim().toLowerCase();
-            const p = (pass || '').trim();
-
-            if (!p) return false;
-
-            // Check active saved credentials
-            if (u === creds.username && p === creds.password) return true;
-            if ((u === 'admin' || u === 'sheshadi') && p === creds.password) return true;
-
-            // Check default code credentials
-            if (u === DEFAULT_ADMIN_AUTH.username && p === DEFAULT_ADMIN_AUTH.password) return true;
-            if (u === 'admin' && p === 'password123') return true;
-            if (u === 'sheshadi' && p === 'sheshadi2026') return true;
-
-            if (p === creds.password) return true;
-
-            return false;
-        },
-
-        // Dynamic Weekly Table Columns Configuration
+        // =========================================================================
+        // 9. DYNAMIC WEEKLY TABLE COLUMNS
+        // =========================================================================
         getWeeklyColumns() {
             const stored = localStorage.getItem('lms_weekly_columns');
             return stored ? JSON.parse(stored) : DEFAULT_WEEKLY_COLUMNS;
         },
         async saveWeeklyColumns(columnsArray) {
             localStorage.setItem('lms_weekly_columns', JSON.stringify(columnsArray));
-            await this.pushToCloud('lms_config/weeklyColumns', columnsArray);
+            await this.pushToDatabase('config', this.getGlobalConfigObject());
             return columnsArray;
         },
         async addWeeklyColumn(label, type) {
@@ -480,8 +977,7 @@
             return { cols, newCol };
         },
         async removeWeeklyColumn(columnKey) {
-            let cols = this.getWeeklyColumns();
-            cols = cols.filter(c => c.key !== columnKey || c.removable === false);
+            let cols = this.getWeeklyColumns().filter(c => c.key !== columnKey || c.removable === false);
             await this.saveWeeklyColumns(cols);
             return cols;
         },
@@ -490,38 +986,110 @@
             return DEFAULT_WEEKLY_COLUMNS;
         },
 
-        // Teacher Confidential Document Storage Vault
-        getTeacherDocs() {
+        // =========================================================================
+        // 10. TEACHER CONFIDENTIAL VAULT DOCUMENTS (JSON DB)
+        // =========================================================================
+        async getTeacherDocs() {
+            const serverBase = this.getServerBaseUrl();
+            if (serverBase) {
+                try {
+                    const res = await fetch(`${serverBase}/api/documents?t=${Date.now()}`);
+                    if (res.ok) {
+                        const docs = await res.json();
+                        if (Array.isArray(docs)) {
+                            localStorage.setItem('teacher_vault_documents', JSON.stringify(docs));
+                            return docs;
+                        }
+                    }
+                } catch (e) {}
+            }
             const stored = localStorage.getItem('teacher_vault_documents');
-            return stored ? JSON.parse(stored) : DEFAULT_TEACHER_DOCS;
+            if (stored) return JSON.parse(stored);
+
+            try {
+                const res = await fetch('assets/data/teacher-docs.json?t=' + Date.now());
+                if (res.ok) {
+                    const data = await res.json();
+                    localStorage.setItem('teacher_vault_documents', JSON.stringify(data));
+                    return data;
+                }
+            } catch (e) {}
+
+            return DEFAULT_TEACHER_DOCS;
         },
         async addTeacherDoc(docObj) {
-            const docs = this.getTeacherDocs();
+            const docs = await this.getTeacherDocs();
+            const currentUser = this.getCurrentUser();
             const newDoc = {
                 id: "TDOC-" + Date.now(),
                 uploadDate: new Date().toISOString().split('T')[0],
+                uploadedBy: currentUser.name || "Educator",
                 ...docObj
             };
             docs.unshift(newDoc);
             localStorage.setItem('teacher_vault_documents', JSON.stringify(docs));
-            await this.pushToCloud('lms_teacher_docs', docs);
+            await this.pushToDatabase('documents', docs);
             return newDoc;
         },
         async deleteTeacherDoc(docId) {
-            let docs = this.getTeacherDocs();
+            let docs = await this.getTeacherDocs();
             docs = docs.filter(d => d.id !== docId);
             localStorage.setItem('teacher_vault_documents', JSON.stringify(docs));
-            await this.pushToCloud('lms_teacher_docs', docs);
+            await this.pushToDatabase('documents', docs);
             return docs;
         },
-        getTeacherDocsByGrade(grade) {
-            const docs = this.getTeacherDocs();
-            if (!grade || grade === 'All' || grade === 'All Grades') return docs;
-            const cleanGrade = grade.toLowerCase();
-            return docs.filter(d => (d.grade || '').toLowerCase().includes(cleanGrade));
+
+        // =========================================================================
+        // 11. MULTI-DEVICE ACTIVITY AUDIT LOGS (JSON DB)
+        // =========================================================================
+        async getActivityLogs() {
+            const serverBase = this.getServerBaseUrl();
+            if (serverBase) {
+                try {
+                    const res = await fetch(`${serverBase}/api/logs?t=${Date.now()}`);
+                    if (res.ok) {
+                        const logs = await res.json();
+                        if (Array.isArray(logs)) {
+                            localStorage.setItem('lms_activity_logs', JSON.stringify(logs));
+                            return logs;
+                        }
+                    }
+                } catch (e) {}
+            }
+            const stored = localStorage.getItem('lms_activity_logs');
+            if (stored) return JSON.parse(stored);
+
+            try {
+                const res = await fetch('assets/data/activity-logs.json?t=' + Date.now());
+                if (res.ok) {
+                    const data = await res.json();
+                    localStorage.setItem('lms_activity_logs', JSON.stringify(data));
+                    return data;
+                }
+            } catch (e) {}
+
+            return [];
+        },
+        async addActivityLog(logObj) {
+            const logs = await this.getActivityLogs();
+            const devInfo = this.getDeviceInfo();
+            const newLog = {
+                id: "LOG-" + Date.now(),
+                timestamp: new Date().toISOString().replace('T', ' ').substring(0, 19),
+                deviceType: devInfo.deviceType,
+                deviceDetail: devInfo.summary,
+                ...logObj
+            };
+            logs.unshift(newLog);
+            if (logs.length > 300) logs.length = 300;
+            localStorage.setItem('lms_activity_logs', JSON.stringify(logs));
+            await this.pushToDatabase('logs', newLog);
+            return newLog;
         },
 
-        // WhatsApp Live Session Engine
+        // =========================================================================
+        // 12. WHATSAPP & ZOOM LIVE ENGINE
+        // =========================================================================
         getWhatsappSession() {
             const stored = localStorage.getItem('lms_whatsapp_session');
             return stored ? JSON.parse(stored) : DEFAULT_WHATSAPP;
@@ -529,7 +1097,7 @@
         async saveWhatsappSession(waObj) {
             const updated = { ...this.getWhatsappSession(), ...waObj };
             localStorage.setItem('lms_whatsapp_session', JSON.stringify(updated));
-            await this.pushToCloud('lms_config/whatsapp', updated);
+            await this.pushToDatabase('config', this.getGlobalConfigObject());
             return updated;
         },
         toggleWhatsappLive(isLive, targetGrade) {
@@ -550,7 +1118,6 @@
             return wa.whatsappGroupUrl || "https://chat.whatsapp.com/ScienceWithSheshadi2026";
         },
 
-        // Zoom Session Engine
         getZoomSession() {
             const stored = localStorage.getItem('lms_zoom_session');
             return stored ? JSON.parse(stored) : DEFAULT_ZOOM;
@@ -558,7 +1125,7 @@
         async saveZoomSession(zoomObj) {
             const updated = { ...this.getZoomSession(), ...zoomObj };
             localStorage.setItem('lms_zoom_session', JSON.stringify(updated));
-            await this.pushToCloud('lms_config/zoom', updated);
+            await this.pushToDatabase('config', this.getGlobalConfigObject());
             return updated;
         },
         toggleZoomLive(isLive, targetGrade) {
@@ -569,7 +1136,9 @@
             });
         },
 
-        // Grade-Wise Notifications Engine
+        // =========================================================================
+        // 13. NOTIFICATIONS, FILES & CALENDAR
+        // =========================================================================
         getNotifications() {
             const stored = localStorage.getItem('lms_notifications');
             return stored ? JSON.parse(stored) : DEFAULT_NOTIFICATIONS;
@@ -580,20 +1149,19 @@
                 id: "NOTIF-" + Date.now(),
                 date: new Date().toISOString().split('T')[0],
                 time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                sender: this.getSettings().teacherName,
+                sender: this.getCurrentUser().name || this.getSettings().teacherName,
                 priority: notifObj.priority || "General",
                 ...notifObj
             };
             notifs.unshift(newNotif);
             localStorage.setItem('lms_notifications', JSON.stringify(notifs));
-            await this.pushToCloud('lms_notifications', notifs);
+            await this.pushToDatabase('config', this.getGlobalConfigObject());
             return newNotif;
         },
         async deleteNotification(notifId) {
-            let notifs = this.getNotifications();
-            notifs = notifs.filter(n => n.id !== notifId);
+            let notifs = this.getNotifications().filter(n => n.id !== notifId);
             localStorage.setItem('lms_notifications', JSON.stringify(notifs));
-            await this.pushToCloud('lms_notifications', notifs);
+            await this.pushToDatabase('config', this.getGlobalConfigObject());
             return notifs;
         },
         getNotificationsForGrade(grade) {
@@ -605,7 +1173,6 @@
             });
         },
 
-        // File Sharing & Study Materials (with Delete Capability)
         getFiles() {
             const stored = localStorage.getItem('lms_files');
             return stored ? JSON.parse(stored) : DEFAULT_FILES;
@@ -615,26 +1182,24 @@
             const newFile = {
                 id: "FILE-" + Date.now(),
                 uploadDate: new Date().toISOString().split('T')[0],
-                uploadedBy: this.getSettings().teacherName,
+                uploadedBy: this.getCurrentUser().name || this.getSettings().teacherName,
                 ...fileObj
             };
             files.unshift(newFile);
             localStorage.setItem('lms_files', JSON.stringify(files));
-            await this.pushToCloud('lms_files', files);
+            await this.pushToDatabase('config', this.getGlobalConfigObject());
             return newFile;
         },
         async deleteFile(fileId) {
-            let files = this.getFiles();
-            files = files.filter(f => f.id !== fileId);
+            let files = this.getFiles().filter(f => f.id !== fileId);
             localStorage.setItem('lms_files', JSON.stringify(files));
-            await this.pushToCloud('lms_files', files);
+            await this.pushToDatabase('config', this.getGlobalConfigObject());
             return files;
         },
         deleteStudentFile(fileId) {
             return this.deleteFile(fileId);
         },
 
-        // Academic Calendar Events (Google Calendar Model)
         getCalendarEvents() {
             const stored = localStorage.getItem('lms_calendar_events');
             return stored ? JSON.parse(stored) : DEFAULT_CALENDAR;
@@ -645,26 +1210,28 @@
             events.push(newEvent);
             events.sort((a, b) => new Date(a.date) - new Date(b.date));
             localStorage.setItem('lms_calendar_events', JSON.stringify(events));
-            await this.pushToCloud('lms_calendar_events', events);
+            await this.pushToDatabase('config', this.getGlobalConfigObject());
             return newEvent;
         },
         async deleteCalendarEvent(eventId) {
-            let events = this.getCalendarEvents();
-            events = events.filter(e => e.id !== eventId);
+            let events = this.getCalendarEvents().filter(e => e.id !== eventId);
             localStorage.setItem('lms_calendar_events', JSON.stringify(events));
-            await this.pushToCloud('lms_calendar_events', events);
+            await this.pushToDatabase('config', this.getGlobalConfigObject());
             return events;
         },
 
-        // --- STUDENT ACCOUNTS: LIVE CLOUD SYNC & SIMULTANEOUS REAL-TIME UPDATES ---
+        // =========================================================================
+        // 14. PURE JSON STUDENT DATABASE ENGINE (MULTI-DEVICE ACCESS)
+        // =========================================================================
         async getStudents(forceRefresh = false) {
-            const cloud = this.getCloudConfig();
+            const serverBase = this.getServerBaseUrl();
+            const stored = localStorage.getItem('lms_students');
+            let localStudents = stored ? JSON.parse(stored) : null;
 
-            // 1. Fetch live from Firebase Cloud Database (Instant 0-second live data across all devices)
-            if (cloud.firebaseUrl) {
+            // 1. Live Node Server REST API
+            if (serverBase) {
                 try {
-                    const cleanUrl = cloud.firebaseUrl.replace(/\/+$/, '');
-                    const res = await fetch(`${cleanUrl}/lms_students.json?t=${Date.now()}`);
+                    const res = await fetch(`${serverBase}/api/students?t=${Date.now()}`);
                     if (res.ok) {
                         const data = await res.json();
                         if (Array.isArray(data) && data.length > 0) {
@@ -672,58 +1239,48 @@
                             return data;
                         }
                     }
-                } catch (e) {
-                    console.log("Firebase students fetch fallback.");
-                }
+                } catch (e) {}
             }
 
-            // 2. Fetch from static JSON file with cache buster
+            // 2. Cached in LocalStorage
+            if (localStudents && Array.isArray(localStudents) && localStudents.length > 0 && !forceRefresh) {
+                return localStudents;
+            }
+
+            // 3. Seed from static assets/data/students.json
             try {
                 const res = await fetch('assets/data/students.json?t=' + Date.now());
                 if (res.ok) {
                     const data = await res.json();
                     if (Array.isArray(data) && data.length > 0) {
-                        const local = localStorage.getItem('lms_students');
-                        if (!local || forceRefresh) {
-                            localStorage.setItem('lms_students', JSON.stringify(data));
-                            return data;
-                        }
+                        localStorage.setItem('lms_students', JSON.stringify(data));
+                        return data;
                     }
                 }
-            } catch (err) {
-                console.error("Error fetching students.json:", err);
-            }
+            } catch (err) {}
 
-            // 3. Fallback to localStorage
-            const stored = localStorage.getItem('lms_students');
-            return stored ? JSON.parse(stored) : [];
+            return localStudents || [];
         },
 
         async saveStudents(studentsArray) {
             localStorage.setItem('lms_students', JSON.stringify(studentsArray));
-            
-            // Push immediately to Cloud Database in real-time!
-            await this.pushToCloud('lms_students', studentsArray);
-            this.notifyListeners('students_updated', studentsArray);
+            await this.pushToDatabase('students', studentsArray);
         },
 
         calculateMonthlyUnitTestAverage(weeks) {
             if (!weeks || !Array.isArray(weeks) || weeks.length === 0) return 0;
-            let sum = 0;
-            let count = 0;
+            let sum = 0, count = 0;
             weeks.forEach(w => {
                 if (w && typeof w.unit_test === 'number' && !isNaN(w.unit_test) && w.unit_test !== null) {
                     sum += w.unit_test;
                     count++;
                 }
             });
-            if (count === 0) return 0;
-            return Math.round((sum / count) * 10) / 10;
+            return count === 0 ? 0 : Math.round((sum / count) * 10) / 10;
         },
 
-        // Register Student Account (Synchronized across all devices)
         async registerStudent(newSt) {
-            const students = await this.getStudents(true);
+            const students = await this.getStudents(false);
             const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             
             const monthlyProgress = {};
@@ -771,7 +1328,7 @@
         },
 
         async updateStudent(studentId, updatedFields) {
-            const students = await this.getStudents(true);
+            const students = await this.getStudents(false);
             const idx = students.findIndex(s => s.student_info && s.student_info.student_id === studentId);
             if (idx !== -1) {
                 const st = students[idx];
@@ -797,7 +1354,7 @@
         },
 
         async resetStudentPassword(studentId, newPassword) {
-            const students = await this.getStudents(true);
+            const students = await this.getStudents(false);
             const idx = students.findIndex(s => s.student_info && s.student_info.student_id === studentId);
             if (idx !== -1) {
                 const pass = (newPassword || 'student123').trim();
@@ -809,7 +1366,7 @@
         },
 
         async deleteStudent(studentId) {
-            let students = await this.getStudents(true);
+            let students = await this.getStudents(false);
             students = students.filter(s => s.student_info && s.student_info.student_id !== studentId);
             await this.saveStudents(students);
             return students;
@@ -834,7 +1391,7 @@
         },
 
         async saveStudentWeeklyTable(studentId, monthName, weeklyRows) {
-            const students = await this.getStudents(true);
+            const students = await this.getStudents(false);
             const st = students.find(s => s.student_info.student_id === studentId);
             if (st) {
                 if (!st.monthly_progress) st.monthly_progress = {};
@@ -859,7 +1416,7 @@
         },
 
         async saveStudentTermMarks(studentId, termAssessments) {
-            const students = await this.getStudents(true);
+            const students = await this.getStudents(false);
             const st = students.find(s => s.student_info.student_id === studentId);
             if (st) {
                 st.assessments = termAssessments;
@@ -903,6 +1460,9 @@
             }
         },
 
+        // =========================================================================
+        // 15. RESPONSIVE THEMING & DOM BRANDING
+        // =========================================================================
         applyThemeAndBranding() {
             const settings = this.getSettings();
             const theme = this.getTheme();
@@ -950,18 +1510,26 @@
             }
         },
 
-        generateGlobalErpConfigJson() {
-            return JSON.stringify({
-                adminAuth: this.getAdminCredentials(),
+        getGlobalConfigObject() {
+            return {
                 settings: this.getSettings(),
                 whatsapp: this.getWhatsappSession(),
                 zoom: this.getZoomSession(),
                 weeklyColumns: this.getWeeklyColumns(),
                 notifications: this.getNotifications(),
                 calendarEvents: this.getCalendarEvents(),
-                teacherDocs: this.getTeacherDocs(),
+                teacherDocs: this.getCachedTeacherDocs(),
                 files: this.getFiles()
-            }, null, 2);
+            };
+        },
+
+        getCachedTeacherDocs() {
+            const stored = localStorage.getItem('teacher_vault_documents');
+            return stored ? JSON.parse(stored) : DEFAULT_TEACHER_DOCS;
+        },
+
+        generateGlobalErpConfigJson() {
+            return JSON.stringify(this.getGlobalConfigObject(), null, 2);
         },
 
         downloadFile(filename, text, mimeType) {
@@ -974,13 +1542,97 @@
             document.body.removeChild(element);
         },
 
-        exportGlobalErpConfig() {
+        // =========================================================================
+        // 16. PURE JSON 1-CLICK EXPORT / IMPORT / EDITOR CONTROLS
+        // =========================================================================
+        async exportStudentsJson() {
+            const students = await this.getStudents(false);
+            this.downloadFile('students.json', JSON.stringify(students, null, 2), 'application/json');
+        },
+
+        exportErpConfigJson() {
             const jsonCode = this.generateGlobalErpConfigJson();
             this.downloadFile('erp-config.json', jsonCode, 'application/json');
+        },
+
+        async exportUsersJson() {
+            const users = await this.getUsers(false);
+            this.downloadFile('users.json', JSON.stringify(users, null, 2), 'application/json');
+        },
+
+        async exportTeacherDocsJson() {
+            const docs = await this.getTeacherDocs();
+            this.downloadFile('teacher-docs.json', JSON.stringify(docs, null, 2), 'application/json');
+        },
+
+        async exportActivityLogsJson() {
+            const logs = await this.getActivityLogs();
+            this.downloadFile('activity-logs.json', JSON.stringify(logs, null, 2), 'application/json');
+        },
+
+        async exportFullDatabaseBundle() {
+            const bundle = {
+                exportTimestamp: new Date().toISOString(),
+                academy: this.getSettings().academyName,
+                students: await this.getStudents(false),
+                config: this.getGlobalConfigObject(),
+                users: await this.getUsers(false),
+                teacherDocs: await this.getTeacherDocs(),
+                activityLogs: await this.getActivityLogs()
+            };
+            this.downloadFile('science_lms_full_database.json', JSON.stringify(bundle, null, 2), 'application/json');
+        },
+
+        async getRawJsonForFile(fileKey) {
+            if (fileKey === 'students') {
+                const data = await this.getStudents(false);
+                return JSON.stringify(data, null, 2);
+            }
+            if (fileKey === 'users') {
+                const data = await this.getUsers(false);
+                return JSON.stringify(data, null, 2);
+            }
+            if (fileKey === 'config') {
+                return this.generateGlobalErpConfigJson();
+            }
+            if (fileKey === 'teacherDocs') {
+                const data = await this.getTeacherDocs();
+                return JSON.stringify(data, null, 2);
+            }
+            if (fileKey === 'logs') {
+                const data = await this.getActivityLogs();
+                return JSON.stringify(data, null, 2);
+            }
+            return "{}";
+        },
+
+        async saveRawJsonForFile(fileKey, jsonString) {
+            const parsed = JSON.parse(jsonString); // validate json
+            if (fileKey === 'students') {
+                if (!Array.isArray(parsed)) throw new Error("students.json must be an array of student objects.");
+                await this.saveStudents(parsed);
+            } else if (fileKey === 'users') {
+                if (!Array.isArray(parsed)) throw new Error("users.json must be an array of user objects.");
+                await this.saveUsers(parsed);
+            } else if (fileKey === 'config') {
+                if (parsed.settings) await this.saveSettings(parsed.settings);
+                if (parsed.whatsapp) await this.saveWhatsappSession(parsed.whatsapp);
+                if (parsed.zoom) await this.saveZoomSession(parsed.zoom);
+                if (parsed.weeklyColumns) await this.saveWeeklyColumns(parsed.weeklyColumns);
+            } else if (fileKey === 'teacherDocs') {
+                if (!Array.isArray(parsed)) throw new Error("teacher-docs.json must be an array.");
+                localStorage.setItem('teacher_vault_documents', JSON.stringify(parsed));
+                await this.pushToDatabase('documents', parsed);
+            } else if (fileKey === 'logs') {
+                if (!Array.isArray(parsed)) throw new Error("activity-logs.json must be an array.");
+                localStorage.setItem('lms_activity_logs', JSON.stringify(parsed));
+                await this.pushToDatabase('logs', parsed);
+            }
+            return true;
         }
     };
 
-    // Auto-Sync across all pages & Setup Real-Time Polling
+    // Auto-Sync across all pages
     document.addEventListener('DOMContentLoaded', () => {
         window.LMSCore.initGlobalSync();
     });

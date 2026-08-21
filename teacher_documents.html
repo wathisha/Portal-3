@@ -312,8 +312,7 @@
         });
 
         function logoutAdmin() {
-            sessionStorage.removeItem('admin_authenticated');
-            window.location.href = 'admin_login.html';
+            if (window.LMSCore) { window.LMSCore.logoutUser(); } else { sessionStorage.removeItem('admin_authenticated'); window.location.href = 'admin_login.html'; }
         }
 
         function toggleUploadDocModal() {

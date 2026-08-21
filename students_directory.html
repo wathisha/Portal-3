@@ -290,10 +290,10 @@
         }
 
         
-        // Auto-poll every 6 seconds for instantaneous updates from phone
+        // Real-time automatic background sync from JSON database server
         setInterval(async () => {
             if (document.visibilityState === 'visible' && window.LMSCore) {
-                const fresh = await window.LMSCore.getStudents(true);
+                const fresh = await window.LMSCore.getStudents(false);
                 if (fresh && Array.isArray(fresh) && fresh.length > 0) {
                     if (JSON.stringify(fresh) !== JSON.stringify(allStudents)) {
                         allStudents = fresh;
@@ -302,7 +302,7 @@
                     }
                 }
             }
-        }, 6000);
+        }, 8000);
 
         window.addEventListener('focus', async () => {
             if (window.LMSCore) {
@@ -314,8 +314,7 @@
         });
 
         function logoutAdmin() {
-            sessionStorage.removeItem('admin_authenticated');
-            window.location.href = 'admin_login.html';
+            if (window.LMSCore) { window.LMSCore.logoutUser(); } else { sessionStorage.removeItem('admin_authenticated'); window.location.href = 'admin_login.html'; }
         }
 
         document.addEventListener('DOMContentLoaded', async () => {

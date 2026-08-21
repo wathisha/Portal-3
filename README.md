@@ -1,121 +1,91 @@
-# Science with Sheshadi - Student Academic Portal
+# Science with Sheshadi LMS - Pure JSON Database & Multi-User Management Portal
 
-A responsive, static web application designed for **Science with Sheshadi** to display individual student academic profiles, weekly guidebooks, practicals, unit tests, and term scores directly from **Google Sheets tabs** or local Excel workbooks.
+A modern, responsive Learning Management System (LMS) and Educator ERP built with a **Pure JSON Database Engine**, **Multi-User Role-Based Access Control (RBAC)**, and **Multi-Device Support (PC, Tablet, and Mobile Phone)**.
 
-Hosted seamlessly on **GitHub Pages**.
+Deployable on **GitHub Pages** (as a static web application) or on **Node.js / VPS / Render / Railway / Localhost** (with live JSON REST API).
 
 ---
 
-## 📁 Repository Folder Structure
+## 📁 GitHub Repository File Structure
 
-```
-student-portal-repo/
-├── index.html                           # Main Web App Entry Point & Dashboard
-├── 404.html                             # Custom SPA Fallback for GitHub Pages
-├── README.md                            # Complete Setup & Integration Documentation
-├── .gitignore                           # Git ignore rules
+```text
+├── index.html                      # Student & Teacher entry hub
+├── admin_login.html                # Multi-user staff authentication & device detection
+├── admin.html                      # Educator dashboard, student evaluation & user management
+├── student.html                    # Individual student scorecard & monthly progress portal
+├── students_directory.html         # Class-wise student master directory
+├── teacher_documents.html          # Confidential teacher document storage vault
+├── 404.html                        # GitHub Pages 404 fallback page
+├── server.js                       # Standalone Node.js JSON REST API database server
+├── README.md                       # Setup and deployment documentation
+├── .gitignore                      # Git ignored files & temp artifacts
+│
 ├── .github/
 │   └── workflows/
-│       └── deploy.yml                   # GitHub Actions workflow for automatic Pages deployment
+│       └── deploy.yml              # GitHub Actions automated GitHub Pages deployment
+│
 ├── assets/
+│   ├── data/                       # Pure JSON Database Layer
+│   │   ├── students.json           # Student profiles, 12-month marks, & unit tests
+│   │   ├── users.json              # Multi-user credentials, roles, & device sessions
+│   │   ├── erp-config.json         # Master configuration, Zoom/WhatsApp links, & columns
+│   │   ├── teacher-docs.json       # Confidential marking schemes & question banks
+│   │   └── activity-logs.json      # Audit log of actions across PC, Tablet, and Phone
+│   │
+│   ├── js/                         # Client-Side Application Logic
+│   │   ├── lms-core.js             # Core data engine, RBAC auth, sync & theming
+│   │   ├── app.js                  # Frontend utilities & charting
+│   │   ├── excel-parser.js         # Tabular data parser utility
+│   │   └── sheet-sync.js           # Cloud data synchronization utility
+│   │
 │   ├── css/
-│   │   └── styles.css                   # Custom glassmorphism, responsive styles & print layout
-│   ├── js/
-│   │   ├── app.js                       # Core portal application logic & tab manager
-│   │   ├── sheet-sync.js                # Google Sheets API & GViz live tab synchronization engine
-│   │   └── excel-parser.js              # In-browser Excel (.xlsx) file reader powered by SheetJS
-│   ├── images/
-│   │   ├── logo.png                     # Official "Science with Sheshadi" Website Logo
-│   │   ├── teacher.png                  # Head Teacher Photo (Mrs. Sheshadi Sathsarani)
-│   │   └── favicon.ico                  # Browser Favicon
-│   └── data/
-│       ├── students.json                # Pre-populated multi-student dataset (1 tab = 1 student)
-│       └── Student_Improvement_Tracker.xlsx # Sample Excel workbook with student tabs
+│   │   └── styles.css              # Custom styling, dual theming (light/dark), & glassmorphism
+│   │
+│   └── images/                     # Academy Branding & Assets
+│       ├── logo.png                # Official website logo
+│       ├── favicon.ico             # Browser favicon
+│       ├── teacher.png             # Teacher profile photo
+│       ├── teacher_banner.png      # Teacher hero banner photo
+│       └── lms_background.png      # Website background pattern
+│
 └── scripts/
-    ├── convert_excel_to_json.py         # Python utility to convert Excel tabs to JSON
-    └── sync_google_sheets.py            # Python utility to sync live Google Sheets tabs
+    └── export_global_lms_files.py  # Script to synchronize global settings across JSON & JS
 ```
 
 ---
 
-## 🚀 How to Upload to GitHub & Host on GitHub Pages
+## 🚀 How to Deploy to GitHub Pages
 
-### Step 1: Create a New GitHub Repository
-1. Log in to your account at [GitHub](https://github.com).
-2. Click **New Repository** (or go to `https://github.com/new`).
-3. Set Repository Name to `science-with-sheshadi-portal` (or your preferred name).
-4. Set Visibility to **Public** (required for free GitHub Pages hosting).
-5. Do **not** initialize with a README (since this folder already includes one). Click **Create repository**.
-
-### Step 2: Upload Files using Git Command Line
-Open your terminal inside the `student-portal-repo` directory and run:
-
+### 1. Initialize Git & Push to GitHub
 ```bash
 git init
 git add .
-git commit -m "Initial commit: Science with Sheshadi Student Portal"
+git commit -m "Deploy: Science LMS with Pure JSON Database & Multi-User RBAC"
 git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/science-with-sheshadi-portal.git
+git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
 git push -u origin main
 ```
 
-*(Alternatively, you can drag and drop all files and folders directly into the GitHub Web Interface).*
-
-### Step 3: Enable GitHub Pages
-1. Go to your repository on GitHub.
-2. Navigate to **Settings** -> **Pages** (under Code and automation).
-3. Under **Source**:
-   - Select **Deploy from a branch** -> Branch: `main` -> Folder: `/ (root)`.
+### 2. Enable GitHub Pages
+1. Open your repository on **GitHub**.
+2. Go to **Settings** → **Pages** (under *Code and automation*).
+3. Under **Build and deployment**:
+   - **Source**: Select `Deploy from a branch`
+   - **Branch**: Select `main` / `/ (root)`
    - Click **Save**.
-4. Within 1-2 minutes, GitHub will publish your portal live at:
-   `https://YOUR_USERNAME.github.io/science-with-sheshadi-portal/`
+4. Alternatively, select **GitHub Actions** as the source to use the automated workflow in `.github/workflows/deploy.yml`.
+5. Within 1-2 minutes, your portal will be live at:
+   `https://YOUR_USERNAME.github.io/YOUR_REPOSITORY/`
 
 ---
 
-## 📊 Google Sheets Data Structure (1 Tab = 1 Student)
+## 💻 Running Locally with Central Node.js Server
 
-The portal reads each student's academic profile from individual worksheet tabs in Google Sheets.
-
-### Spreadsheet Details
-- **Google Sheet URL**: [Student Improvement Tracker](https://docs.google.com/spreadsheets/d/1X8TSZcUAJjKj49q6BrL8M2IELx8SVK3L/edit?gid=780068320#gid=780068320)
-- **Spreadsheet ID**: `1X8TSZcUAJjKj49q6BrL8M2IELx8SVK3L`
-
-### Tab Layout Guidelines
-1. **Sheet Tab Name**: Name each tab after the student or student index (e.g., `Student 1`, `Student 2`, `Student 3`, `Alex Johnson`).
-2. **Profile Section**:
-   - `Student Name`: (e.g. Alex Johnson)
-   - `Student ID`: (e.g. ST-84092)
-   - `Grade / Class`: (e.g. 06 - Science)
-   - `Homeroom Teacher`: (e.g. Mrs. Sheshadi Sathsarani)
-3. **Weekly Table Columns**:
-   - `Weeks` | `mastr guid book 1` | `mastr guid book 2` | `Past Paper` | `Practicle` | `Unit Tet`
-4. **Term Assessment Table**:
-   - `Assessment` | `Score (out of 100)`
-
----
-
-## ⚙️ Updating Student Data
-
-### Method A: Live Google Sheets Sync
-- Make changes directly in your Google Sheet tabs.
-- Click the **"Sync Google Sheet"** button on the website navbar to refresh live data.
-
-### Method B: Uploading Local Excel (.xlsx) File
-- Click **"Upload Excel (.xlsx)"** on the navbar and select `Student_Improvement_Tracker.xlsx`.
-- The in-browser parser will instantly render all tabs into student profile tabs without reloading!
-
-### Method C: Automated Build via Python Script
-Run the included conversion script to refresh `assets/data/students.json`:
+To run the LMS locally with live JSON file read/write operations and multi-device LAN support:
 
 ```bash
-python scripts/convert_excel_to_json.py
+node server.js
 ```
 
----
-
-## 🌟 Key Features
-- **Logo & Branding**: Features official "Science with Sheshadi" logo and teacher photo.
-- **Tab Navigation**: Click between student tabs (`Student 1`, `Student 2`, `Student 3`...).
-- **Real-Time Analytics**: Interactive Chart.js line charts for unit tests and bar charts for term exams.
-- **Printable Report Cards**: Click "Print Report" to generate clean, formatted student reports.
-- **Search & Filter**: Find students instantly by name, ID, or sheet tab.
+- **Local PC Access**: `http://localhost:3000`
+- **Mobile & Tablet LAN Access**: `http://<YOUR-IP>:3000` (Access from phones & tablets connected to the same Wi-Fi)
