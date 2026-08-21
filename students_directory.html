@@ -290,15 +290,18 @@
         }
 
         
-        // Auto-poll every 6 seconds for instantaneous updates from phone
+        // Live auto-poll every 6 seconds: fetches live JSON from npoint.io across all devices
         setInterval(async () => {
             if (document.visibilityState === 'visible' && window.LMSCore) {
-                const fresh = await window.LMSCore.getStudents(true);
-                if (fresh && Array.isArray(fresh) && fresh.length > 0) {
-                    if (JSON.stringify(fresh) !== JSON.stringify(allStudents)) {
-                        allStudents = fresh;
-                        document.getElementById('totalStudentsCount').textContent = allStudents.length;
-                        renderStudentsGrid();
+                const cloud = window.LMSCore.getCloudConfig();
+                if (cloud.cloudJsonStudentsUrl && cloud.cloudJsonStudentsUrl.trim() !== '') {
+                    const fresh = await window.LMSCore.getStudents(false);
+                    if (fresh && Array.isArray(fresh) && fresh.length > 0) {
+                        if (JSON.stringify(fresh) !== JSON.stringify(allStudents)) {
+                            allStudents = fresh;
+                            document.getElementById('totalStudentsCount').textContent = allStudents.length;
+                            renderStudentsGrid();
+                        }
                     }
                 }
             }
@@ -314,8 +317,7 @@
         });
 
         function logoutAdmin() {
-            sessionStorage.removeItem('admin_authenticated');
-            window.location.href = 'admin_login.html';
+            if (window.LMSCore) { window.LMSCore.logoutUser(); } else { sessionStorage.removeItem('admin_authenticated'); window.location.href = 'admin_login.html'; }
         }
 
         document.addEventListener('DOMContentLoaded', async () => {
